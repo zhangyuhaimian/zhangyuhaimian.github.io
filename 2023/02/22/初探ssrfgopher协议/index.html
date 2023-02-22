@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            初探ssrfgopher协议
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,28 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">初探ssrfgopher协议</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-02-22
+                        </span>
+                        
+                            <span id="/2023/02/22/初探ssrfgopher协议/" class="leancloud_visitors" data-flag-title="初探ssrfgopher协议">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/02/22/初探ssrfgopher协议/"></span>
+                        </span>  
+                    </p>
+                    
+                    
                 </div>
             
         </div>
@@ -48,47 +61,60 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
-                        
-                            目前共计 2 篇日志，继续加油！
-                        
-                    </span>
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>我们先开始介绍下我们这篇文章的主角，gopher协议。<br>Gopher 协议是 HTTP 协议出现之前，在 Internet 上常见且常用的一个协议。随着HTTP协议的壮大，Gopher协议已经慢慢的淡出了我们的视线，但是Gopher协议很多组件都支持并且可以做很多事，在SSRF中，Gopher协议<br>可以对FTP、Telnet、Redis、Memcache、mysql进行攻击,也可以发送GET、POST 请求。</p>
+<p>那么Gopher协议需要如何构造妮？<br>其实这个协议和http协议很类似，只不过gopher协议没有默认端口，需要特殊指定，而且需要指定POST方法，回车换行需要使用%0d%0a,而且POST参数之间的&amp;分隔符也需要URL编码</p>
+<p>我们来看看Gopher协议的基本协议格式<br>gopher:&#x2F;&#x2F;<host>:<port>&#x2F;<gopher-path>_后接TCP数据流</p>
+<p>那么我们试试看Gopher协议最经典的攻击方式，很多服务默认都不会在公网开启，一般都是仅仅允许本地访问，例如Redis，Redis因为配置不当会造成未授权访问，攻击者可以读取敏感信息，写入文件</p>
+<p>因为gopher协议传参方式是TCP数据流，那么我们可以尝试使用tcpdump或者直接使用Wireshark进行捕捉TCP的传输。</p>
+<p>我们现在攻击机上安装一个redis 【安装方法有很多，可以用wget安装，也可以用apt-get安装】【可以参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/langtianya/p/5187681.html%E3%80%91%E6%88%91%E5%9B%A0%E4%B8%BA%E6%98%AFKali%E7%9B%B4%E6%8E%A5apt-get%E6%90%9E%E5%AE%9A%E7%9A%84%E3%80%82">https://www.cnblogs.com/langtianya/p/5187681.html】我因为是Kali直接apt-get搞定的。</a> 按照这个网站一步一步来总会搞定的，不要自己瞎搞了，我走了好多弯路。</p>
+<p>安装成功之后就会开心的出现这个页面<img src="/" alt="安装成功"></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/02/22/%E5%88%9D%E6%8E%A2ssrfgopher%E5%8D%8F%E8%AE%AE/" target="_blank">初探ssrfgopher协议</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                <div class="article-prev-next">
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/22/%E5%88%9D%E6%8E%A2ssrfgopher%E5%8D%8F%E8%AE%AE/"><span>初探ssrfgopher协议</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-22</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/10/%E7%AB%A0%E9%B1%BC%E6%B5%B7%E7%BB%B5/"><span>章鱼海绵</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-10</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/02/10/%E7%AB%A0%E9%B1%BC%E6%B5%B7%E7%BB%B5/" class="next-prefix">» </a> 下一篇：    <a href="/2023/02/10/%E7%AB%A0%E9%B1%BC%E6%B5%B7%E7%BB%B5/" title="发布于 2023-02-10 01:39">章鱼海绵</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -120,7 +146,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
