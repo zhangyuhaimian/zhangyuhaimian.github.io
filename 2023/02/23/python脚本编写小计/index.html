@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            章鱼海绵
+            python脚本编写小计
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -36,19 +36,19 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">章鱼海绵</h1>
+                <h1 class="header-subtitle">python脚本编写小计</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2023-02-10
+                            <i class="iconfont icon-time"></i> 发表时间：2023-02-23
                         </span>
                         
-                            <span id="/2023/02/10/章鱼海绵/" class="leancloud_visitors" data-flag-title="章鱼海绵">
+                            <span id="/2023/02/23/python脚本编写小计/" class="leancloud_visitors" data-flag-title="python脚本编写小计">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
                         <span>
-                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/02/10/章鱼海绵/"></span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/02/23/python脚本编写小计/"></span>
                         </span>  
                     </p>
                     
@@ -65,7 +65,100 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <p>我的名字是章鱼海绵,我有一个好看的女朋友，今天是第一次搭建好博客，还有很多需要改进的地方，以后慢慢一边学习一边改进。</p>
+                <p>http默认监听80 https默认监听443<br>请求方法<br>http1.0支持     </p>
+<ol>
+<li>GET           </li>
+<li>POST</li>
+<li>HEAD</li>
+</ol>
+<p>http1.1支持</p>
+<ol>
+<li>PUT</li>
+<li>DELETE</li>
+<li>TRACE</li>
+<li>CONNECT</li>
+<li>PAtCH</li>
+</ol>
+<p>url  协议:&#x2F;&#x2F;主机名.域名&#x2F;文件夹&#x2F;文件？参数&#x3D;值&amp;参数1&#x3D;值1</p>
+<p>Http 请求头   </p>
+<ol>
+<li>User-Agent         浏览器版本信息</li>
+<li>Accept-encoding    浏览器接受的编码</li>
+<li>Referer            当前网页是从哪里跳转过来的</li>
+<li>Cookie             Cookie信息</li>
+<li>Location           跳转到哪里</li>
+<li>Set-Cookie         设置Cookie信息</li>
+<li>WWW-Authenticate   用于身份验证 HTTP Basic等</li>
+</ol>
+<p>Http响应状态码</p>
+<ol>
+<li>1xx  信息提示</li>
+<li>2xx  成功</li>
+<li>3xx  重定向</li>
+<li>4xx  客户端错误</li>
+<li>5xx  服务端错误</li>
+</ol>
+<p>查看HTTP burp f12（network）</p>
+<p>Python Http请求</p>
+<ol>
+<li><p>GET请求  不带参数   <code>requests.get(url)</code><br>     带参数     <code>requests.get(url=url,params=(key1=value1,key2=value2))</code><br>                <code>r.url 获取请求url</code></p>
+</li>
+<li><p>post请求  不带参数  <code>requests.post(url)</code><br>                <code>request.post(url,data=&#123;(key1:value1)&#125;)</code></p>
+</li>
+<li><p>自定义请求头 <code>headers = &#123;key:value&#125;</code><br>        <code>request.get(url,headers=headers)</code><br><br>        修改headers</p>
+</li>
+</ol>
+<p><code>import requests</code><br><code>url = &quot;https://www.baidu.com&quot;</code><br><code>payload = &#123;&#39;User-Agent&#39;:&#39;zhangyuhaimian&#39;&#125;</code><br><code>data = &#123;&#39;wd&#39;:&#39;123465&#39;&#125;</code><br><code>r = requests.get(url)</code><br><code>p = requests.get(url,headers=payload)</code><br><code>print(p.url)</code><br><code>print(p.status_code)</code><br><code>print(p.request.headers)</code></p>
+<p>Python-Http响应  </p>
+<ol>
+<li><p>获取响应状态码 r.status_code</p>
+</li>
+<li><p>获取响应文本   <code>r.content</code>  二进制数据包含换行     ctrl + &#x2F; 注释<br>          <code>r.text</code>     源代码</p>
+</li>
+<li><p>获得响应头    <code>r.headers</code><br>请求头    <code>r.request.headers</code></p>
+</li>
+<li><p>输出url       <code>r.url</code></p>
+</li>
+<li><p>获取cookie    <code>r.cookie</code></p>
+</li>
+</ol>
+<p>Python-Http 代理</p>
+<ol>
+<li>代理设置  http proxies<br>      https verify &#x3D; False</li>
+</ol>
+<p><code>proxise = &#123;&#39;http&#39;: &#39;http://192.168.1.110:8081&#39;&#125;</code></p>
+<p><code>r = requests.get(url, proxies=proxise, verify=False)  </code></p>
+<p>Python会话编程</p>
+<ol>
+<li><p>携带cookie的会话</p>
+</li>
+<li><p>Python-Session  访问某些页面时，会通过 Set-Cookie 设置 Cookie的值，以便于下次访问自动提交Cookie进行身份验证</p>
+<pre><code>  s=requests.Session()
+  r=s.get(url)
+</code></pre>
+</li>
+</ol>
+<p><code>import requests</code><br><code>url=&quot;https://www.baidu.com&quot;</code><br><code>s=requests.Session()</code><br><code>r=s.get(url)</code><br><code>print(r.cookies)</code><br><code>print(r.headers)</code></p>
+<hr>
+<p>Python 目录扫描工具   </p>
+<ol>
+<li><p>目录扫描原理    读取字典文件，拼接url  HTTP GET请求 URL 判断状态码，输出存在目录</p>
+</li>
+<li><p>字典文件读取    with open(“filename.txt”,”r”) as f:        r 是读模式来读取    f是重命名  with 结束语句块之后文件流会自动关闭<br>           f.readline()       每次读取一行<br>           f.readlines()      全部读取出来<br>           f.read()           读取对应字节</p>
+</li>
+</ol>
+<p> <code>f=open(&quot;text.txt&quot;,&quot;r&quot;)</code><br> <code>for line in f.readlines():</code><br> <code>print(line.strip())</code><br> <code>f.close()</code></p>
+<p>yudiyang</p>
+<p>aoteman</p>
+<p>aizengzhi</p>
+<p>中间会有空格，把后面的&#x2F;n会被当作空行处理，这是可以加上  line.strip()<br>得到结果</p>
+<p><code>f=open(&quot;text.txt&quot;,&quot;r&quot;)</code><br><code>line1 = f.readline()</code>       or     <code>line1 = f.read(3)</code>      or    <code>line1 = f.readlines()</code><br><code>print(line1)</code><br><code>f.close()</code></p>
+<p>yudiyang                             yud                           ‘yudiyang\n’, ‘aoteman\n’, ‘aizengzhi’</p>
+<p><code>with open(&quot;text.txt&quot;,&quot;r&quot;) as f:</code><br>    <code>for line in f.readlines():</code><br>        <code>print(line.strip())</code></p>
+<p>yudiyang<br>aoteman<br>aizengzhi         </p>
+<ol start="3">
+<li>工具编写</li>
+</ol>
 
                 
                 <p class="end">__END__</p>
@@ -78,7 +171,7 @@
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>章鱼海绵
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/2023/02/10/%E7%AB%A0%E9%B1%BC%E6%B5%B7%E7%BB%B5/" target="_blank">章鱼海绵</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/02/23/python%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99%E5%B0%8F%E8%AE%A1/" target="_blank">python脚本编写小计</a>
         <br>
         <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
         <br>
@@ -93,9 +186,8 @@
                 
                 <div class="article-prev-next">
                     
-                        <a href="/2023/02/22/%E5%88%9D%E6%8E%A2ssrfgopher%E5%8D%8F%E8%AE%AE/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/02/22/%E5%88%9D%E6%8E%A2ssrfgopher%E5%8D%8F%E8%AE%AE/" title="发布于 2023-02-22 10:15">初探ssrfgopher协议</a>
-                        <br>
                     
+                        <a href="/2023/02/22/%E5%88%9D%E6%8E%A2ssrfgopher%E5%8D%8F%E8%AE%AE/" class="next-prefix">» </a> 下一篇：    <a href="/2023/02/22/%E5%88%9D%E6%8E%A2ssrfgopher%E5%8D%8F%E8%AE%AE/" title="发布于 2023-02-22 10:15">初探ssrfgopher协议</a>
                     
                 </div>
             </div>
