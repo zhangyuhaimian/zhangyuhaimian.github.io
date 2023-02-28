@@ -144,7 +144,7 @@
 <ol>
 <li><p>目录扫描原理    读取字典文件，拼接url  HTTP GET请求 URL 判断状态码，输出存在目录</p>
 </li>
-<li><p>字典文件读取    with open(“filename.txt”,”r”) as f:        r 是读模式来读取    f是重命名  with 结束语句块之后文件流会自动关闭<br>           f.readline()       每次读取一行<br>           f.readlines()      全部读取出来<br>           f.read()           读取对应字节</p>
+<li><p>字典文件读取    with open(“filename.txt”,”r”) as f:        r 是读模式来读取    f是重命名  with 结束语句块之后文件流会自动关闭                                           默认情况下也是r<br>                                                      w是写入<br>                                                      写操作会自动写入内容，并且对之前的内容进行覆盖<br>                                                      a是追加不覆盖<br>           f.readline()       每次读取一行<br>           f.readlines()      全部读取出来<br>           f.read()           读取对应字节</p>
 </li>
 </ol>
 <p> <code>f=open(&quot;text.txt&quot;,&quot;r&quot;)</code><br> <code>for line in f.readlines():</code><br> <code>print(line.strip())</code><br> <code>f.close()</code></p>
@@ -156,8 +156,68 @@
 <p>yudiyang                             yud                           ‘yudiyang\n’, ‘aoteman\n’, ‘aizengzhi’</p>
 <p><code>with open(&quot;text.txt&quot;,&quot;r&quot;) as f:</code><br>    <code>for line in f.readlines():</code><br>        <code>print(line.strip())</code></p>
 <p>yudiyang<br>aoteman<br>aizengzhi         </p>
+<p><code>f1 = open(&quot;text.txt&quot;,&quot;w&quot;)</code>   写入会覆盖<br><code>f1.write(&#39;zhangyuhaimian&#39;)</code><br><code>f1.close()</code></p>
+<p><code>f2 = open(&quot;text.txt&quot;,&quot;r&quot;)</code><br><code>for line in f2.readlines():</code><br>    <code>print(line.strip())</code><br><code>f2.close()</code></p>
+<p>zhangyuhaimian</p>
 <ol start="3">
-<li>工具编写</li>
+<li>工具编写<br><code>import requests</code></li>
+</ol>
+<p><code>url = &quot;http://127.0.0.1/&quot;</code><br><code>with open(&quot;text.txt&quot;,&quot;r&quot;) as f</code><br>    <code>for line in f.readlines()</code><br>        <code>line = line.strip()</code><br>        <code>r = requests.get(url+line)</code><br>        <code>if r.status_code == 200</code><br>            <code>print(&quot;url:&quot;+r.turl+&quot;exist&quot;)</code></p>
+<p><code>import sys</code></p>
+<p><code>print(sys.argv[0])</code><br><code>print(sys.argv[1])</code></p>
+<p>C:&#x2F;Users&#x2F;ao’te’man&#x2F;PycharmProjects&#x2F;untitled&#x2F;SCAN.py  绝对路径<br>123456                                               参数   </p>
+<p>感觉实际上就是一个数组，空格分割</p>
+<p>自定义User-Agent<br><code>import requests</code></p>
+<p><code>url = &quot;https://www.baidu.com&quot;</code><br><code>headers=&#123;&#39;User-Agent&#39;:&#39;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko</code><br><code>Chrome/99.0.4844.51 Safari/537.36&#39;&#125;</code><br><code>r = requests.get(url,headers=headers)</code><br><code>print(r.request.headers)</code></p>
+<p>IIS Put漏洞探测工具</p>
+<ol>
+<li><p>工具原理    IIS中扩展工具WebDAV支持HTTP方法，也提供了一些和其他功能强大的方法 （Move），使得开启WebDAV可以直接上传任意文件</p>
+<pre><code>       使用HTTP options方法可以探测出服务器支持的HTTP方法
+</code></pre>
+</li>
+<li><p>工具编写   确定目标服务器<br>     发送OPTIONS请求</p>
+</li>
+</ol>
+<p><code>import requests</code></p>
+<p><code>url = &quot;http://192.168.1.101:81/2.php&quot;</code><br><code>r = requests.options(url)</code><br><code>print(r.headers)</code><br><code>print(r.headers[&quot;Allow&quot;])</code></p>
+<pre><code>        确定结果中是否含有MOVE PUT
+</code></pre>
+<p><code>import requests</code></p>
+<p><code>url = &quot;http://192.168.1.101:81/2.php&quot;</code><br><code>r = requests.options(url)</code><br><code>print(r.headers)</code><br><code>print(r.headers[&quot;Allow&quot;])</code><br><code>result = r.headers[&#39;Public&#39;]</code><br><code>print(type(result))</code><br><code>if requests.find(&quot;PUT&quot;) and result.find(&quot;MOVE&quot;):</code><br>    <code>print(&quot;exit iis put vul&quot;)</code><br><code>else:</code><br>    <code>print(&quot;there is no iis put vul&quot;)</code></p>
+<p>Python 获取HTTP服务器信息   </p>
+<p>1.获取中间件信息</p>
+<p>2.获取脚本信息</p>
+<p>Python 漏洞检测工具</p>
+<ol>
+<li>漏洞管理     漏洞被披露之后，根据漏洞原理写出对应的poc代码，用来验证漏洞是否存在<br>       写poc代码首先要了解漏洞原理，以ms15-034为例</li>
+</ol>
+<p><code>import requests</code></p>
+<p><code>url = &quot;ip&quot;</code></p>
+<p><code>r = requests.get(url)</code><br><code>remote_server = r.headers[&#39;Server&#39;]</code></p>
+<p><code>if remote_server.find(&quot;IIS/7.5&quot;) or remote_find(&quot;IIS/8.0&quot;):</code><br>    <code>payload = &#123;&#39;Host&#39;:&#39;stuff&#39;,&#39;Range&#39;:&#39;byte=0-18446744073709551615&#39;&#125;</code><br>    <code>r1 = requests.get(url,headers=payload)</code><br>    <code>print(r1.content)</code><br>    <code>if str(r1.content).find(&quot;Requested Range Not Satisfiale&quot;):</code><br>        <code>print(url+&quot;exist vuln ms15-034&quot;)</code><br>    <code>else:</code><br>        <code>print(url+&quot;not exist&quot;)</code><br><code>else:     </code>print(“do not exist”)&#96;</p>
+<ol start="2">
+<li><p>代码编写          </p>
+</li>
+<li><p>验证检测效果</p>
+</li>
+</ol>
+<p>站点地图构建</p>
+<ol>
+<li><p>测试Web App首要任务    获取站点完整目录与文件</p>
+</li>
+<li><p>技术种类    1.通过基于字典的目录文件扫描 确定   使用python requests可以轻松完成任务<br>      2.通过基于网络爬虫的技术确定        使用python scrapy完成，requests也可以但是复杂</p>
+</li>
+<li><p>burpsuite 构建站点地图<br>action spider爬虫爬取</p>
+</li>
+</ol>
+<p>Python Scrapy 介绍与安装</p>
+<ol>
+<li><p>第三方库Scrapy        Scrapy是一个用于抓取Web站点和提取结构化数据的应用程序框架，可用于广泛的用于应用程序，如数 据挖掘，信息处理或历史存档<br>               尽管Scrapy最初是为Web抓取而设计的，但是他也可以使用api（如Amazon Associates web Services）或通用web爬虫程序来提取数据</p>
+</li>
+<li><p>Windows下安装        兼容问题 twisted</p>
+</li>
+<li><p>Linux下安装          建议使用linux安装  sudo apt-get install python3 python3-dev<br>                                   sudo apt install python3-pip<br>                                   pip3 install scrapy<br>                                   测试安装是否成功  import scrapy</p>
+</li>
 </ol>
 
                 
