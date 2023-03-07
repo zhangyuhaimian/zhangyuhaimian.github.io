@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            标签
+            php伪协议之filter
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/page.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">标签</h1>
+                <h1 class="header-subtitle">php伪协议之filter</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-03-07
+                        </span>
+                        
+                            <span id="/2023/03/07/php伪协议之filter/" class="leancloud_visitors" data-flag-title="php伪协议之filter">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/07/php伪协议之filter/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">php伪协议</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">php伪协议</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,22 +69,90 @@
 </div>
 <div id="container">
     
-        <!-- 独立页面 -->
-        
-            <div class="tags">
-                <div class="tags-title">
-                    目前共计 4 个标签
-                </div>
-                <div class="tags-content">
-                    <div class="tags-light">
-                        <a href="/tags/burp%E4%BD%BF%E7%94%A8/" style="font-size: 12px; color: #ccc">burp使用</a> <a href="/tags/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" style="font-size: 12px; color: #ccc">php伪协议</a> <a href="/tags/ssrf/" style="font-size: 12px; color: #ccc">ssrf</a> <a href="/tags/%E6%9D%82%E8%AE%B0/" style="font-size: 12px; color: #ccc">杂记</a>
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>php:&#x2F;&#x2F;filter 是php中独有的一个协议，可以作为一个中间流来处理其他流，也可以进行任意文件的读取，具有resource（要过滤的数据流）、read（读链筛选的数据流）、write（写链筛选的数据流）等等参数。</p>
+<p>php:&#x2F;&#x2F;filter 是一种元封装器， 设计用于数据流打开时的筛选过滤应用。 这对于一体式（all-in-one）的文件函数非常有用，类似 <code>readfile()、 file() 和 file_get_contents()</code>， 在数据流内容读取之前没有机会应用其他过滤器。<br>php:&#x2F;&#x2F;filter 目标使用以下的参数作为它路径的一部分。 复合过滤链能够在一个路径上指定。详细使用这些参数可以参考具体范例。</p>
+<pre><code>                    描述                                     php://filter 参数
+</code></pre>
+<p>名称	<br>resource&#x3D;         &lt;要过滤的数据流&gt;	               这个参数是必须的。它指定了你要筛选过滤的数据流。<br>read&#x3D;             &lt;读链的筛选列表&gt;	               该参数可选。可以设定一个或多个过滤器名称，以管道符（<br>write&#x3D;            &lt;写链的筛选列表&gt;	               该参数可选。可以设定一个或多个过滤器名称，以管道符（<br>&lt;；两个链的筛选列表&gt;	任何没有以 read&#x3D; 或 write&#x3D; 作前缀 的筛选器列表会视情况应用于读或写链。<br>————————————————</p>
+<p>php:&#x2F;&#x2F;filter常用于：<br>1、利用base64获得源码<br>2、通过读写编码实行绕过操作<br>构造传入page的参数：</p>
+<p>php:&#x2F;&#x2F;filter伪协议的一般使用方法为：</p>
+<p><code>php://filter/过滤器|过滤器/resource=要过滤的数据流</code></p>
+<p>过滤器可以设置多个，使用管道符 |分隔，按照从左到右的方式依次使用相应的过滤器进行过滤处理，例如：</p>
+<p><code>echo file_get_contents(&quot;php://filter/read=convert.base64-encode|convert.base64-encode/resource=data://text/plain,&lt;?php phpinfo();?&gt;&quot;);</code></p>
+<p>上述代码对 <?php phpinfo();?> 进行了两次base64编码处理。</p>
+<p>read可以省略，会自动根据函数作用来决定read还是write。</p>
+<p>我们使用了 data伪协议 将 file_get_contents() 想要读取的内容变成了data伪协议输入的内容</p>
+<p>php:&#x2F;&#x2F;filter过滤器分类<br>根据 php:&#x2F;&#x2F;filter官方说明 ，php:&#x2F;&#x2F;filter协议的过滤器 大致分为以下四类：</p>
+<p>1、字符串过滤器</p>
+<p>2、转换过滤器</p>
+<p>3、压缩过滤器</p>
+<p>4、加密过滤器</p>
+<p>filter字符串过滤器<br>每个过滤器都正如其名字暗示的那样工作并与内置的 PHP 字符串函数的行为相对应。</p>
+<p>字符串过滤器以 string 开头，常见的过滤器有 rot13、toupper、tolower、strip_tags等</p>
+<p><code>string.rot13</code><br>使用该过滤器也就是用 str_rot13() 函数处理所有的流数据。</p>
+<p><code>echo file_get_contents(&quot;php://filter/read=string.rot13/resource=data://text/plain,abcdefg&quot;);</code></p>
+<p>&#x2F;&#x2F;输出： nopqrst</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/03/07/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bfilter/" target="_blank">php伪协议之filter</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/categories/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">php伪协议</a>
+                        
                     </div>
-                    <div class="tags-dark">
-                        <a href="/tags/burp%E4%BD%BF%E7%94%A8/" style="font-size: 12px; color: #666">burp使用</a> <a href="/tags/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" style="font-size: 12px; color: #666">php伪协议</a> <a href="/tags/ssrf/" style="font-size: 12px; color: #666">ssrf</a> <a href="/tags/%E6%9D%82%E8%AE%B0/" style="font-size: 12px; color: #666">杂记</a>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tags/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">php伪协议</a>
+                        
                     </div>
+                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/2023/03/04/burp%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%BB%95%E8%BF%87%E7%88%86%E7%A0%B4/" class="next-prefix">» </a> 下一篇：    <a href="/2023/03/04/burp%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%BB%95%E8%BF%87%E7%88%86%E7%A0%B4/" title="发布于 2023-03-04 10:18">burp宏定义绕过爆破</a>
+                    
                 </div>
             </div>
+            
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -93,7 +182,7 @@
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
-                        <li class=" active "><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
                         <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
