@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            php伪协议之data
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">php伪协议之data</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-03-08
+                        </span>
+                        
+                            <span id="/2023/03/08/php伪协议之data/" class="leancloud_visitors" data-flag-title="php伪协议之data">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/08/php伪协议之data/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">php伪协议</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">php伪协议</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,97 +69,85 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>data:&#x2F;&#x2F;<br>数据流封装器，以传递相应格式的数据。可以让用户来控制输入流，当它与包含函数结合时，用户输入的data:&#x2F;&#x2F;流会被当作php文件执行。</p>
+<ol>
+<li><p><code>data://text/plain</code>,<br><code>http://127.0.0.1/include.php?file=data://text/plain,&lt;?php%20phpinfo();?&gt;</code></p>
+</li>
+<li><p><code>data://text/plain;base64</code>,<br><code>http://127.0.0.1/include.php?file=data://text/plain;base64,PD9waHAgcGhwaW5mbygpOz8%2b</code></p>
+</li>
+<li><p>打印 data:&#x2F;&#x2F; 的内容</p>
+</li>
+</ol>
+<p><code>&lt;?php</code><br><code>// 打印 &quot;SSBsb3ZlIFBIUAo=&quot;</code><br><code>echo  file_get_contents ( &#39;data://text/plain;base64,SSBsb3ZlIFBIUAo=&#39; );</code><br><code>?&gt;</code><br>SSBsb3ZlIFBIUAo&#x3D; 为  SSBsb3ZlIFBIUAo&#x3D; 编码后内容</p>
+<ol start="2">
+<li>获取媒体类型</li>
+</ol>
+<p><code>&lt;?php</code><br><code>$fp    =  fopen ( &#39;data://text/plain;base64,&#39; ,  &#39;r&#39; );</code><br><code>$meta  =  stream_get_meta_data ( $fp );</code></p>
+<p><code>// 打印 &quot;text/plain&quot;</code><br><code>echo  $meta [ &#39;mediatype&#39; ];</code><br><code>?&gt;</code></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bdata/" target="_blank">php伪协议之data</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 7 篇日志，继续加油！
+                            <a href="/categories/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">php伪协议</a>
                         
-                    </span>
-                    
-                    
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
                         
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/"><span>php伪协议</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-08</span>
-                                </div>
-                            </div>
-                        </div>
+                            <a href="/tags/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">php伪协议</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bdata/"><span>php伪协议之data</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-08</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" title="发布于 2023-03-08 09:41">php伪协议</a>
+                        <br>
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/07/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bfilter/"><span>php伪协议之filter</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-07</span>
-                                </div>
-                            </div>
-                        </div>
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/04/burp%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%BB%95%E8%BF%87%E7%88%86%E7%A0%B4/"><span>burp宏定义绕过爆破</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-04</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/23/python%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99%E5%B0%8F%E8%AE%A1/"><span>python脚本编写小计</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-23</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/22/%E5%88%9D%E6%8E%A2ssrfgopher%E5%8D%8F%E8%AE%AE/"><span>初探ssrfgopher协议</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-22</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/10/%E7%AB%A0%E9%B1%BC%E6%B5%B7%E7%BB%B5/"><span>章鱼海绵</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-10</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/03/07/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bfilter/" class="next-prefix">» </a> 下一篇：    <a href="/2023/03/07/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bfilter/" title="发布于 2023-03-07 08:49">php伪协议之filter</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -170,7 +179,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     

@@ -78,7 +78,12 @@
 <pre><code>                    描述                                     php://filter 参数
 </code></pre>
 <p>名称	<br>resource&#x3D;         &lt;要过滤的数据流&gt;	               这个参数是必须的。它指定了你要筛选过滤的数据流。<br>read&#x3D;             &lt;读链的筛选列表&gt;	               该参数可选。可以设定一个或多个过滤器名称，以管道符（<br>write&#x3D;            &lt;写链的筛选列表&gt;	               该参数可选。可以设定一个或多个过滤器名称，以管道符（<br>&lt;；两个链的筛选列表&gt;	任何没有以 read&#x3D; 或 write&#x3D; 作前缀 的筛选器列表会视情况应用于读或写链。<br>————————————————</p>
-<p>php:&#x2F;&#x2F;filter常用于：<br>1、利用base64获得源码<br>2、通过读写编码实行绕过操作<br>构造传入page的参数：</p>
+<p>php:&#x2F;&#x2F;filter常用于：</p>
+<ol>
+<li>利用base64获得源码</li>
+<li>通过读写编码实行绕过操作</li>
+<li>构造传入page的参数：</li>
+</ol>
 <p>php:&#x2F;&#x2F;filter伪协议的一般使用方法为：</p>
 <p><code>php://filter/过滤器|过滤器/resource=要过滤的数据流</code></p>
 <p>过滤器可以设置多个，使用管道符 |分隔，按照从左到右的方式依次使用相应的过滤器进行过滤处理，例如：</p>
@@ -92,7 +97,17 @@
 <p>3、压缩过滤器</p>
 <p>4、加密过滤器</p>
 <p>filter字符串过滤器<br>每个过滤器都正如其名字暗示的那样工作并与内置的 PHP 字符串函数的行为相对应。</p>
-<p>字符串过滤器以 string 开头，常见的过滤器有 rot13、toupper、tolower、strip_tags等</p>
+<p>字符串过滤器以 string 开头，常见的过滤器有 rot13、toupper、tolower、strip_tags等<br>string.rot13</p>
+<p><code>一种字符处理方式，字符右移十三位。</code></p>
+<p><code>string.toupper</code></p>
+<p><code>将所有字符转换为大写。</code></p>
+<p><code>string.tolower</code></p>
+<p><code>将所有字符转换为小写。</code></p>
+<p><code>string.strip_tags</code><br><code>这个过滤器就比较有意思，用来处理掉读入的所有标签，例如XML的等等。在绕过死亡exit大有用处。</code></p>
+<p><code>对数据流进行编码，通常用来读取文件源码。</code></p>
+<p><code>convert.base64-encode &amp; convert.base64-decode</code></p>
+<p><code>base64加密解密</code></p>
+<p><code>convert.quoted-printable-encode &amp; convert.quoted-printable-decode</code></p>
 <p><code>string.rot13</code><br>使用该过滤器也就是用 str_rot13() 函数处理所有的流数据。</p>
 <p><code>echo file_get_contents(&quot;php://filter/read=string.rot13/resource=data://text/plain,abcdefg&quot;);</code></p>
 <p>&#x2F;&#x2F;输出： nopqrst</p>
@@ -136,6 +151,9 @@
                     </div>
                 
                 <div class="article-prev-next">
+                    
+                        <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bdata/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bdata/" title="发布于 2023-03-08 09:15">php伪协议之data</a>
+                        <br>
                     
                     
                         <a href="/2023/03/04/burp%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%BB%95%E8%BF%87%E7%88%86%E7%A0%B4/" class="next-prefix">» </a> 下一篇：    <a href="/2023/03/04/burp%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%BB%95%E8%BF%87%E7%88%86%E7%A0%B4/" title="发布于 2023-03-04 10:18">burp宏定义绕过爆破</a>
