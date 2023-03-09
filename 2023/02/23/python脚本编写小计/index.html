@@ -73,8 +73,7 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <p>Python Http请求 <a href="#Python http qingqiu">Python Http请求</a></p>
-<p>http默认监听80 https默认监听443<br>请求方法<br>http1.0支持     </p>
+                <p>http默认监听80 https默认监听443<br>请求方法<br>http1.0支持  </p>
 <ol>
 <li>GET           </li>
 <li>POST</li>
@@ -108,7 +107,7 @@
 <li>5xx  服务端错误</li>
 </ol>
 <p>查看HTTP burp f12（network）</p>
-<h2 id="Python-Http请求"><a href="#Python-Http请求" class="headerlink" title="Python Http请求"></a><a id="Python http qingqiu>Python">Python Http请求</a></h2><p>Python Http请求</p>
+<h2 id="Python-Http请求"><a href="#Python-Http请求" class="headerlink" title="Python Http请求"></a><b id="Pythonhttpqingqiu">Python Http请求</b></h2><p>Python Http请求</p>
 <ol>
 <li><p>GET请求  不带参数   <code>requests.get(url)</code><br>     带参数     <code>requests.get(url=url,params=(key1=value1,key2=value2))</code><br>                <code>r.url 获取请求url</code></p>
 </li>
@@ -118,7 +117,7 @@
 </li>
 </ol>
 <p><code>import requests</code><br><code>url = &quot;https://www.baidu.com&quot;</code><br><code>payload = &#123;&#39;User-Agent&#39;:&#39;zhangyuhaimian&#39;&#125;</code><br><code>data = &#123;&#39;wd&#39;:&#39;123465&#39;&#125;</code><br><code>r = requests.get(url)</code><br><code>p = requests.get(url,headers=payload)</code><br><code>print(p.url)</code><br><code>print(p.status_code)</code><br><code>print(p.request.headers)</code></p>
-<p>Python-Http响应  </p>
+<h2 id="Python-http-响应"><a href="#Python-http-响应" class="headerlink" title="Python http 响应"></a><c id="Python http 响应">Python http 响应</c></h2><p>Python-Http响应  </p>
 <ol>
 <li><p>获取响应状态码 r.status_code</p>
 </li>
@@ -131,13 +130,13 @@
 <li><p>获取cookie    <code>r.cookie</code></p>
 </li>
 </ol>
-<p>Python-Http 代理</p>
+<h2 id="Python-Http-代理"><a href="#Python-Http-代理" class="headerlink" title="Python-Http 代理"></a><d id="Python-Http 代理">Python-Http 代理</d></h2><p>Python-Http 代理</p>
 <ol>
 <li>代理设置  http proxies<br>      https verify &#x3D; False</li>
 </ol>
 <p><code>proxise = &#123;&#39;http&#39;: &#39;http://192.168.1.110:8081&#39;&#125;</code></p>
 <p><code>r = requests.get(url, proxies=proxise, verify=False)  </code></p>
-<p>Python会话编程</p>
+<h2 id="Python会话编程"><a href="#Python会话编程" class="headerlink" title="Python会话编程"></a><e id="Python会话编程">Python会话编程</e></h2><p>Python会话编程</p>
 <ol>
 <li><p>携带cookie的会话</p>
 </li>
@@ -149,7 +148,7 @@
 </ol>
 <p><code>import requests</code><br><code>url=&quot;https://www.baidu.com&quot;</code><br><code>s=requests.Session()</code><br><code>r=s.get(url)</code><br><code>print(r.cookies)</code><br><code>print(r.headers)</code></p>
 <hr>
-<p>Python 目录扫描工具   </p>
+<h2 id="Python-目录扫描工具"><a href="#Python-目录扫描工具" class="headerlink" title="Python 目录扫描工具"></a><f id="Python 目录扫描工具">Python 目录扫描工具</f></h2><p>Python 目录扫描工具   </p>
 <ol>
 <li><p>目录扫描原理    读取字典文件，拼接url  HTTP GET请求 URL 判断状态码，输出存在目录</p>
 </li>
@@ -178,7 +177,7 @@
 <p>感觉实际上就是一个数组，空格分割</p>
 <p>自定义User-Agent<br><code>import requests</code></p>
 <p><code>url = &quot;https://www.baidu.com&quot;</code><br><code>headers=&#123;&#39;User-Agent&#39;:&#39;Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko</code><br><code>Chrome/99.0.4844.51 Safari/537.36&#39;&#125;</code><br><code>r = requests.get(url,headers=headers)</code><br><code>print(r.request.headers)</code></p>
-<p>IIS Put漏洞探测工具</p>
+<h2 id="IIS-Put漏洞探测工具"><a href="#IIS-Put漏洞探测工具" class="headerlink" title="IIS Put漏洞探测工具"></a><g id="IIS Put漏洞探测工具">IIS Put漏洞探测工具</g></h2><p>IIS Put漏洞探测工具</p>
 <ol>
 <li><p>工具原理    IIS中扩展工具WebDAV支持HTTP方法，也提供了一些和其他功能强大的方法 （Move），使得开启WebDAV可以直接上传任意文件</p>
 <pre><code>       使用HTTP options方法可以探测出服务器支持的HTTP方法
@@ -196,7 +195,7 @@
 <p>Python 获取HTTP服务器信息   </p>
 <p>1.获取中间件信息</p>
 <p>2.获取脚本信息</p>
-<p>Python 漏洞检测工具</p>
+<h2 id="Python-漏洞检测工具"><a href="#Python-漏洞检测工具" class="headerlink" title="Python 漏洞检测工具"></a><h id="Python 漏洞检测工具">Python 漏洞检测工具</h></h2><p>Python 漏洞检测工具</p>
 <ol>
 <li>漏洞管理     漏洞被披露之后，根据漏洞原理写出对应的poc代码，用来验证漏洞是否存在<br>       写poc代码首先要了解漏洞原理，以ms15-034为例</li>
 </ol>
