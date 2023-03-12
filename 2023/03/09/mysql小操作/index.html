@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            php伪协议
+            mysql小操作
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -36,29 +36,29 @@
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">php伪协议</h1>
+                <h1 class="header-subtitle">mysql小操作</h1>
                 <div class="header-subinfo">
                     <p class="article-info-text">
                         <span>
-                            <i class="iconfont icon-time"></i> 发表时间：2023-03-08
+                            <i class="iconfont icon-time"></i> 发表时间：2023-03-09
                         </span>
                         
-                            <span id="/2023/03/08/php伪协议/" class="leancloud_visitors" data-flag-title="php伪协议">
+                            <span id="/2023/03/09/mysql小操作/" class="leancloud_visitors" data-flag-title="mysql小操作">
                                 <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
                             </span>
                         
                         <span>
-                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/08/php伪协议/"></span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/09/mysql小操作/"></span>
                         </span>  
                     </p>
                     
                         
-                            <span class="category-color">php伪协议</span>
+                            <span class="category-color">mysql</span>
                         
                     
                     
                         
-                            <span class="tag-color">php伪协议</span>
+                            <span class="tag-color">mysql</span>
                         
                     
                 </div>
@@ -73,37 +73,15 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <h2 id="file"><a href="#file" class="headerlink" title="file"></a><a id="file">file</a></h2><p>file:&#x2F;&#x2F;</p>
-<p>条件：</p>
-<ul>
-<li>allow_url_fopen:off&#x2F;on</li>
-<li>allow_url_include :off&#x2F;on</li>
-</ul>
-<p>作用：<br>用于访问本地文件系统，在CTF中通常用来读取本地文件的且不受allow_url_fopen与allow_url_include的影响。<br>include()&#x2F;require()&#x2F;include_once()&#x2F;require_once()参数可控的情况下，如导入为非.php文件，则仍按照php语法进行解析，这是include()函数所决定的。</p>
-<p>说明：<br>file:&#x2F;&#x2F; — 访问本地文件系统<br>说明文件系统 是 PHP 使用的默认封装协议，展现了本地文件系统。 当指定了一个相对路径(不以:&#x2F;&#x2F;indows 盘符开头的路径)提供的路径将基于当前的工作目录。在很多情况下是脚本所在的目录，除非被修改了。 使用 CLI 的时候，目录默认是脚本被调用时所在的目录。在某些函数里，例如 fopen() 和 file_get_contents() ， include_path 会可选地搜索，也作为相对的路径。<br>有时会出现file:&#x2F;&#x2F;&#x2F;****** 的情况这个原因是访问了文件的根目录</p>
-<p>用法：</p>
-<ol>
-<li>&#x2F;path&#x2F;to&#x2F;file.ext</li>
-<li>relative&#x2F;path&#x2F;to&#x2F;file.ext</li>
-<li>fileInCwd.ext</li>
-<li>C:&#x2F;path&#x2F;to&#x2F;winfile.ext</li>
-<li>C:pathtowinfile.ext</li>
-<li>smbserversharepathtowinfile.ext</li>
-<li>file:&#x2F;&#x2F;&#x2F;path&#x2F;to&#x2F;file.ext</li>
-</ol>
-<p>实例<br><code>&lt;?php</code><br>   <code>$file = $_GET[&#39;file&#39;];</code><br>   <code>include($file);</code><br>   <code>……</code><br><code>?&gt;</code></p>
-<p>这里只能用绝对路径 原来访问相对路径直接访问就行了</p>
-<h2 id="phar"><a href="#phar" class="headerlink" title="phar"></a><b id="phar">phar</b></h2><p>phar</p>
-<p>phar:&#x2F;&#x2F;<br>phar:&#x2F;&#x2F;协议与zip:&#x2F;&#x2F;类似，同样可以访问zip格式压缩包内容，在这里只给出一个示例</p>
-<p><a target="_blank" rel="noopener" href="http://127.0.0.1/include.php?file=phar://E:/phpStudy/PHPTutorial/WWW/phpinfo.zip/phpinfo.txt">http://127.0.0.1/include.php?file=phar://E:/phpStudy/PHPTutorial/WWW/phpinfo.zip/phpinfo.txt</a></p>
-<h2 id="phar-1"><a href="#phar-1" class="headerlink" title="phar"></a><c id="phar">phar</c></h2><p>zip</p>
-<p>zip:&#x2F;&#x2F;协议在双off的情况下也可以正常使用；</p>
-<p>allow_url_fopen ：off&#x2F;on</p>
-<p>allow_url_include：off&#x2F;on</p>
-<p>zip:&#x2F;&#x2F;属于压缩流，可以访问压缩文件中的子文件，更重要的是不需要指定后缀名。<br>示例格式：zip:&#x2F;&#x2F;archive.zip#dir&#x2F;file.txt<br>                  zip:&#x2F;&#x2F; [压缩文件绝对路径]#[压缩文件内的子文件名&#x2F;一句话木马]<br>                  ?file&#x3D;zip:&#x2F;&#x2F;[压缩文件绝对路径]#[压缩文件内的子文件名]<br>                  %23 井号</p>
-<pre><code>              http://192.168.19.130:8443/security/Upload/fileinc.php?filename=zip:///opt/lampp/htdocs/security/temp/shell.zip%23shell.txt
-</code></pre>
-<p>先将要执行的PHP代码写好并保存为txt文件，将txt进行zip压缩,如果可以上传zip文件便直接上传，若不能便将zip后缀名改为jpg后在上传，其他几种压缩格式也可以这样操作。由于#在get请求中会将后面的参数忽略所以使用get请求时候应进行url编码为%23 且上传文件时要使用绝对路径。</p>
+                <h2 id="预编译动态使用sql"><a href="#预编译动态使用sql" class="headerlink" title="预编译动态使用sql"></a><a href="预编译动态使用sql">预编译动态使用sql</a></h2><p>mysql存储过程可以使用预编译语句的方式来使用动态SQL，主要就是将SQL字符串预编译为statement，然后执行次语句：</p>
+<p>SET @sql &#x3D; sql</p>
+<p>PREPARE stmt_name FROM @sql;</p>
+<p>EXECUTE stmt_name;</p>
+<p>{DEALLOCATE | DROP} PREPARE stmt_name;</p>
+<p>SET @sql：设置SQL字符串变量，一般为用户变量，即前面带有@的变量<br>PREPARE stmt_name FROM @sql：预编译SQL字符串为语句<br>EXECUTE stmt_name：执行预编译后的语句<br>DEALLOCATE PREPARE stmt_name：释放预编译后的语句，释放资源，也可以使用DROP</p>
+<h2 id="反引号"><a href="#反引号" class="headerlink" title="反引号"></a><b herf="反引号">反引号</b></h2><p>它是为了区分MYSQL的保留字与普通字符而引入的符号。<br>举个例子：SELECT select FROM test WHERE select&#x3D;’字段值’<br>在test表中，有个select字段，如果不用反引号，MYSQL将把select视为保留字而导致出错，所以，有MYSQL保留字作为字段的，必须加上反引号来区分。</p>
+<h2 id="报错注入函数"><a href="#报错注入函数" class="headerlink" title="报错注入函数"></a><c herf="报错注入函数">报错注入函数</c></h2><p>常用的报错功能函数包括extractvalue()、updatexml)、floor()、exp()等<br>报错原理:<br>xml文档中查找字符位置是用&#x2F;xxx&#x2F;xxx&#x2F;xxx&#x2F;…这种格式，如果写入其他格式就会报错,并且会返回写入的非法格式内容，错误信息如:XPATH syntax error:’xxxxxxxx’。<br>该函数最大显示长度为32，超过长度可以配合substr、limit等函数来显示</p>
+<p><code>and extractvalue(null,concat(0x7e,(代码操作),0x7e))</code></p>
 
                 
                 <p class="end">__END__</p>
@@ -116,7 +94,7 @@
     <div class="suffix-box-right">
         <span class="suffix-box-title">文章作者：</span>章鱼海绵
         <br>
-        <span class="suffix-box-title">文章出处：</span><a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" target="_blank">php伪协议</a>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/03/09/mysql%E5%B0%8F%E6%93%8D%E4%BD%9C/" target="_blank">mysql小操作</a>
         <br>
         <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
         <br>
@@ -131,7 +109,7 @@
                     <div class="category">
                         分类：
                         
-                            <a href="/categories/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">php伪协议</a>
+                            <a href="/categories/mysql/">mysql</a>
                         
                     </div>
                 
@@ -139,17 +117,17 @@
                     <div class="tag">
                         标签：
                         
-                            <a href="/tags/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">php伪协议</a>
+                            <a href="/tags/mysql/">mysql</a>
                         
                     </div>
                 
                 <div class="article-prev-next">
                     
-                        <a href="/2023/03/09/mysql%E5%B0%8F%E6%93%8D%E4%BD%9C/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/03/09/mysql%E5%B0%8F%E6%93%8D%E4%BD%9C/" title="发布于 2023-03-09 08:46">mysql小操作</a>
+                        <a href="/2023/03/12/linux%E5%B0%8F%E6%8A%80%E5%B7%A7/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/03/12/linux%E5%B0%8F%E6%8A%80%E5%B7%A7/" title="发布于 2023-03-12 08:04">linux小技巧</a>
                         <br>
                     
                     
-                        <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bdata/" class="next-prefix">» </a> 下一篇：    <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bdata/" title="发布于 2023-03-08 09:15">php伪协议之data</a>
+                        <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" class="next-prefix">» </a> 下一篇：    <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" title="发布于 2023-03-08 09:41">php伪协议</a>
                     
                 </div>
             </div>
