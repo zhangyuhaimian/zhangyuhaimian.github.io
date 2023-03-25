@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            标签
+            XSS杂记
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/page.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">标签</h1>
+                <h1 class="header-subtitle">XSS杂记</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-03-25
+                        </span>
+                        
+                            <span id="/2023/03/25/XSS杂记/" class="leancloud_visitors" data-flag-title="XSS杂记">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/25/XSS杂记/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">XSS</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">XSS</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,22 +69,89 @@
 </div>
 <div id="container">
     
-        <!-- 独立页面 -->
-        
-            <div class="tags">
-                <div class="tags-title">
-                    目前共计 8 个标签
-                </div>
-                <div class="tags-content">
-                    <div class="tags-light">
-                        <a href="/tags/XSS/" style="font-size: 12px; color: #ccc">XSS</a> <a href="/tags/burp%E4%BD%BF%E7%94%A8/" style="font-size: 12px; color: #ccc">burp使用</a> <a href="/tags/ctf/" style="font-size: 12px; color: #ccc">ctf</a> <a href="/tags/linux/" style="font-size: 12px; color: #ccc">linux</a> <a href="/tags/mysql/" style="font-size: 12px; color: #ccc">mysql</a> <a href="/tags/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" style="font-size: 25px; color: #111">php伪协议</a> <a href="/tags/ssrf/" style="font-size: 12px; color: #ccc">ssrf</a> <a href="/tags/%E6%9D%82%E8%AE%B0/" style="font-size: 18.5px; color: #6f6f6f">杂记</a>
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>Cross-Site Scripting 简称为“CSS”，为避免与前端叠成样式表的缩写”CSS”冲突，故又称XSS。一般XSS可以分为如下几种常见类型：<br>    1.反射性XSS;<br>    2.存储型XSS;<br>    3.DOM型XSS;</p>
+<p>XSS漏洞一直被评估为web漏洞中危害较大的漏洞，在OWASP TOP10的排名中一直属于前三的江湖地位。<br>XSS是一种发生在前端浏览器端的漏洞，所以其危害的对象也是前端用户。<br>形成XSS漏洞的主要原因是程序对输入和输出没有做合适的处理，导致“精心构造”的字符输出在前端时被浏览器当作有效代码解析执行从而产生危害。<br>因此在XSS漏洞的防范上，一般会采用“对输入进行过滤”和“输出进行转义”的方式进行处理:<br>  输入过滤：对输入进行过滤，不允许可能导致XSS攻击的字符输入;<br>  输出转义：根据输出点的位置对输出到前端的内容进行适当转义;</p>
+<ol>
+<li><p>反射型xss （GET）<br>反射型xss最简单的就是 利用<code>&lt;script&gt;alert()&lt;/script&gt;</code> 来测试 , 但是有时候回限制输入的长度可能造成没法输入完整的代码，这时候可以到前端是否看到限制长度，如下<code>maxlength=&quot;20&quot;</code>限制了长度 可以对限制进行修改<br><code>&lt;input class=&quot;xssr_in&quot; type=&quot;text&quot; maxlength=&quot;20&quot; name=&quot;message&quot;&gt;</code></p>
+</li>
+<li><p>反射型xss （POST）<br>可以先登陆然后 一样很简单输入 <code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code> 可以获取cookie</p>
+</li>
+<li><p>存储型xss<br>就是存起来了你再次访问就会触发xss</p>
+</li>
+<li><p>DOM型xss<br>DOM简单来说DOM文档就是一份XML文档，当有了DOM标准之后，DOM便将前端html代码化为一个树状结构，方便程序和脚本能够轻松的动态访问和更新这个树状结构的内容、结构以及样式，且不需要经过服务端，所以DOM型xss在js前端自己就可以完成数据的输入输出，不与服务器产生交互，这样来说DOM型xss也可以理解为反射性xss。</p>
+<p>DOM型xss可以在前端通过js渲染来完成数据的交互，达到插入数据造成xss脚本攻击，且不经过服务器，所以即使抓包无无法抓取到这里的流量，而反射性与存储型xss需要与服务器交互，这便是三者的区别  源码如下<br><code>   function domxss()&#123;</code><br>                 <code>var str = document.getElementById(&quot;text&quot;).value;</code><br>                 <code>document.getElementById(&quot;dom&quot;).innerHTML = &quot;&lt;a href=&#39;&quot;+str+&quot;&#39;&gt;what do you see?&lt;/a&gt;&quot;;</code><br>             <code>&#125;</code></p>
+<h2 id="要想办法闭合下面的a标签"><a href="#要想办法闭合下面的a标签" class="headerlink" title="要想办法闭合下面的a标签"></a>要想办法闭合下面的a标签</h2><h2 id="这里要注意"><a href="#这里要注意" class="headerlink" title="这里要注意"></a>这里要注意</h2><p>我们在打XSS的时候，会发现浏览器里的源码是双引号，但实际上开发写的是单引号，经过浏览器渲染之后就把单引号，渲染成双引号了，所以她实质上是单引号。所以我们打XSS的时候也要用单引号。<br><code>&lt;a href=&quot;&quot;&gt;what do you see?&lt;/a&gt;</code></p>
+</li>
+</ol>
+<p>  这两个语句都可以闭合<br>   <code>&#39; onclick=&quot;alert(9527)&quot;&gt;        </code><br>  <code>&#39; &gt;  &lt;img src=&quot;#&quot; onmouseover=&quot;alert(9527)&quot;&gt;</code></p>
+<ol start="5">
+<li>DOM型xSS -x</li>
+</ol>
+<p> <code>                     function domxss()&#123;</code><br>  <code>                      var str = window.location.search;</code><br><code>                        var txss = decodeURIComponent(str.split(&quot;text=&quot;)[1]);</code><br><code>                        var xss = txss.replace(/\+/g,&#39; &#39;);</code><br><code>//                        alert(xss);</code></p>
+<p> <code>                       document.getElementById(&quot;dom&quot;).innerHTML = &quot;&lt;a href=&#39;&quot;+xss+&quot;&#39;&gt;就让往事都随风,都随风吧&lt;/a&gt;&quot;;</code><br> <code>                   &#125;</code></p>
+<p><code>&lt;a href=&quot;&lt;&gt;&lt;&gt;&quot;&gt;就让往事都随风,都随风吧&lt;/a&gt;</code> </p>
+<p><code>&#39; onclick=&quot;alert(9527)&quot;&gt;</code><br><code>&#39; &gt; &lt;img src=&quot;#&quot; onmouseover = &quot;alert(9527)&quot; &gt;</code></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/03/25/XSS%E6%9D%82%E8%AE%B0/" target="_blank">XSS杂记</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/categories/XSS/">XSS</a>
+                        
                     </div>
-                    <div class="tags-dark">
-                        <a href="/tags/XSS/" style="font-size: 12px; color: #666">XSS</a> <a href="/tags/burp%E4%BD%BF%E7%94%A8/" style="font-size: 12px; color: #666">burp使用</a> <a href="/tags/ctf/" style="font-size: 12px; color: #666">ctf</a> <a href="/tags/linux/" style="font-size: 12px; color: #666">linux</a> <a href="/tags/mysql/" style="font-size: 12px; color: #666">mysql</a> <a href="/tags/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/" style="font-size: 25px; color: #eee">php伪协议</a> <a href="/tags/ssrf/" style="font-size: 12px; color: #666">ssrf</a> <a href="/tags/%E6%9D%82%E8%AE%B0/" style="font-size: 18.5px; color: #aaa">杂记</a>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tags/XSS/">XSS</a>
+                        
                     </div>
+                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/2023/03/16/windows%E6%8F%90%E6%9D%83/" class="next-prefix">» </a> 下一篇：    <a href="/2023/03/16/windows%E6%8F%90%E6%9D%83/" title="发布于 2023-03-16 10:15">windows提权</a>
+                    
                 </div>
             </div>
+            
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -93,7 +181,7 @@
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
-                        <li class=" active "><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
                         <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
