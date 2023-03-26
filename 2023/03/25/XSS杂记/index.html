@@ -75,26 +75,69 @@
             <div class="article-body">
                 <p>Cross-Site Scripting 简称为“CSS”，为避免与前端叠成样式表的缩写”CSS”冲突，故又称XSS。一般XSS可以分为如下几种常见类型：<br>    1.反射性XSS;<br>    2.存储型XSS;<br>    3.DOM型XSS;</p>
 <p>XSS漏洞一直被评估为web漏洞中危害较大的漏洞，在OWASP TOP10的排名中一直属于前三的江湖地位。<br>XSS是一种发生在前端浏览器端的漏洞，所以其危害的对象也是前端用户。<br>形成XSS漏洞的主要原因是程序对输入和输出没有做合适的处理，导致“精心构造”的字符输出在前端时被浏览器当作有效代码解析执行从而产生危害。<br>因此在XSS漏洞的防范上，一般会采用“对输入进行过滤”和“输出进行转义”的方式进行处理:<br>  输入过滤：对输入进行过滤，不允许可能导致XSS攻击的字符输入;<br>  输出转义：根据输出点的位置对输出到前端的内容进行适当转义;</p>
-<ol>
-<li><p>反射型xss （GET）<br>反射型xss最简单的就是 利用<code>&lt;script&gt;alert()&lt;/script&gt;</code> 来测试 , 但是有时候回限制输入的长度可能造成没法输入完整的代码，这时候可以到前端是否看到限制长度，如下<code>maxlength=&quot;20&quot;</code>限制了长度 可以对限制进行修改<br><code>&lt;input class=&quot;xssr_in&quot; type=&quot;text&quot; maxlength=&quot;20&quot; name=&quot;message&quot;&gt;</code></p>
-</li>
-<li><p>反射型xss （POST）<br>可以先登陆然后 一样很简单输入 <code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code> 可以获取cookie</p>
-</li>
-<li><p>存储型xss<br>就是存起来了你再次访问就会触发xss</p>
-</li>
+<p><code>皮卡丘xss</code></p>
+<h2 id="反射型xss-（GET）"><a href="#反射型xss-（GET）" class="headerlink" title="反射型xss （GET）"></a><a id="反射型xss">反射型xss （GET）</a></h2><ol>
+<li>反射型xss （GET）<br>反射型xss最简单的就是 利用<code>&lt;script&gt;alert()&lt;/script&gt;</code> 来测试 , 但是有时候回限制输入的长度可能造成没法输入完整的代码，这时候可以到前端是否看到限制长度，如下<code>maxlength=&quot;20&quot;</code>限制了长度 可以对限制进行修改<br><code>&lt;input class=&quot;xssr_in&quot; type=&quot;text&quot; maxlength=&quot;20&quot; name=&quot;message&quot;&gt;</code></li>
+</ol>
+<h2 id="反射型xss-（POST）"><a href="#反射型xss-（POST）" class="headerlink" title="反射型xss （POST）"></a><b id="反射型xss （POST）">反射型xss （POST）</b></h2><ol start="2">
+<li>反射型xss （POST）<br>可以先登陆然后 一样很简单输入 <code>&lt;script&gt;alert(document.cookie)&lt;/script&gt;</code> 可以获取cookie</li>
+</ol>
+<h2 id="存储型xss"><a href="#存储型xss" class="headerlink" title="存储型xss"></a><c id="存储型xss">存储型xss</c></h2><ol start="3">
+<li>存储型xss<br>就是存起来了你再次访问就会触发xss</li>
+</ol>
+<h2 id="DOM型xss"><a href="#DOM型xss" class="headerlink" title="DOM型xss"></a><d id="DOM型xss">DOM型xss</d></h2><ol start="4">
 <li><p>DOM型xss<br>DOM简单来说DOM文档就是一份XML文档，当有了DOM标准之后，DOM便将前端html代码化为一个树状结构，方便程序和脚本能够轻松的动态访问和更新这个树状结构的内容、结构以及样式，且不需要经过服务端，所以DOM型xss在js前端自己就可以完成数据的输入输出，不与服务器产生交互，这样来说DOM型xss也可以理解为反射性xss。</p>
 <p>DOM型xss可以在前端通过js渲染来完成数据的交互，达到插入数据造成xss脚本攻击，且不经过服务器，所以即使抓包无无法抓取到这里的流量，而反射性与存储型xss需要与服务器交互，这便是三者的区别  源码如下<br><code>   function domxss()&#123;</code><br>                 <code>var str = document.getElementById(&quot;text&quot;).value;</code><br>                 <code>document.getElementById(&quot;dom&quot;).innerHTML = &quot;&lt;a href=&#39;&quot;+str+&quot;&#39;&gt;what do you see?&lt;/a&gt;&quot;;</code><br>             <code>&#125;</code></p>
 <h2 id="要想办法闭合下面的a标签"><a href="#要想办法闭合下面的a标签" class="headerlink" title="要想办法闭合下面的a标签"></a>要想办法闭合下面的a标签</h2><h2 id="这里要注意"><a href="#这里要注意" class="headerlink" title="这里要注意"></a>这里要注意</h2><p>我们在打XSS的时候，会发现浏览器里的源码是双引号，但实际上开发写的是单引号，经过浏览器渲染之后就把单引号，渲染成双引号了，所以她实质上是单引号。所以我们打XSS的时候也要用单引号。<br><code>&lt;a href=&quot;&quot;&gt;what do you see?&lt;/a&gt;</code></p>
 </li>
 </ol>
 <p>  这两个语句都可以闭合<br>   <code>&#39; onclick=&quot;alert(9527)&quot;&gt;        </code><br>  <code>&#39; &gt;  &lt;img src=&quot;#&quot; onmouseover=&quot;alert(9527)&quot;&gt;</code></p>
-<ol start="5">
+<h2 id="DOM型xSS-x"><a href="#DOM型xSS-x" class="headerlink" title="DOM型xSS -x"></a><e id="DOM型xSS -x">DOM型xSS -x</e></h2><ol start="5">
 <li>DOM型xSS -x</li>
 </ol>
 <p> <code>                     function domxss()&#123;</code><br>  <code>                      var str = window.location.search;</code><br><code>                        var txss = decodeURIComponent(str.split(&quot;text=&quot;)[1]);</code><br><code>                        var xss = txss.replace(/\+/g,&#39; &#39;);</code><br><code>//                        alert(xss);</code></p>
 <p> <code>                       document.getElementById(&quot;dom&quot;).innerHTML = &quot;&lt;a href=&#39;&quot;+xss+&quot;&#39;&gt;就让往事都随风,都随风吧&lt;/a&gt;&quot;;</code><br> <code>                   &#125;</code></p>
 <p><code>&lt;a href=&quot;&lt;&gt;&lt;&gt;&quot;&gt;就让往事都随风,都随风吧&lt;/a&gt;</code> </p>
 <p><code>&#39; onclick=&quot;alert(9527)&quot;&gt;</code><br><code>&#39; &gt; &lt;img src=&quot;#&quot; onmouseover = &quot;alert(9527)&quot; &gt;</code></p>
+<h2 id="xss之盲打"><a href="#xss之盲打" class="headerlink" title="xss之盲打"></a><f id="xss之盲打">xss之盲打</f></h2><ol start="6">
+<li>xss之盲打<br>   提交之后管理员登录后台查看会触发xss</li>
+</ol>
+<h2 id="xss之过滤"><a href="#xss之过滤" class="headerlink" title="xss之过滤"></a><g id="xss之过滤">xss之过滤</g></h2><ol start="7">
+<li><p>xss之过滤<br>   随便输入一些内容之后发现有过滤<br>   测试以下哪些东西会被过滤<br>  “&lt;&gt;’on&#x2F;<code>() script img href src</code><br>  这些都没有过滤<br>  “ img href src<code>  说明最大的可能就是</code>&lt;.*script<code>都被过滤了， 接下来就是想办法绕过过滤   可以尝试以下 img标签  </code>&lt;img src&#x3D;”#” onmouseover &#x3D; alert(‘章鱼海绵’)&gt;&#96;<br>  成功弹窗<br>  再试试能不能绕过呢<br>  去网上收集了一些绕过方法</p>
+</li>
+<li><p>大小写绕过：<br>一般后台对输入进行过滤有两种方法：</p>
+</li>
+<li><p>使用正则匹配，一旦匹配成功就会被删除掉。2，用查找的函数查找。被函数查找到的内容也会被删除。<br>这两种方法可以用大小写混合的方式进行绕过，而后端是不管大小写的，可以正常执行我们的语句。</p>
+<p>  正则表达式：</p>
+</li>
+</ol>
+<p>重要性：在新技术层出不穷的今天，让人难以遗忘的，能称得上是伟大的东西寥寥无几，但是这个正则表达式算一个！但是，最让人容易忽略和忘记的也是正则表达式！（一定要学！！！）</p>
+<p>正则表达式是一种描述字符串结构的语法规则，是一种规定好了的字符串格式，作用是可以匹配，替换，截取匹配的字符串</p>
+<ol start="2">
+<li>拼凑绕过<br><code>&lt;scri&lt;script&gt;pt&gt;alert(&quot;hello world!&quot;)&lt;/scri&lt;/script&gt;pt&gt;</code></li>
+<li>注释干扰<br><code>&lt;scri&lt;!--test--&gt;pt&gt;alert(&quot;hello world!&quot;)&lt;/scri&lt;!--test--&gt;pt&gt;</code></li>
+<li>编码绕过</li>
+</ol>
+<p>解析顺序是这样的，URL 解析器，HTML 解析器， CSS 解析器，JS解析器<br>实体编码（HTML解析器）&amp;#十进制; 或者&amp;#x十六进制；<br>JS编码（JS解析器） \u00十六进制</p>
+<p>如果想要能够进行实体编码解析，就必须不能破坏语法结构，比如不能对标签名称、&lt;&gt;&#x3D;等具有语法结构的特殊字符进行实体编码，可以对比如对标签之间的文本进行实体编码、对标签的属性的值进行实体编码</p>
+<p>JS解析器，只有进入JS解析环境，才会进行JS编码解析，并且位于JS解析环境的，不会进行实体编码解析</p>
+<p>这里的情况就像是位于javascript伪协议冒号后面一样，同样都可以进行实体编码或JS编码，<br>但是进行JS编码时，不能对括号、引号都具有构成函数特殊意义的特殊字符进行JS编码，但可以对函数的名称比如alert进行JS编码</p>
+<ol start="5">
+<li>关于htmlspecialchars（）函数的绕过<br>单引号和斜杠没有被处理，所以我们可以结合后端返回回来的代码试着做闭合处理</li>
+</ol>
+<h2 id="xss-htmlspecialchars（）"><a href="#xss-htmlspecialchars（）" class="headerlink" title="xss  htmlspecialchars（）"></a><h id="xss  htmlspecialchars（）">xss  htmlspecialchars（）</h></h2><ol start="8">
+<li>xss  htmlspecialchars（）</li>
+</ol>
+<p><code>&lt;a href=&quot;aa&quot;&gt;aa&lt;/a&gt; </code><br>绕过 <code>&#39; onmouseover = &#39;alert(9527)&#39;</code><br>原码变成 <code>&lt;a href=&quot;&quot; onmouseover=&quot;alert(1)&quot; &#39;=&quot;&quot;&gt;&#39; onmouseover = &#39;alert(1)&#39;&lt;/a&gt;</code>  成功弹窗</p>
+<h2 id="xss-lt-a-gt-标签herf输出"><a href="#xss-lt-a-gt-标签herf输出" class="headerlink" title="xss  &lt;a&gt;标签herf输出"></a><i id="`<a>`标签herf输出">xss  <code>&lt;a&gt;</code>标签herf输出</i></h2><ol start="9">
+<li><code>&lt;a&gt;</code>标签herf输出<br> <a> 标签的 href 属性用于指定超链接目标的 URL。</li>
+</ol>
+<p>href 属性的值可以是任何有效文档的相对或绝对 URL，包括片段标识符和 JavaScript 代码段。如果用户选择了 <a> 标签中的内容，那么浏览器会尝试检索并显示 href 属性指定的 URL 所表示的文档，或者执行 JavaScript 表达式、方法和函数的列表。</p>
+<h2 id="xss之js输出"><a href="#xss之js输出" class="headerlink" title="xss之js输出"></a><j id="xss之js输出">xss之js输出</j></h2><ol start="10">
+<li>xss之js输出</li>
+</ol>
+<p><code>&lt;script&gt;</code><br><code>  $ms=&#39;&#39;;alert(1);//&#39;;</code><br>   <code> if($ms.length != 0)&#123;</code><br>     <code>   if($ms == &#39;tmac&#39;)&#123;</code><br>      <code>      $(&#39;#fromjs&#39;).text(&#39;tmac确实厉害,看那小眼神..&#39;)</code><br>     <code>   &#125;else &#123;</code><br><code>//            alert($ms);</code><br>         <code>   $(&#39;#fromjs&#39;).text(&#39;无论如何不要放弃心中所爱..&#39;)</code><br>       <code> &#125;</code></p>
+<p> <code>   &#125;</code><br><code>&lt;/script&gt;</code><br> 这些语句被插入了script中<br> 只要闭合最开始的语句 直接输入执行的语句就可以</p>
 
                 
                 <p class="end">__END__</p>
