@@ -130,9 +130,9 @@
 </ol>
 <p><code>&lt;a href=&quot;aa&quot;&gt;aa&lt;/a&gt; </code><br>绕过 <code>&#39; onmouseover = &#39;alert(9527)&#39;</code><br>原码变成 <code>&lt;a href=&quot;&quot; onmouseover=&quot;alert(1)&quot; &#39;=&quot;&quot;&gt;&#39; onmouseover = &#39;alert(1)&#39;&lt;/a&gt;</code>  成功弹窗</p>
 <h2 id="xss-lt-a-gt-标签herf输出"><a href="#xss-lt-a-gt-标签herf输出" class="headerlink" title="xss  &lt;a&gt;标签herf输出"></a><i id="`<a>`标签herf输出">xss  <code>&lt;a&gt;</code>标签herf输出</i></h2><ol start="9">
-<li><code>&lt;a&gt;</code>标签herf输出<br> <a> 标签的 href 属性用于指定超链接目标的 URL。</li>
+<li><code>&lt;a&gt;</code>标签herf输出<br> <code>&lt;a&gt; </code> 标签的 href 属性用于指定超链接目标的 URL。</li>
 </ol>
-<p>href 属性的值可以是任何有效文档的相对或绝对 URL，包括片段标识符和 JavaScript 代码段。如果用户选择了 <a> 标签中的内容，那么浏览器会尝试检索并显示 href 属性指定的 URL 所表示的文档，或者执行 JavaScript 表达式、方法和函数的列表。</p>
+<p>href 属性的值可以是任何有效文档的相对或绝对 URL，包括片段标识符和 JavaScript 代码段。如果用户选择了<code> &lt;a&gt;</code>标签中的内容，那么浏览器会尝试检索并显示 href 属性指定的 URL 所表示的文档，或者执行 JavaScript 表达式、方法和函数的列表。</p>
 <h2 id="xss之js输出"><a href="#xss之js输出" class="headerlink" title="xss之js输出"></a><j id="xss之js输出">xss之js输出</j></h2><ol start="10">
 <li>xss之js输出</li>
 </ol>
@@ -178,6 +178,9 @@
                     </div>
                 
                 <div class="article-prev-next">
+                    
+                        <a href="/2023/03/28/csrf%E6%9D%82%E8%AE%B0/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/03/28/csrf%E6%9D%82%E8%AE%B0/" title="发布于 2023-03-28 07:07">csrf杂记</a>
+                        <br>
                     
                     
                         <a href="/2023/03/16/windows%E6%8F%90%E6%9D%83/" class="next-prefix">» </a> 下一篇：    <a href="/2023/03/16/windows%E6%8F%90%E6%9D%83/" title="发布于 2023-03-16 10:15">windows提权</a>
