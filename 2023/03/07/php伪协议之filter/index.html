@@ -111,6 +111,7 @@
 <p><code>string.rot13</code><br>使用该过滤器也就是用 str_rot13() 函数处理所有的流数据。</p>
 <p><code>echo file_get_contents(&quot;php://filter/read=string.rot13/resource=data://text/plain,abcdefg&quot;);</code></p>
 <p>&#x2F;&#x2F;输出： nopqrst</p>
+<p>为什么要编码<br>就是利用filter协议读文件+-，将index.php通过base64编码后进行输出。这样做的好处就是如果不进行编码，文件包含后就不会有输出结果，而是当做php文件执行了，而通过编码后则可以读取文件源码。</p>
 
                 
                 <p class="end">__END__</p>

