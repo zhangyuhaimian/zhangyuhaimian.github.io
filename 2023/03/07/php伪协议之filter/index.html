@@ -112,6 +112,8 @@
 <p><code>echo file_get_contents(&quot;php://filter/read=string.rot13/resource=data://text/plain,abcdefg&quot;);</code></p>
 <p>&#x2F;&#x2F;输出： nopqrst</p>
 <p>为什么要编码<br>就是利用filter协议读文件+-，将index.php通过base64编码后进行输出。这样做的好处就是如果不进行编码，文件包含后就不会有输出结果，而是当做php文件执行了，而通过编码后则可以读取文件源码。</p>
+<p><code>convert.iconv.&lt;input-encoding&gt;.&lt;output-encoding&gt;      convert.iconv.&lt;input-encoding&gt;/&lt;output-encoding&gt; </code><br>例子这个可以，有的编码没有回显，这个可以绕过base64<br>     ?filename&#x3D;php:&#x2F;&#x2F;filter&#x2F;convert.iconv.UTF-8.UTF-16*&#x2F;resource&#x3D;flag.php</p>
+<p>UCS-4*<br>UCS-4BE<br>UCS-4LE*<br>UCS-2<br>UCS-2BE<br>UCS-2LE<br>UTF-32*<br>UTF-32BE*<br>UTF-32LE*<br>UTF-16*<br>UTF-16BE*<br>UTF-16LE*<br>UTF-7<br>UTF7-IMAP<br>UTF-8*<br>ASCII*</p>
 
                 
                 <p class="end">__END__</p>
