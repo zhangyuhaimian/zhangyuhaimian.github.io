@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            分类 - 杂记
+            归档
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">分类归档</h1>
+                <h1 class="header-subtitle">windows提权自我总结ing</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-04-13
+                        </span>
+                        
+                            <span id="/2023/04/13/windows提权自我总结ing/" class="leancloud_visitors" data-flag-title="windows提权自我总结ing">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/13/windows提权自我总结ing/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">杂记</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">杂记</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,57 +69,166 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1771226" title="windows提权">windows提权</a></p>
+<p>这篇文章 把windows提权分为了7个方法，这里我再一边学习一边总结，感觉好难，这篇文章我都用我自己的话来描述</p>
+<h1 id="系统内核溢出漏洞提权"><a href="#系统内核溢出漏洞提权" class="headerlink" title="系统内核溢出漏洞提权"></a><a herf="系统内核溢出漏洞提权">系统内核溢出漏洞提权</a></h1><p> 就是系统本身存在一些漏洞，这些漏洞没打相应的补丁，然后通过对比，找到没打的补丁，通过缺失补丁号和对应的系统版本查找对应的exp<br> 如果没成功可能就是系统版本没对应上，或者是有没有可能是提权漏洞需要的环境没有</p>
+<ol>
+<li><p><code>systeminfo</code> 查询对应补丁号</p>
+</li>
+<li><p><code>post/windows/gather/enum_patches</code>           MSF后渗透扫描<br><code>post/multi/recon/local_exploit_suggester</code></p>
+</li>
+<li><p>有一个插件挺不错挺好用的   <code>https://github.com/AonCyberLabs/Windows-Exploit-Suggester</code>   windows exploit suggester<br>(这个插件在我使用的过程中出现了问题，他说它不支持xls 后来尝试降低版本成功安装了<br>这里我的虚拟机有多个python版本<br>我的pip默认下载再python3环境下<br>但是这个好像是python2运行<br>我用的代码是  <code>python27 -m pip install xlrd == 1.2.0</code>   因为来回切换环境有些麻烦，我也没弄什么pip虚拟环境，感觉好麻烦<br>我进入对应版本的python目录下 将python.exe复制，记住是复制，之后粘贴出来一份，把名字改成了对应版本的python27，下次调用的时候<br>就不用进入环境变量里面修改了，直接python27   python38 就可以了</p>
+<p>之后你要先systeminfo把内容复制下来，再这个工具的目录生成一个txt，把内容放入txt中 再执行命令，就会得到未打的补丁<br>)</p>
+</li>
+<li><p><code>Import-Module C:\Sherlock.ps1</code> 下载ps1脚本，导入模块 powershell中的sherlock脚本<br><code>Find-AllVulns</code></p>
+</li>
+<li><p><code>usemodule privesc/powerup/allchecks</code> Empire内置模块 Empire框架也提供了关于内核溢出漏洞提权的漏洞利用方法<br><code>execute</code>    （这个没试过）</p>
+</li>
+</ol>
+<p>下面就是几个能找exp的地方  hacking8我进不去</p>
+<p><code>https://github.com/SecWiki/windows-kernel-exploits</code><br><code>https://bugs.hacking8.com/tiquan/</code><br><code>https://github.com/Heptagrams/Heptagram/tree/master/Windows/Elevation</code><br><code>https://www.exploit-db.com/</code><br><code>https://i.hacking8.com/tiquan/</code></p>
+<h1 id="系统配置错误提权"><a href="#系统配置错误提权" class="headerlink" title="系统配置错误提权"></a><b herf="系统配置错误提权">系统配置错误提权</b></h1><p>· 错误权限配置<br>  windows系统服务文件再造作系统开机是运行，再后台调用可执行文件，如果管理员配置错误，导致一个低权限的用户能对这些系统调用的文件有写的权限，然后这个低权限的用户就能将这个可执行文件替换为任意执行文件（马），就能拿下系统服务，获得系统服务的权限，windows服务是system权限运行就能获得system权限</p>
+<ol>
+<li>服务未启动，用其他服务替换这个服务然后重启服务</li>
+<li>服务正在运行并且无法被终止： 这个场景更多，攻击者会用dll劫持技术并尝试重启服务提权 （需要administrtor权限）</li>
+</ol>
+<p>  这个dll劫持技术我不太懂啊，我简单看了一下就像是 你写程序的时候调用的头文件，<br>  然后他会找这个文件在哪顺序就是    </p>
+<ol>
+<li><p>程序所在目录。</p>
+</li>
+<li><p>加载 DLL 时所在的当前目录。</p>
+</li>
+<li><p>系统目录即 SYSTEM32 目录。</p>
+</li>
+<li><p>16位系统目录即 SYSTEM 目录。</p>
+</li>
+<li><p>Windows目录。</p>
+</li>
+<li><p>PATH环境变量中列出的目录<br>或者 SafeDllSearchMode的值设置为1，即安全DLL搜索模式开启时，查找DLL的目录顺序如下：</p>
+</li>
+<li><p>程序所在目录</p>
+</li>
+<li><p>系统目录即 SYSTEM32 目录。</p>
+</li>
+<li><p>16位系统目录即 SYSTEM 目录。</p>
+</li>
+<li><p>Windows目录。</p>
+</li>
+<li><p>加载 DLL 时所在的当前目录。</p>
+</li>
+<li><p>PATH环境变量中列出的目录。<br>在win7及以上当启用了SafeDllSearchMode搜索顺序如下</p>
+</li>
+<li><p>应用程序所在目录。</p>
+</li>
+<li><p>系统目录SYSTEM32 目录。</p>
+</li>
+<li><p>16位系统目录。没有获取该目录路径的函数，但会对其进行搜索。</p>
+</li>
+<li><p>Windows目录。使用GetWindowsDirectory函数获取此目录的路径。</p>
+</li>
+<li><p>当前目录</p>
+</li>
+<li><p>环境变量PATH中所有目录。需要注意的是，这里不包括App Paths注册表项指定的应用程序路径。<br>  这个时候再这个文件之前的目录创建一个和他名字一样的dll文件就会调用你创建的dll</p>
+</li>
+</ol>
+<p>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session\Manager\KnownDLLs<br>不在这个注册表里应该可以劫持</p>
+<p>  详情见 <code>https://blog.csdn.net/qq_37232329/article/details/95510227</code></p>
+<p>计划任务也算系统服务功能。<br>简介：windows操作系统提供了一个实用程序（schtasks.exe）,使系统管理员能够在特定的时间执行程序或脚本（在大多数情况下，计划任务是以NT AuthoritySystem高权限执行的），如果地权限用户对计划任务所在目录有读写权限，完全可以替换计划任务所执行的脚本或程序，获得高权限（但需要错误配置，让此目录下其他用户可写）</p>
+<p>或者是powerup 很好用，感觉  Invoke-AllChecks</p>
+<p>· 可信任服务路径漏洞<br>  简介：如果一个服务的可执行文件的路径没有被双引号引起来且包含空格，那么这个服务就是有漏洞的。</p>
+<p>· 不安全的注册表权限配置<br><code>HKEY_LOCAL_MACHINESYSTEMControlSet001ServicesVulnerable Service</code> 服务储存路径<br>如果有权限就修改服务名称 运行马</p>
+<p>·启用注册表键AlwaysInstallElevated</p>
+<p>启用可以安装恶意的安装程序<br><code>run exploit/windows/local/always_install_elevated</code><br><code>可以通过命令行调用msiexec安装msi文件，msi文件内包含要执行的Payload，Payload将会以System权限执行</code><br><code>msiexec /quiet /qn /i muma.msi</code></p>
+<h1 id="系组策略首选项提权"><a href="#系组策略首选项提权" class="headerlink" title="系组策略首选项提权"></a><c herf="组策略首选项提权">系组策略首选项提权</c></h1><p>所有的组策略均存储在如下位置： \<DOMAIN>\SYSVOL&lt;DOMAIN&gt;\Policies\<br>没太会<br>#Msf<br>run post&#x2F;windows&#x2F;gather&#x2F;credentials&#x2F;gpp  反正就利用msf gpp把</p>
+<h1 id="bypassUAC提权"><a href="#bypassUAC提权" class="headerlink" title="bypassUAC提权"></a><d herf="bypassUAC提权">bypassUAC提权</d></h1><p>用户账户控制（User Account Control，简称UAC）<br>利用Msf中的一些模块<br>cs中的模块</p>
+<h1 id="令牌窃取"><a href="#令牌窃取" class="headerlink" title="令牌窃取"></a><e herf="令牌窃取">令牌窃取</e></h1><p>令牌token 是系统的临时密钥</p>
+<ol>
+<li>访问令牌 表示访问控制操作主体的系统对象 。</li>
+<li>会话令牌 是交互会话中唯一的身份标识符。</li>
+<li>密保令牌 又叫做认证令牌或硬件令牌，是一种计算机身份校验的物理设备，例如U盾。</li>
+</ol>
+<p>烂土豆，就是这样 加模仿高权限令牌</p>
+<p>我看了几个，我是小白，我简述一下我的理解<br>就是诱导系统高权限用户执行一些操作，引导到一个需要NTLM身份验证的地方，对这个认证过程重放<br>，本地协商一个安全令牌，然后模仿这个令牌</p>
+<h1 id="数据库提权"><a href="#数据库提权" class="headerlink" title="数据库提权"></a><f herf="数据库提权">数据库提权</f></h1><p>·mssql提权</p>
+<p>启用xp_cmdshell<br>#先获取高权限的数据库用户 sysadmin）<br>查找网站源码数据库链接文件<br>web.config &#x2F;conn.asp&#x2F;aspx config.asp &#x2F;aspx dbconfig.asp&#x2F;aspx 等文件 找一个能登录进数据库的账户密码<br>select IS_SRVROLEMEMBER(‘sysadmin’) 查询是不是sysadmin账户</p>
+<p>然后利用高权限用户执行命令</p>
+<p>·Mysql提权</p>
+<ol>
+<li>MOF提权</li>
+</ol>
+<p>MOF文件是mysql数据库的扩展文件（在c:&#x2F;windows&#x2F;system32&#x2F;wbem&#x2F;mof&#x2F;nullevt.mof）叫做”托管对象格式”，其作用是每隔五秒就会去监控进程创建和死亡，因为MOF文件每五秒就会执行，且是系统权限，所以如果我们有权限替换原有的mof文件，就能获得system权限<br>mysql的my.ini文件内加入“secure-file-priv &#x3D; “” ”来禁用它<br>条件<br>    <code>Windows&lt;=2003</code><br>    <code>mysql在c:windows/system32/mof目录有写权限</code><br>    <code>已知数据库账号密码</code></p>
+<p>mysql语句将恶意mov文件替换nullevt.mof</p>
+<ol start="2">
+<li>UFD提权<br>UDF,user defined funcion,即用户自定义函数，用户可以通过自己增加函数对mysql功能进行扩充，文件后缀为.dll。</li>
+</ol>
+<p>条件<br>   <code>windows2003、windowsXP、windows7</code><br>   <code>拥有mysql的insert和delete权限</code></p>
+<pre><code>就是上传然后执行
+</code></pre>
+<p><code>#首先我们要判断mysql版本，根据不同的版本：</code><br><code>mysql版本 &lt; 5.2 , UDF导出到系统目录c:/windows/system32/</code><br><code>mysql版本 &gt; 5.2 ，UDF导出到安装路径MySQL\Lib\Plugin\</code><br><code>直接查询插件安装目录show variables like %plugin%</code></p>
+<p><code>#上传udf.dll 将udf.dll导出到插件目录，然后执行sql语句创建用户自定义函数,并利用他执行命令提权</code><br><code>create function cmd_shell returns string soname &#39;udf.dll&#39;;#创建函数</code><br><code>select cmd_shell(&#39;命令&#39;);#使用函数</code><br><code>drop function cmd_shell; #删除函数</code></p>
+<p><code>#也可以自动化过程，使用sqlmap自动化上传插件</code><br><code>python sqlmap.py -u &#39;xxxx&#39; --file-write=/lib_mysqludf_sys.so  --file-dest=/usr/lib/mysql/plugin/</code><br><code>python sqlmap.py -u &#39;xxxx&#39; --sql-shell</code></p>
+<p>其他各种cve <code>CVE-2016-6663和CVE-2016-6664,CVE-2016-6663,CVE-2016-6664,CVE-2016-6663,CVE-2016-6664</code></p>
+<h1 id="系数据库提权"><a href="#系数据库提权" class="headerlink" title="系数据库提权"></a><g herf="其他手法">系数据库提权</g></h1>
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/04/13/windows%E6%8F%90%E6%9D%83%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93ing/" target="_blank">windows提权自我总结ing</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            当前分类：<span class="category">杂记</span>
+                            <a href="/categorie/%E6%9D%82%E8%AE%B0/">杂记</a>
                         
-                    </span>
-                    
-                    
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
                         
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/13/windows%E6%8F%90%E6%9D%83%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93ing/"><span>windows提权自我总结ing</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-13</span>
-                                </div>
-                            </div>
-                        </div>
+                            <a href="/tag/%E6%9D%82%E8%AE%B0/">杂记</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/16/windows%E6%8F%90%E6%9D%83/"><span>windows提权（搬运来的）</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-16</span>
-                                </div>
-                            </div>
-                        </div>
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/23/python%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99%E5%B0%8F%E8%AE%A1/"><span>python脚本编写小计</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-23</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/04/05/CS%E5%81%9A%E6%88%90%E6%9C%8D%E5%8A%A1/" class="next-prefix">» </a> 下一篇：    <a href="/2023/04/05/CS%E5%81%9A%E6%88%90%E6%9C%8D%E5%8A%A1/" title="发布于 2023-04-05 04:56">CS做成服务</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -130,7 +260,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
