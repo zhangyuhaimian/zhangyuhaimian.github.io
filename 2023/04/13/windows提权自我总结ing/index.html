@@ -155,6 +155,7 @@
 <p>我看了几个，我是小白，我简述一下我的理解<br>就是诱导系统高权限用户执行一些操作，引导到一个需要NTLM身份验证的地方，对这个认证过程重放<br>，本地协商一个安全令牌，然后模仿这个令牌</p>
 <h1 id="数据库提权"><a href="#数据库提权" class="headerlink" title="数据库提权"></a><f herf="数据库提权">数据库提权</f></h1><p>·mssql提权</p>
 <p>启用xp_cmdshell<br>#先获取高权限的数据库用户 sysadmin）<br>查找网站源码数据库链接文件<br>web.config &#x2F;conn.asp&#x2F;aspx config.asp &#x2F;aspx dbconfig.asp&#x2F;aspx 等文件 找一个能登录进数据库的账户密码<br>select IS_SRVROLEMEMBER(‘sysadmin’) 查询是不是sysadmin账户</p>
+<p><code>USE master</code><br><code>RECONFIGURE</code><br><code>exec sp_configure ‘show advanced options’,1;</code><br><code>RECONFIGURE</code><br><code>exec sp_configure ‘xp_cmdshell’,1;</code></p>
 <p>然后利用高权限用户执行命令</p>
 <p>·Mysql提权</p>
 <ol>
@@ -212,6 +213,9 @@
                     </div>
                 
                 <div class="article-prev-next">
+                    
+                        <a href="/2023/04/20/%E6%80%9D%E8%B7%AF/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/04/20/%E6%80%9D%E8%B7%AF/" title="发布于 2023-04-20 06:05">渗透测试思路</a>
+                        <br>
                     
                     
                         <a href="/2023/04/05/CS%E5%81%9A%E6%88%90%E6%9C%8D%E5%8A%A1/" class="next-prefix">» </a> 下一篇：    <a href="/2023/04/05/CS%E5%81%9A%E6%88%90%E6%9C%8D%E5%8A%A1/" title="发布于 2023-04-05 04:56">CS做成服务</a>

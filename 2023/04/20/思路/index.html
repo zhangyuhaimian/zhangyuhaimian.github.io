@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            渗透测试思路
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">渗透测试思路</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-04-20
+                        </span>
+                        
+                            <span id="/2023/04/20/思路/" class="leancloud_visitors" data-flag-title="渗透测试思路">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/20/思路/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">思路</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">思路</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,135 +69,135 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a><a herf="信息收集">信息收集</a></h2><p>第一步 信息收集</p>
+<pre><code>   大体看一遍
+  `https://www.virustotal.com/`
+   首先就是获取主站域名 然后查真实ip 多地ping   `https://ping.chinaz.com/www.haowen108.com`
+</code></pre>
+<h2 id="绕过cdn"><a href="#绕过cdn" class="headerlink" title=" 绕过cdn"></a><c herf=" 绕过cdn"> 绕过cdn</c></h2><pre><code>   绕过cdn    cdn是基于解析的      cdn要钱，旁站，子域名，c段可能不存在cdn
+</code></pre>
+<ol>
+<li><p>找dns历史记录，找最早的一条<br> <code>https://x.threatbook.com</code><br> <code>https://webiplookup.com</code><br> <code>https://viewdns.info/iphistory</code><br> <code>https://securitytrails.com/#search</code><br> <code>https://toolbar.netcraft.com/site_report</code></p>
+</li>
+<li><p>多地ping，国外ping （可能行比较小）<br>没有国外业务，只有国内业务，可能只有国内有cdn，国外访问就没有cdn<br><code>https://ping.chinaz.com/</code></p>
+</li>
+<li><p>边缘业务的子域名<br>微信小程序<br>app客户端</p>
+</li>
+<li><p>基于证书的<br><code>https://search.censys.io/</code><br><code>https://crt.sh/</code></p>
+</li>
+<li><p>邮件服务器<br>   cdn 是不支持邮箱的<br>   邮件原文打开 可能就是真是ip<br>eg :  ping <a target="_blank" rel="noopener" href="http://www.beijing.gov.cn/">www.beijing.gov.cn</a><br>   ping mail.beijing.gov.cn</p>
+</li>
+<li><p>FOFA查找网站标题，寻找真实ip</p>
+</li>
+<li><p>cdn绕过之ajax请求不规范，用ip的形势进行调用<br>应用架构是前后端分离，bp返回html源码，新架构采取前后端分离，返回包，json{}，AJAX技术，<br>调用后台api</p>
+<pre><code>可以用 favion.ico base64 来找真实ip
+           
+          查DNS域名解析   可能域名没变，ip换过 ip可能还在用，扫描目录和端口
+                                           `https://www.ip138.com/`
+                                           `https://ipchaxun.com/zkaq.cn/`
+</code></pre>
+</li>
+</ol>
+<h2 id="Ksubdomain，masscan"><a href="#Ksubdomain，masscan" class="headerlink" title="Ksubdomain，masscan"></a><d herf="Ksubdomain，masscan">Ksubdomain，masscan</d></h2><pre><code>   Ksubdomain        暴力枚举子域名                  
+   泛解析 没有好的办法什么组合都有记录
+
+   masscan 采用异步传输，无状态扫描
+</code></pre>
+<p>a<br>       <code>masscan-P80,8000-8100 10.0.0.0/8 --rate=10000</code><br>       以10kpps的速度扫描10.0.0.0上的某些web端口<br>a<br>       <code>masscan -p80 10.0.0.0/8 --banners -oB &lt;文件名&gt;</code><br>      以二进制格式将扫描结果保存到&lt;文件名&gt;<br>a<br>      <code>masscan --open --banners --readscan &lt;文件名&gt; -oX&lt;保存文件&gt;</code><br>     在&lt;文件名&gt;中读取二进制扫描结果，并在&lt;保存文件&gt;</p>
+<pre><code>            查看是哪一种语言  插件 Wappalyzer
+php --&gt; mysql
+jsp --&gt; oracle/mysql
+asp --&gt; sqlserver 
+
+   查看cms利用工具 ehole   去网站找 yunsee
+
+   dirsearch 扫描目录
+</code></pre>
+<h2 id="jsfinder"><a href="#jsfinder" class="headerlink" title="jsfinder"></a><e herf="jsfinder">jsfinder</e></h2><p> jsfinder -u    xxx   -d 深度爬取</p>
+<h2 id="google信息收集"><a href="#google信息收集" class="headerlink" title="google信息收集"></a><f herf="使用google信息收集">google信息收集</f></h2><p>使用搜索引擎搜集 被动收集</p>
+<p> site：搜索指定站点的内容（通常⽤来指定⽬标避免搜索的信息过多）</p>
+<p> filetype：搜索指定的⽂件类型（通常⽤来搜索dat，log，txt，xls，rar，bak等敏感⽂件查看敏感内容）</p>
+<p> 结合使⽤例⼦：搜索qq⽬标下的pdf⽂件<br> filetype:pdf site:qq.com</p>
+<p> intitle:搜索标题中有指定内容的⽹⻚</p>
+<p> inurl:搜索url中有指定内容的⽹⻚</p>
+<p> 结合使⽤例⼦：wordpress下的alfa插件的敏感信息泄露查询<br> inurl:ALFA_DATA intitle:”index of”</p>
+<p> intext:搜索⽹⻚内容中有指定内容的⽹⻚</p>
+<p> 漏洞网站  exploit-db.com  有谷歌语法搜索漏洞</p>
+<h2 id="社会工程学水坑攻击"><a href="#社会工程学水坑攻击" class="headerlink" title="社会工程学水坑攻击"></a><g herf="社会工程学水坑攻击">社会工程学水坑攻击</g></h2><p>⽔坑攻击：“⽔坑攻击”，⿊客攻击⽅式之⼀，顾名思义，是在受害者必经之路设置了⼀个“⽔坑(陷阱)”。最常⻅的<br>做法是，⿊客分析攻击⽬标的上⽹活动规律，寻找攻击⽬标经常访问的⽹站的弱点，先将此⽹站“攻破”并植⼊攻击<br>代码，⼀旦攻击⽬标访问该⽹站就会“中招”。信任关系。</p>
+<p>插入恶意代码页面跳转</p>
+<p><code>&lt;script&gt;location.href=&quot;http:/xxxxx.html&quot;&lt;/script&gt;</code></p>
+<p>tr 行标签 td 列标签</p>
+<p><code>&lt;tr&gt;</code><br>    <code>&lt;td rowspan=&quot;2&quot;&gt;1&lt;/td&gt;  #行合并 colspan列合并</code><br>    <code> &lt;td&gt;2&lt;/td&gt;</code><br><code>&lt;/tr&gt;</code></p>
+<p>&lt;img（标签插入图片） src（属性从哪里引入地址是什么）&#x3D; “”   alt（图片不出现就会出现）&#x3D;“”&gt;</p>
+<p><code>&lt;!DOCTYPE html&gt;</code><br><code>&lt;html lang=&quot;en&quot;&gt;</code><br><code>&lt;head&gt;</code><br> <code>&lt;meta charset=&quot;UTF-8&quot;&gt;</code><br> <code>&lt;title&gt;Title&lt;/title&gt;</code><br><code>&lt;/head&gt;</code><br> <code>&lt;body&gt;</code><br> <code>&lt;img src=&quot;/resource/background.jpeg&quot; alt=&quot;上海鲜花港 - 郁⾦⾹&quot; /&gt;</code><br><code>&lt;!-- &lt;img src=&quot;https://www.baidu.com/img/PCtm_d9c8750bed0b3c7d089fa7d55720d6cf.png&quot; alt=&quot;test&quot;&gt;--&gt;</code><br> <code>&lt;/body&gt;</code><br><code>&lt;/html&gt;</code><br><code>&lt;!--img 元素向⽹⻚中嵌⼊⼀幅图像。--&gt;</code><br><code>&lt;!--请注意，从技术上讲，&lt;img&gt; 标签并不会在⽹⻚中插⼊图像，⽽是从⽹⻚上链接图像。&lt;img&gt; 标签创建的是被引</code><br><code>⽤图像的占位空间。--&gt;</code><br><code>&lt;!--&lt;img&gt; 标签有两个必需的属性：src 属性 和 alt 属性。--&gt;</code></p>
+<p>a标签</p>
+<p><code>&lt;a herf=&quot;http://xxx.com&quot; target=&quot;_self&quot;&gt;点一下   &lt;/a&gt;</code></p>
+<p><code>&lt;!-- &lt;a&gt;标签定义超链接，用于从一张页面 链接到另一张页面 &gt;</code><br><code>&lt;！-- &lt;a&gt; 元素最重要的属性是herf 属性，他是链接的目标&gt;</code></p>
+<p>div 标签<br><code>&lt;div style=&quot;color:green&quot;&gt;</code><br>          <code>&lt;h3&gt;this is a header&lt;/h3&gt;</code><br>         <code> &lt;p&gt;this is a paragraph&lt;/p&gt;</code><br> <code>&lt;/div&gt;</code>         </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;!--&lt;div&gt; 可定义⽂档中的分区或节（division/section）。--&gt;</span><br><span class="line">&lt;!-- &lt;div&gt; 标签可以把⽂档分割为独⽴的、不同的部分。它可以⽤作严格的组织⼯具，并且不使⽤任何格式与其</span><br><span class="line">关联。--&gt;</span><br><span class="line">&lt;!-- 如果⽤ id 或 class 来标记 &lt;div&gt;，那么该标签的作⽤会变得更加有效。--&gt;</span><br><span class="line">&lt;!-- ⽤法--&gt;</span><br><span class="line">&lt;!-- &lt;div&gt; 是⼀个块级元素。这意味着它的内容⾃动地开始⼀个新⾏。实际上，换⾏是 &lt;div&gt; 固有</span><br><span class="line">的唯⼀格式表现。可以通过 &lt;div&gt; 的 class 或 id 应⽤额外的样式。--&gt;</span><br><span class="line">&lt;!-- 不必为每⼀个 &lt;div&gt; 都加上类或 id，虽然这样做也有⼀定的好处。--&gt;</span><br><span class="line">&lt;!-- 可以对同⼀个 &lt;div&gt; 元素应⽤ class 或 id 属性，但是更常⻅的情况是只应⽤其</span><br><span class="line">中⼀种。这两者的主要差异是，class ⽤于元素组（类似的元素，或者可以理解为某⼀类元素），⽽ id ⽤于标识单</span><br><span class="line">独的唯⼀的元素。--&gt;</span><br></pre></td></tr></table></figure>
+
+<p>1 10</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/04/20/%E6%80%9D%E8%B7%AF/" target="_blank">渗透测试思路</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 19 篇日志，继续加油！
+                            <a href="/categorie/%E6%80%9D%E8%B7%AF/">思路</a>
                         
-                    </span>
-                    
-                    
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
                         
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/20/%E6%80%9D%E8%B7%AF/"><span>渗透测试思路</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-20</span>
-                                </div>
-                            </div>
-                        </div>
+                            <a href="/tag/%E6%80%9D%E8%B7%AF/">思路</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/13/windows%E6%8F%90%E6%9D%83%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93ing/"><span>windows提权自我总结ing</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-13</span>
-                                </div>
-                            </div>
-                        </div>
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/05/CS%E5%81%9A%E6%88%90%E6%9C%8D%E5%8A%A1/"><span>CS做成服务</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/05/APP%E6%B5%8B%E8%AF%95%E6%9C%8D%E5%8A%A1%E7%AB%AF/"><span>APP测试服务端</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/05/APP%E6%B5%8B%E8%AF%95%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%96%B9%E5%90%91/"><span>APP测试客户端方向</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/30/sql%E6%B3%A8%E5%85%A5%E6%9D%82%E8%AE%B0/"><span>sql注入杂记</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-30</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/28/csrf%E6%9D%82%E8%AE%B0/"><span>csrf杂记</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-28</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/25/XSS%E6%9D%82%E8%AE%B0/"><span>XSS杂记</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-25</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/16/windows%E6%8F%90%E6%9D%83/"><span>windows提权（搬运来的）</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-16</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/15/ciphey%E8%A7%A3%E7%A0%81/"><span>ciphey解码</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-15</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/04/13/windows%E6%8F%90%E6%9D%83%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93ing/" class="next-prefix">» </a> 下一篇：    <a href="/2023/04/13/windows%E6%8F%90%E6%9D%83%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93ing/" title="发布于 2023-04-13 05:10">windows提权自我总结ing</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a href="/archive/page/2/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -208,7 +229,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
