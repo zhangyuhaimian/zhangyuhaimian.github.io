@@ -262,10 +262,33 @@ exit();
     <div class="progressbar-top"></div>
 
     
+        <div class="aplayer"></div>
         <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
         <script type="text/javascript" src="/js/APlayer.min.js"></script>
-        <script type="text/javascript" src="/js/Meting.min.js"></script>
-        <meting-js id="3778678" lrcshow="false" server="netease" type="playlist" fixed="true" autoplay="false" loop="all" order="random" preload="auto" volume="0.67" mutex="true"></meting-js>
+        <script type="text/javascript">
+            const aplayer = new APlayer({
+                container: document.querySelector(".aplayer"),
+                fixed: true,
+                autoplay: true,
+                loop: "all",
+                order: "random",
+                preload: "auto",
+                volume: 0.67,
+                mutex: true,
+                lrcType: 3,
+                audio: [
+                    
+                        {
+                            name: "镇海",
+                            artist: "不良人",
+                            cover: "/music/cover/shuai.jpg",
+                            url: "/music/song/zhenhai.mp3",
+                            lrc: "/music/lrc/Endless Tears.lrc"
+                        },
+                    
+                ]
+            });
+        </script>
     
     
     <div class="wrap-right">
@@ -381,7 +404,7 @@ exit();
             
                 "/image/header/home.jpg",
             
-                "/image/header/back.jpeg",
+                "/image/header/back.jpg",
             
         ],
         HomeBannerText  : "",
@@ -662,12 +685,12 @@ exit();
         },
 
         Music : {
-            type : "Meting"
+            type : "APlayer"
         },
         APlayer : {
             container : ".aplayer",
             fixed     : true,
-            autoplay  : false,
+            autoplay  : true,
             loop      : "all",
             order     : "random",
             preload   : "auto",
@@ -677,10 +700,10 @@ exit();
             audio     : [
                 
                     {
-                        name   : "Endless Tears",
-                        artist : "CLIFF EDGE",
-                        cover  : "/music/cover/Endless Tears.jpg",
-                        url    : "/music/song/Endless Tears.mp3",
+                        name   : "镇海",
+                        artist : "不良人",
+                        cover  : "/music/cover/shuai.jpg",
+                        url    : "/music/song/zhenhai.mp3",
                         lrc    : "/music/lrc/Endless Tears.lrc"
                     },
                 
@@ -692,12 +715,12 @@ exit();
             server   : "netease", 
             type     : "playlist", 
             fixed    : true, 
-            autoplay : false, 
+            autoplay : true, 
             loop     : "all", 
             order    : "random", 
             preload  : "auto", 
             volume   : 0.67, 
-            mutex    : true
+            mutex    : false
         },
 
         Mouse : {
