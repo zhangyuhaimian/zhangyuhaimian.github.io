@@ -69,7 +69,7 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <ol>
+                <h2 id="基本免杀"><a href="#基本免杀" class="headerlink" title="基本免杀"></a><a herf="基本免杀">基本免杀</a></h2><ol>
 <li><p>杀毒软件的基本等级</p>
 <ol>
 <li>无害</li>
@@ -86,10 +86,44 @@
 <li>加密（可疑）<br>使用加密解密行为或对文件又额外保护措施</li>
 </ol>
 <p>·动态</p>
-<p>通常是静态分析之后，部分杀软会有沙盒（也叫启发式查杀，通过模拟计算机的环境执行目标文件观察特征行为）<br>                                  （内存小，时间快，减少对计算机的小号）</p>
+<p>通常是静态分析之后，部分杀软会有沙盒（也叫启发式查杀，通过模拟计算机的环境执行目标文件观察特征行为）<br>                                  （内存小，时间快，减少对计算机的消耗，io设备缺失（鼠标和键盘））</p>
 <p><code>https://www.virustotal.com/gui/home/upload</code><br><code>https://s.threatbook.com/</code></p>
-<p>判断是不是  一般沙箱 10 到20 s</p>
+<p>判断是不是  一般沙箱 10 到20 s  沙河内部速度比现实世界快，提高查杀速度</p>
 <p>可以在马中 加一个休眠 不立即使用</p>
+<p>·计算机相关</p>
+<p>通常由r1 r2 层挂监控的方式 类似（hook）  触发这些条件就会产生事件</p>
+<ol>
+<li>服务 </li>
+<li>注册表</li>
+<li>组策略</li>
+<li>防火墙</li>
+<li>敏感程序</li>
+</ol>
+<p>·用户<br>添加删除修改等操作文件夹</p>
+<p>C:&#x2F;windows&#x2F;system32</p>
+<p>C:\Users\Administrator\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup</p>
+<p>C:\tmp等敏感文件夹</p>
+<p>例 ： cmd powershell wmi psexec bitsadmin rundll</p>
+<h2 id="常见绕过思路、"><a href="#常见绕过思路、" class="headerlink" title="常见绕过思路、"></a><b herf="常见绕过思路">常见绕过思路</b>、</h2><p>·白名单调用这些敏感行为，再导入恶意内容</p>
+<p>·网络相关</p>
+<p>socket &#x3D;&#x3D;&gt; 控制端       shellcode 小马建立链接<br>控制端 &#x3D;&#x3D;&gt;  客户端      控制端给客户端马<br>客户端 &#x3D;&#x3D;&gt;  控制端      客户端回连</p>
+<p>小马拉大马</p>
+<p>http &#x2F;uri 请求到控制端 符合控制端算法  确实是他的马发送的交互式特征<br>控制端把大马放到客户端内存中  客户端上线 </p>
+<p><strong>IP****，域名，证书匹配</strong></p>
+<p>查找通讯的ip或域名是否之前存在攻击行为</p>
+<p><strong>流量内容</strong></p>
+<p>时间特征：扫描等</p>
+<p>内容特征：data字段中是否存在命令相关关键词或关键词加密特征</p>
+<p>结构特征：是否存在已知远控的通讯结构特征</p>
+<p><strong>常见的绕过思路</strong></p>
+<p>tcp分段，内容加密，使用合法证书等</p>
+<p><strong>总结</strong></p>
+<p>不是所有的杀毒软件都有这些，有些比较拉跨，有些比较强，不过总体的思路都是差不多的。</p>
+<p><strong>对编程语言的免杀方式</strong></p>
+<p>powershell-》混淆、加密</p>
+<p>c++-》编译过程、混淆、加密</p>
+<p>python-》混淆、加密</p>
+<p>通用-》启发式查杀</p>
 
                 
                 <p class="end">__END__</p>

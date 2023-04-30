@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            Hexo
+            postgresql数据库
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,291 +31,109 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-title">章鱼海绵</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <h1 class="header-subtitle">postgresql数据库</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-04-30
+                        </span>
+                        
+                            <span id="/2023/04/30/postgresql数据库/" class="leancloud_visitors" data-flag-title="postgresql数据库">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/30/postgresql数据库/"></span>
+                        </span>  
+                    </p>
+                    
+                    
+                        
+                            <span class="tag-color">工具</span>
+                        
+                    
+                </div>
             
         </div>
     </div>
-    
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
     
 </div>
 <div id="container">
     
-        
-            <!-- 首页 -->
-            <div class="articles">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>1.首先切换到 root：su -root</p>
+<pre><code>    2.进入 /bin 目录：cd /bin
+
+    3.执行命令：systemctl stop firewalld.service（关闭防火墙)
+
+                        systemctl disable firewalld.service（关闭防火墙自动启动）
+
+    4.查看防火墙状态：systemctl status firewalld.service（查看防火墙服务状态）
+</code></pre>
+<p>切换到postgres用户 su - postgres</p>
+<p>进入到命令行 默认端口号为5432 直接psql<br> 如果设置了其他的端口号psql -pxxx(端口号)</p>
+<p>psql<br>创建用户 create user test with password ‘123.com’;<br>创建数据库create database test_db owner test;</p>
+<p>退出<br>\q</p>
+<p>exit</p>
+<p>psql 数据库名  –连接数据库<br>select rolname,rolpassword from pg_authid;–查看用户名密码<br>select usename,passwd from pg_shadow;–查看用户名密码<br>select version();	– 查看版本<br>select current_database();–查看当前数据库<br>\l					–查看所有数据库<br>\dt					–查看表<br>\password username	–修改密码<br>\password           –设置密码。<br>?                  –查看psql命令列表。<br>\c [database_name]  –连接其他数据库，切换数据库。<br>\conninfo           –列出当前数据库和连接的信息。<br>\d                  –列出当前数据库的所有表格。<br>\d [table_name]     –列出某一张表格的结构。<br>\du                 –列出所有用户。<br>\e                  –打开文本编辑器。<br>help				–帮助<br>\h                  –查看SQL命令的解释，比如\h select。<br>\q					–退出</p>
+
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/30/postgresql%E6%95%B0%E6%8D%AE%E5%BA%93/">postgresql数据库</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-30
-                            </span>
-                            
-                                <span id="/2023/04/30/postgresql数据库/" class="leancloud_visitors" data-flag-title="postgresql数据库">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/30/postgresql数据库/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/04/30/postgresql%E6%95%B0%E6%8D%AE%E5%BA%93/" target="_blank">postgresql数据库</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tag/%E5%B7%A5%E5%85%B7/">工具</a>
+                        
                     </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/28/msf%E4%BD%BF%E7%94%A8/">msf使用</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-28
-                            </span>
-                            
-                                <span id="/2023/04/28/msf使用/" class="leancloud_visitors" data-flag-title="msf使用">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/28/msf使用/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/28/%E5%85%8D%E6%9D%80/">免杀</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-28
-                            </span>
-                            
-                                <span id="/2023/04/28/免杀/" class="leancloud_visitors" data-flag-title="免杀">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/28/免杀/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/20/%E6%80%9D%E8%B7%AF/">渗透测试思路</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-20
-                            </span>
-                            
-                                <span id="/2023/04/20/思路/" class="leancloud_visitors" data-flag-title="渗透测试思路">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/20/思路/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/13/windows%E6%8F%90%E6%9D%83%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93ing/">windows提权自我总结ing</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-13
-                            </span>
-                            
-                                <span id="/2023/04/13/windows提权自我总结ing/" class="leancloud_visitors" data-flag-title="windows提权自我总结ing">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/13/windows提权自我总结ing/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/05/CS%E5%81%9A%E6%88%90%E6%9C%8D%E5%8A%A1/">CS做成服务</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-05
-                            </span>
-                            
-                                <span id="/2023/04/05/CS做成服务/" class="leancloud_visitors" data-flag-title="CS做成服务">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/05/CS做成服务/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/05/APP%E6%B5%8B%E8%AF%95%E6%9C%8D%E5%8A%A1%E7%AB%AF/">APP测试服务端</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-05
-                            </span>
-                            
-                                <span id="/2023/04/05/APP测试服务端/" class="leancloud_visitors" data-flag-title="APP测试服务端">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/05/APP测试服务端/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/05/APP%E6%B5%8B%E8%AF%95%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%96%B9%E5%90%91/">APP测试客户端方向</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-05
-                            </span>
-                            
-                                <span id="/2023/04/05/APP测试客户端方向/" class="leancloud_visitors" data-flag-title="APP测试客户端方向">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/05/APP测试客户端方向/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/30/sql%E6%B3%A8%E5%85%A5%E6%9D%82%E8%AE%B0/">sql注入杂记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-30
-                            </span>
-                            
-                                <span id="/2023/03/30/sql注入杂记/" class="leancloud_visitors" data-flag-title="sql注入杂记">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/30/sql注入杂记/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/28/csrf%E6%9D%82%E8%AE%B0/">csrf杂记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-28
-                            </span>
-                            
-                                <span id="/2023/03/28/csrf杂记/" class="leancloud_visitors" data-flag-title="csrf杂记">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/28/csrf杂记/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/2023/04/28/msf%E4%BD%BF%E7%94%A8/" class="next-prefix">» </a> 下一篇：    <a href="/2023/04/28/msf%E4%BD%BF%E7%94%A8/" title="发布于 2023-04-28 04:39">msf使用</a>
+                    
+                </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a href="/page/2/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -341,7 +159,7 @@
             <div class="menu-list">
                 <ul>
                     
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
