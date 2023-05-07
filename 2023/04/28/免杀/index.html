@@ -124,6 +124,10 @@
 <p>c++-》编译过程、混淆、加密</p>
 <p>python-》混淆、加密</p>
 <p>通用-》启发式查杀</p>
+<p>编译jar<br> <code>jar cvfm ./bin/fileupload.jar ./bin/MANIFEST.MF -C ./bin/classes ./net</code><br>.&#x2F;bin&#x2F;fileupload.jar <strong>要生成文件位置</strong><br>.&#x2F;bin&#x2F;MANIFEST.MF    <strong>这个文件的路径</strong><br>.&#x2F;bin&#x2F;classes        <strong>指定那个目录又class文件</strong><br>.&#x2F;net                <strong>起始位置</strong></p>
+<h2 id="远控、"><a href="#远控、" class="headerlink" title="远控、"></a><b herf="远控">远控</b>、</h2><p>远控</p>
+<p>反编译exe，IAT导出表。IAT导出表可以查看当前程序使用了哪些函数。loader加载器<br>通过DLLImport 直接导入  </p>
+<p>通过寻找dll中的函数导入  找地址<br>VirtualAlloc       &#x2F;&#x2F;创建一块内存空间并标记为可读写执行<br>MemeryCopy         &#x2F;&#x2F;向创建的内存空间写入自己的shellcode<br>CreateThread       &#x2F;&#x2F;将程序执行的流程指向这块内存空间</p>
 
                 
                 <p class="end">__END__</p>

