@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle"></h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-07-03
+                        </span>
+                        
+                            <span id="/2023/07/03/python爬虫学习/" class="leancloud_visitors" data-flag-title="">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/07/03/python爬虫学习/"></span>
+                        </span>  
+                    </p>
+                    
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h2 id="必须要掌握的py基础"><a href="#必须要掌握的py基础" class="headerlink" title="必须要掌握的py基础"></a>必须要掌握的py基础</h2><h3 id="3-1-基础语法相关"><a href="#3-1-基础语法相关" class="headerlink" title="3.1 基础语法相关"></a>3.1 基础语法相关</h3><ol>
+<li><p>if条件判断</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> 条件:</span><br><span class="line">    <span class="comment"># 事情1</span></span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    <span class="comment"># 事情2</span></span><br><span class="line">    </span><br><span class="line">当你需要判断的时候. 就去写<span class="keyword">if</span>. </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>上面就是if的最基础的语法规则. 含义是, 如果条件为真, 去执行<code>事情1</code>, 如果条件不真, 去执行<code>事情2</code>. 这东西. 我就不拆开聊了. 关于if. 你要记住的事情是, <code>它是用来做条件判断的</code>. 以后你的程序里,  如果需要条件判断了. 就用它….</p>
+<p>举例,</p>
+<p>在写爬虫的时候. 我们会遇到这样的两种情况 </p>
+<p>情况一, 数据里有一些我们并不需要的内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">data = <span class="string">&quot;10,英雄本色,1500万&quot;</span>   <span class="comment"># 正常你需要的数据</span></span><br><span class="line">data = <span class="string">&quot;11,-,-&quot;</span>  <span class="comment"># 你不需要的数据</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 伪代码, 理解含义(思路)</span></span><br><span class="line"><span class="keyword">if</span> data里有你需要的数据:</span><br><span class="line">	处理数据</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line"> 	再见</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>baidu.com</p>
+<p>第一页的内容和第二页的内容</p>
+<p>网页有可能会有多种页面结构</p>
+<p>小伙伴1. 逼着自己写一个提取器。 去适应不同的页面结构  -&gt; 难度系数(非常高)</p>
+<p>小伙伴2. 写两个提取器, 不同的提取器去爬取不同的网页</p>
+<p>情况二, 页面结构不统一, 会有两种页面结构</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 伪代码, 理解含义(思路)</span></span><br><span class="line">提取器<span class="number">1</span> = xxxx  <span class="comment">#  用来提取页面中内容的</span></span><br><span class="line">提取器<span class="number">2</span> = xxxxxx</span><br><span class="line"></span><br><span class="line"><span class="comment"># 页面有可能是不规则的。 </span></span><br><span class="line">结果<span class="number">1</span> = 提取器<span class="number">1.</span>提取(页面)</span><br><span class="line"><span class="keyword">if</span> 结果<span class="number">1</span>:</span><br><span class="line">    有结果. 存起来</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    没有结果. </span><br><span class="line">    结果<span class="number">2</span> = 提取器<span class="number">2.</span>提取(页面)</span><br></pre></td></tr></table></figure>
+
+<p>相信我, 上面的逻辑并不难. 但是, 到了后面很多小伙伴容易踩坑. 我们完全没必要用一个提取器获取所有的数据. 完全没必要…..</p>
+</li>
+<li><p>while循环<br>关于循环, 我们必须要知道一个事情. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> 条件:</span><br><span class="line">    循环体</span><br></pre></td></tr></table></figure>
+
+<p>如果条件为真, 就执行循环体, 然后再次判断条件…..直到条件为假. 结束循环. </p>
+<p>反复的执行一段代码</p>
+</li>
+<li><p>关于True和False</p>
+<p>True, 是真的意思. 翻译成人话:  对的, OK, 没毛病. 确定</p>
+<p>False, 是假的意思. 翻译成人话: 不对劲, 错误, No. 有瑕疵. 不对劲</p>
+<p>这个应该都能看懂. </p>
+<p>但是下面这个, 需要各位去记住</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 几乎所有能表示为空的东西. 都可以认为是False</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>(<span class="number">0</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>(<span class="string">&quot;&quot;</span>))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>([]))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>(&#123;&#125;))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>(<span class="built_in">set</span>()))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>(<span class="built_in">tuple</span>()))</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">bool</span>(<span class="literal">None</span>))</span><br><span class="line"><span class="comment"># 上面这一坨全是False, 相反的. 都是真. 利用这个特性. 我们可以有以下的一些写法</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 伪代码, 理解逻辑. </span></span><br><span class="line">结果 = 提取器.提取(页面)</span><br><span class="line"><span class="keyword">if</span> 结果:</span><br><span class="line">    有结果. 我要保存结果</span><br><span class="line"><span class="keyword">else</span>:</span><br><span class="line">    没结果.......</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="3-2-字符串"><a href="#3-2-字符串" class="headerlink" title="3.2  字符串"></a>3.2  字符串</h3><p>​	字符串在<code>爬虫</code>里. 必须要知道的几个操作:</p>
+<ol>
+<li><p>索引和切片<br>索引, 就是第几个字符. 它从0开始.<br>切片, 从字符串中提取n个字符. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">&quot;我爱黎明,黎明爱我&quot;</span></span><br><span class="line"><span class="built_in">print</span>(s[<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(s[<span class="number">0</span>])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(s[<span class="number">2</span>:<span class="number">4</span>])  从第<span class="number">2</span>个, 到第<span class="number">4</span>个(取不到<span class="number">4</span>)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>strip()</p>
+<p>我们从网页上提取的数据. 很多都是带有一些杂质的(换行, 空格),怎么去掉?</p>
+<p>strip()可以去掉字符串<code>左右两端</code>的空白(空格, 换行\n, 回车\r, 制表符\t)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">&quot;    \t\t\t我的天哪\r\r      \n\n  &quot;</span>  <span class="comment"># 够乱的字符串</span></span><br><span class="line">s1 = s.strip()</span><br><span class="line"><span class="built_in">print</span>(s1)  <span class="comment"># 好了 `我的天哪`</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>split()</p>
+<p>split,  做切割的. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">&quot;10,男人本色,100000万&quot;</span>  <span class="comment"># 你在网页上提取到这样的一段数据. 现在我需要电影名称</span></span><br><span class="line">tmps = s.split(<span class="string">&quot;,&quot;</span>)</span><br><span class="line">name = tmps[<span class="number">1</span>]</span><br><span class="line"><span class="built_in">print</span>(name)  <span class="comment"># 男人本色</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">id</span>, name, money = s.split(<span class="string">&quot;,&quot;</span>)  <span class="comment"># 切割后. 把三个结果直接怼给三个变量</span></span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">id</span>)</span><br><span class="line"><span class="built_in">print</span>(name)</span><br><span class="line"><span class="built_in">print</span>(money)</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>replace()</p>
+<p>replace, 字符串替换</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">&quot;我      \t\t\n\n爱   黎       明    &quot;</span>   <span class="comment"># 这是你从网页上拿到的东西</span></span><br><span class="line">s1 = replace(<span class="string">&quot; &quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;\t&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;\n&quot;</span>, <span class="string">&quot;&quot;</span>)  <span class="comment"># 干掉空格, \t, \n</span></span><br><span class="line"><span class="built_in">print</span>(s1)  <span class="comment"># 我爱黎明</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>join()</p>
+<p>join, 将列表拼接为一个完整的字符串</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="string">&quot;我妈&quot;</span>, <span class="string">&quot;不喜欢&quot;</span>, <span class="string">&quot;黎明&quot;</span>]  <span class="comment"># 有时,由于网页结构的不规则, 导致获取的数据是这样的. </span></span><br><span class="line">s1 = <span class="string">&quot;&quot;</span>.join(lst)  <span class="comment"># 用空字符串把lst中的每一项拼接起来</span></span><br><span class="line"><span class="built_in">print</span>(s1)  <span class="comment"># 我妈不喜欢黎明</span></span><br><span class="line"></span><br><span class="line">lst2 = [<span class="string">&quot;\n\r&quot;</span>,<span class="string">&quot;\n\r&quot;</span>,<span class="string">&quot;周杰伦\n\r&quot;</span>, <span class="string">&quot;\n不认识我\r&quot;</span>] </span><br><span class="line">s2 = <span class="string">&quot;&quot;</span>.join(lst2).replace(<span class="string">&quot;\n&quot;</span>, <span class="string">&quot;&quot;</span>).replace(<span class="string">&quot;\r&quot;</span>, <span class="string">&quot;&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s2)  <span class="comment"># 周杰伦不认识我</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>f-string</p>
+<p>格式化字符串的一种方案</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">&quot;周杰伦&quot;</span></span><br><span class="line">s1 = <span class="string">f&quot;我喜欢<span class="subst">&#123;s&#125;</span>&quot;</span>  <span class="comment">#  它会把一个变量塞入一个字符串</span></span><br><span class="line"><span class="built_in">print</span>(s1)  <span class="comment"># 我喜欢周杰伦</span></span><br><span class="line"></span><br><span class="line">k = <span class="number">10085</span></span><br><span class="line">s2 = <span class="string">f&quot;我的电话号是<span class="subst">&#123;k+<span class="number">1</span>&#125;</span>&quot;</span> <span class="comment"># 它会把计算结果赛入一个字符串</span></span><br><span class="line"><span class="built_in">print</span>(s2)  <span class="comment"># 我的电话号是10086</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 综上, f-string的大括号里, 其实是一段表达式.能计算出结果即可</span></span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="3-3-列表"><a href="#3-3-列表" class="headerlink" title="3.3  列表"></a>3.3  列表</h3><p>列表, 我们未来遇见的仅次于字符串的一种数据类型. 它主要是能承载大量的数据. 理论上. 你的内存不炸. 它就能一直存</p>
+<ol>
+<li><p>索引, 切片</p>
+<p>列表的索引和切片逻辑与字符串完全一致</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="string">&quot;赵本山&quot;</span>, <span class="string">&quot;王大陆&quot;</span>, <span class="string">&quot;大嘴猴&quot;</span>, <span class="string">&quot;马后炮&quot;</span>]</span><br><span class="line">item1 = lst[<span class="number">2</span>]  <span class="comment"># 大嘴猴</span></span><br><span class="line">item2 = lst[<span class="number">1</span>]  <span class="comment"># 王大陆</span></span><br><span class="line"></span><br><span class="line">lst2 = lst[<span class="number">2</span>:]</span><br><span class="line"><span class="built_in">print</span>(lst2)  <span class="comment"># [&quot;大嘴猴&quot;, &quot;马后炮&quot;]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意, 如果列表中没有数据. 取0会报错</span></span><br><span class="line">lst = []</span><br><span class="line"><span class="built_in">print</span>(lst[<span class="number">0</span>])  <span class="comment"># 报错, Index out of bounds</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 注意, 如果给出的索引下标超过了列表的最大索引. 依然会报错</span></span><br><span class="line">lst = [<span class="string">&quot;123&quot;</span>, <span class="string">&quot;456&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(lst[<span class="number">9999</span>])  <span class="comment"># 报错, Index out of bounds</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>增加</p>
+<p>给列表添加数据.   append</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="number">11</span>,<span class="number">22</span>]</span><br><span class="line">lst.append(<span class="number">33</span>)</span><br><span class="line">lst.append(<span class="number">44</span>)</span><br><span class="line"><span class="built_in">print</span>(lst)  <span class="comment"># [11,22,33,44]</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>删除</p>
+<p>删除数据(不常用, 好不容易爬到的数据. 为什么要删)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lst.remove(<span class="string">&quot;周润发&quot;</span>)  <span class="comment">#  把周润发删掉</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="string">&quot;赵本山&quot;</span>, <span class="string">&quot;王大陆&quot;</span>, <span class="string">&quot;大嘴猴&quot;</span>, <span class="string">&quot;马后炮&quot;</span>]</span><br><span class="line">lst[<span class="number">1</span>] = <span class="string">&quot;周杰伦&quot;</span></span><br><span class="line"><span class="built_in">print</span>(lst)  <span class="comment"># [&quot;赵本山&quot;, &quot;周杰伦&quot;, &quot;大嘴猴&quot;, &quot;马后炮&quot;]</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>range</p>
+<p>用for循环数数的一个东西</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    <span class="built_in">print</span>(i)   <span class="comment"># 从0数到9</span></span><br><span class="line">   </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">5</span>, <span class="number">10</span>):</span><br><span class="line">    <span class="built_in">print</span>(i)  <span class="comment"># 从5 数到 9</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查询(必会!!!!)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">lst = [<span class="string">&quot;赵本山&quot;</span>, <span class="string">&quot;周杰伦&quot;</span>, <span class="string">&quot;大嘴猴&quot;</span>, <span class="string">&quot;马后炮&quot;</span>]</span><br><span class="line"><span class="built_in">print</span>(lst[<span class="number">0</span>])</span><br><span class="line"><span class="built_in">print</span>(lst[<span class="number">1</span>])</span><br><span class="line"><span class="built_in">print</span>(lst[<span class="number">2</span>])</span><br><span class="line"><span class="built_in">print</span>(lst[<span class="number">3</span>])</span><br><span class="line"></span><br><span class="line"><span class="comment"># 循环列表的索引</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(lst)):</span><br><span class="line">    <span class="built_in">print</span>(lst[i])</span><br><span class="line"><span class="comment"># 循环列表的内容</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> lst:</span><br><span class="line">    <span class="built_in">print</span>(item)</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="3-4-字典"><a href="#3-4-字典" class="headerlink" title="3.4  字典"></a>3.4  字典</h3><p>字典可以成对儿的保存数据. </p>
+<ol>
+<li><p>增加</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;&#125;</span><br><span class="line">dic[<span class="string">&#x27;name&#x27;</span>] = <span class="string">&#x27;樵夫&#x27;</span></span><br><span class="line">dic[<span class="string">&#x27;age&#x27;</span>] = <span class="number">18</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(dic)  <span class="comment"># &#123;&quot;name&quot;: &quot;樵夫&quot;, &quot;age&quot;: 18&#125;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>修改</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;樵夫&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>&#125;</span><br><span class="line">dic[<span class="string">&#x27;age&#x27;</span>] = <span class="number">19</span></span><br><span class="line"><span class="built_in">print</span>(dic)  <span class="comment"># &#123;&quot;name&quot;: &quot;樵夫&quot;, &quot;age&quot;: 19&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>删除(不常用)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;樵夫&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>&#125;</span><br><span class="line">dic.pop(<span class="string">&quot;age&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(dic)  <span class="comment"># &#123;&#x27;name&#x27;: &#x27;樵夫&#x27;&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>查询(重点)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;樵夫&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>&#125;</span><br><span class="line"></span><br><span class="line">a = dic[<span class="string">&#x27;name&#x27;</span>]  <span class="comment"># 查询&#x27;name&#x27;的值</span></span><br><span class="line"><span class="built_in">print</span>(a)  <span class="comment"># 樵夫</span></span><br><span class="line"></span><br><span class="line">b = dic[<span class="string">&#x27;age&#x27;</span>]  <span class="comment"># 拿到dic中age对应的值</span></span><br><span class="line"><span class="built_in">print</span>(b)  <span class="comment"># 18</span></span><br><span class="line"></span><br><span class="line">c = dic[<span class="string">&#x27;哈拉少&#x27;</span>]   <span class="comment"># 没有哈拉少. 报错</span></span><br><span class="line">d = dic.get(<span class="string">&quot;哈拉少&quot;</span>)  <span class="comment"># 没有哈拉少, 不报错. 返回None. 它好. 它不报错</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>循环</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;樵夫&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>&#125;</span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> dic:  <span class="comment"># 循环出所有的key</span></span><br><span class="line">    <span class="built_in">print</span>(k)  </span><br><span class="line">    <span class="built_in">print</span>(dic[k])  <span class="comment"># 获取到所有的value并打印</span></span><br><span class="line">    </span><br></pre></td></tr></table></figure>
+
+<p>嵌套</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">dic = &#123;</span><br><span class="line">    <span class="string">&quot;name&quot;</span>: <span class="string">&quot;王峰&quot;</span>,</span><br><span class="line">    <span class="string">&quot;age&quot;</span>: <span class="number">18</span>,</span><br><span class="line">    <span class="string">&quot;wife&quot;</span>: &#123;</span><br><span class="line">        <span class="string">&quot;name&quot;</span>: <span class="string">&quot;章子怡&quot;</span>,</span><br><span class="line">        <span class="string">&quot;age&quot;</span>: <span class="number">19</span>,</span><br><span class="line">    &#125;,</span><br><span class="line">    <span class="string">&quot;children&quot;</span>: [</span><br><span class="line">        &#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&quot;胡一菲&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">19</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&quot;胡二菲&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>&#125;,</span><br><span class="line">        &#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&quot;胡三菲&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">17</span>&#125;,</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 王峰的第二个孩子的名字</span></span><br><span class="line"><span class="built_in">print</span>(dic[<span class="string">&#x27;children&#x27;</span>][<span class="number">1</span>][<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line"><span class="comment"># 王峰所有孩子的名称和年龄</span></span><br><span class="line"><span class="keyword">for</span> item <span class="keyword">in</span> dic[<span class="string">&#x27;children&#x27;</span>]:</span><br><span class="line">    <span class="built_in">print</span>(item[<span class="string">&#x27;name&#x27;</span>])</span><br><span class="line">    <span class="built_in">print</span>(item[<span class="string">&#x27;age&#x27;</span>])</span><br></pre></td></tr></table></figure></li>
+</ol>
+<h3 id="3-5-字符集和bytes"><a href="#3-5-字符集和bytes" class="headerlink" title="3.5  字符集和bytes"></a>3.5  字符集和bytes</h3><p>字符集, 记住两个字符集就够了. 一个是utf-8, 一个是gbk. 都是支持中文的. 但是utf-8的编码数量远大于gbk. 我们平时使用的最多的是utf-8</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 把字符串转化成字节</span></span><br><span class="line">bs = <span class="string">&quot;我的天哪abcdef&quot;</span>.encode(<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(bs)  <span class="comment">#  b&#x27;\xe6\x88\x91\xe7\x9a\x84\xe5\xa4\xa9\xe5\x93\xaaabcdef&#x27;</span></span><br><span class="line"><span class="comment"># 一个中文在utf-8里是3个字节. 一个英文是一个字节. 所以英文字母是正常显示的</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 把字节还原回字符串</span></span><br><span class="line">bs = <span class="string">b&#x27;\xe6\x88\x91\xe7\x9a\x84\xe5\xa4\xa9\xe5\x93\xaaabcdef&#x27;</span></span><br><span class="line">s = bs.decode(<span class="string">&quot;utf-8&quot;</span>)</span><br><span class="line"><span class="built_in">print</span>(s)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>记住, bytes不是给人看的. 是给机器看的. 我们遇到的所有文字, 图片, 音频, 视频. 所有所有的东西到了计算机里都是字节. </p>
+<h3 id="3-6-文件操作"><a href="#3-6-文件操作" class="headerlink" title="3.6 文件操作"></a>3.6 文件操作</h3><p>python中. 想要处理一个文件. 必须用open()先打开一个文件</p>
+<p>语法规则</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">f = <span class="built_in">open</span>(文件名, mode=<span class="string">&quot;模式&quot;</span>, encoding=<span class="string">&#x27;文件编码&#x27;</span>)</span><br><span class="line">f.read()|f.write()</span><br><span class="line">f.close()</span><br></pre></td></tr></table></figure>
+
+<p>文件名就不解释了. </p>
+<p>模式:<br>    我们需要知道的主要有4个. 分别是: r, w, a, b</p>
+<ol>
+<li>r  只读模式. 含义是, 当前这一次open的目的是读取数据. 所以, 只能读. 不能写</li>
+<li>w 只写模式. 含义是, 当前这一次open的目的是写入数据. 所以, 只能写, 不能读</li>
+<li>a 追加模式. 含义是, 当前这一次open的目的是向后追加. 所以, 只能写, 不能读</li>
+<li>b 字节模式. 可以和上面三种模式进行混合搭配. 目的是. 写入的内容或读取的内容是字节.</li>
+</ol>
+<p>问: </p>
+<ol>
+<li>如果我想保存一张图片. 应该用哪种模式?</li>
+<li>我想读取txt文件, 用哪种模式?</li>
+<li>我想复制一个文件. 应该用哪种模式?</li>
+</ol>
+<p>encoding: 文件编码. 只有处理的文件是文本的时候才能使用. 并且mode不可以是<code>b</code>.   99%的时候我们用的是<code>utf-8</code></p>
+<p>另一种写法:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(文件名, mode=模式, encoding=编码) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+
+<p>这种写法的好处是, 不需要我们手动去关闭<code>f</code></p>
+<p>读取一个文本文件:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">with</span> <span class="built_in">open</span>(<span class="string">&quot;躺尸一摆手.txt&quot;</span>, mode=<span class="string">&quot;r&quot;</span>, encoding=<span class="string">&quot;utf-8&quot;</span>) <span class="keyword">as</span> f:</span><br><span class="line">    <span class="keyword">for</span> line <span class="keyword">in</span> f:  <span class="comment"># for循环可以逐行的进行循环文件中的内容</span></span><br><span class="line">        <span class="built_in">print</span>(line)</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="3-7-关于函数"><a href="#3-7-关于函数" class="headerlink" title="3.7  关于函数"></a>3.7  关于函数</h3><p>在代码量很少的时候, 我们并不需要函数. 但是一旦代码量大了. 一次写个几百行代码. 调试起来就很困难. 此时, 建议把程序改写成一个一个具有特定功能的函数. 方便调试. 也方便代码的重用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">函数名</span>(<span class="params">形式参数</span>):</span><br><span class="line">    <span class="comment"># 函数体</span></span><br><span class="line">    <span class="keyword">return</span> 返回值</span><br></pre></td></tr></table></figure>
+
+<p>上面是编写一个函数的固定逻辑. 但是, 编写好的函数是不会自己运行的. 必须有人调用才可以</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">函数名(实际参数)</span><br></pre></td></tr></table></figure>
+
+<p>写一个试试:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">get_page_source</span>(<span class="params">url</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;我要发送请求了. 我要获取到页面源代码啊&quot;</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;页面源代码&quot;</span></span><br><span class="line"></span><br><span class="line">pg_one = get_page_source(<span class="string">&quot;baidu.com&quot;</span>)</span><br><span class="line">pg_two = get_page_source(<span class="string">&quot;koukou.com&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>再来一个</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">def</span> <span class="title function_">download_image</span>(<span class="params">url, save_path</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;我要下载图片<span class="subst">&#123;url&#125;</span>了&quot;</span>, <span class="string">f&quot;保存在<span class="subst">&#123;save_path&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">donwload_image(<span class="string">&quot;http://www.baidu.com/abc/huyifei.jpg&quot;</span>, <span class="string">&quot;胡二飞.jpg&quot;</span>)</span><br><span class="line">donwload_image(<span class="string">&quot;http://www.baidu.com/aaa/dagedagefeifeifei.jpg&quot;</span>, <span class="string">&quot;大哥大哥飞飞飞.jpg&quot;</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>总结, 函数的好处就是, 以后需要该功能. 不用再写重复代码了. </p>
+<h3 id="3-8-关于模块"><a href="#3-8-关于模块" class="headerlink" title="3.8 关于模块"></a>3.8 关于模块</h3><p>模块是啥? 模块就是已经有人帮我们写好了的一些代码, 这些代码被保存在一个py文件或者一个文件夹里. 我们可以拿来直接用</p>
+<p>在python中有三种模块.</p>
+<p>第一种, python内置模块</p>
+<p>​	不用安装. 直接导入就能用</p>
+<p>第二种, 第三方模块</p>
+<p>​	需要安装. 安装后. 导入就可以用了</p>
+<p>第三种, 自定义模块(新手先别自己定义模块)</p>
+<p>​	直接导入就能用</p>
+<p>导入模块的语法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> 模块</span><br><span class="line"><span class="keyword">from</span> 模块 <span class="keyword">import</span> 功能</span><br><span class="line"><span class="keyword">from</span> 模块.子模块 <span class="keyword">import</span> 功能</span><br><span class="line"></span><br><span class="line">举例子, </span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> urllib.parse <span class="keyword">import</span> urljoin</span><br><span class="line"><span class="keyword">from</span> bs4 <span class="keyword">import</span> BeautifulSoup</span><br></pre></td></tr></table></figure>
+
+<p>搞爬虫.必须要了解的一些python内置模块</p>
+<ol>
+<li><p>time模块</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line">time.time()  <span class="comment"># 这个是获取到时间戳</span></span><br><span class="line">time.sleep(<span class="number">999</span>)  <span class="comment"># 让程序暂停999秒</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>os模块 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="comment"># 判断文件是否存在</span></span><br><span class="line">os.path.exists()  <span class="comment">#  判断文件或者文件夹是否存在</span></span><br><span class="line">os.path.join()    <span class="comment"># 路径拼接</span></span><br><span class="line">os.makedirs()     <span class="comment"># 创建文件夹</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>json模块(重中之重)</p>
+<p>现在的网站不同于从前了. 习惯性用json来传递数据. 所以, 我们必须要知道json是啥, 以及python如何处理json. </p>
+<p>json是一种类似字典一样的东西.  对于python而言, json是字符串.  </p>
+<p>例如, </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">s = <span class="string">&#x27;&#123;&quot;name&quot;: &quot;jay&quot;, &quot;age&quot;: 18&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>你看. 这破玩意就是<code>json</code></p>
+<p>如何来转化它. </p>
+<p><strong><span style="background-color:yellow;color:red;">json字符串 &#x3D;&gt; python字典</span></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line">s = <span class="string">&#x27;&#123;&quot;name&quot;: &quot;jay&quot;, &quot;age&quot;: 18&#125;&#x27;</span></span><br><span class="line">dic = json.loads(s)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(dic))</span><br></pre></td></tr></table></figure>
+
+<p><strong><span style="background-color:yellow;color:red;">python字典 &#x3D;&gt; json字符串</span></strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> json</span><br><span class="line">dic = &#123;<span class="string">&quot;name&quot;</span>: <span class="string">&quot;jay&quot;</span>, <span class="string">&quot;age&quot;</span>: <span class="number">18</span>&#125;</span><br><span class="line">s = json.dumps(dic)</span><br><span class="line"><span class="built_in">print</span>(<span class="built_in">type</span>(s))</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>random模块</p>
+<p>随机. 没别的用处.生成随机数</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> random</span><br><span class="line">i = random.randint(<span class="number">1</span>, <span class="number">10</span>)  <span class="comment"># 1~10的随机数</span></span><br><span class="line"><span class="built_in">print</span>(i)   <span class="comment"># 多跑两次.效果更加</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>异常处理</p>
+<p>这个是重点. 我们在写爬虫的时候. 非常容易遇到问题. 但这些问题本身并不是我们程序的问题. </p>
+<p>比如, 你在抓取某网站的时候. 由于网络波动或者他服务器本身压力太大. 导致本次请求失败. 这种现象太常见了. 此时, 我们程序这边就会崩溃. 打印一堆红色的文字. 让你难受的一P.  怎么办?</p>
+<p>我们要清楚一个事情. 我们平时在打开一个网址的时候. 如果长时间没有反应, 或者加载很慢的时候. 我们习惯性的会刷新网页. 对吧. 这个逻辑就像: <code>程序如果本次请求失败了. 能不能重新来一次</code>. OK, 我们接下来聊的这个异常处理. 就是干这个事儿的. </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>: <span class="comment"># 尝试...</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;假如, 我是一段爬虫代码, 请求到对方服务器&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;我得出事儿啊&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="number">1</span>/<span class="number">0</span>)  <span class="comment"># 出事儿了</span></span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:  <span class="comment"># 出错了. 我给你兜着</span></span><br><span class="line">    <span class="built_in">print</span>(e)  <span class="comment"># 怎么兜?  打印一下. 就过去了</span></span><br><span class="line">    </span><br><span class="line"><span class="built_in">print</span>(<span class="string">&quot;不论上面是否出错. 我这里, 依然可以执行&quot;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>看懂了么? 程序执行的时候. 如果<code>try</code>中的代码出现错误. 则自动跳到<code>except</code>中. 并执行<code>except</code>中的代码. 然后程序正常的, 继续执行</p>
+<p>有了这玩意. 我们就可以写出一段很漂亮的代码逻辑:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> <span class="number">1</span>:</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        我要发送请求了. 我要干美国CIA的总部. 我要上天</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;我成功了!!&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span>  <span class="comment"># 成功了.就跳出循环</span></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;失败了&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;我不怕失败&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;再来&quot;</span>)</span><br><span class="line">       </span><br></pre></td></tr></table></figure>
+
+<p>改良版:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="number">10</span>):</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        我要发送请求了. 我要干美国CIA的总部. 我要上天</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;我成功了!!&quot;</span>)</span><br><span class="line">        <span class="keyword">break</span>  <span class="comment"># 成功了.就跳出循环</span></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;失败了&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;我不怕失败&quot;</span>)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">&quot;再来&quot;</span>)</span><br><span class="line">        time.sleep(i * <span class="number">10</span>)</span><br><span class="line">        </span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><span style='background-color:yellow;color:red;font-size:1cm;line-height:1.5cm;'>在写代码测试阶段. 不要加try…except… 要不然. 出错了. 你都不知道. 啥错了, 错哪儿了. </span></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/07/03/python%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/" target="_blank"></a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/2023/08/16/%E5%A4%A7%E9%A9%AC%E5%AD%A6%E4%B9%A0/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/08/16/%E5%A4%A7%E9%A9%AC%E5%AD%A6%E4%B9%A0/" title="发布于 2023-08-16 10:29">大马学习</a>
+                        <br>
+                    
+                    
+                        <a href="/2023/04/30/postgresql%E6%95%B0%E6%8D%AE%E5%BA%93/" class="next-prefix">» </a> 下一篇：    <a href="/2023/04/30/postgresql%E6%95%B0%E6%8D%AE%E5%BA%93/" title="发布于 2023-04-30 04:30">postgresql数据库</a>
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
+    
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>简单地活着，肆意而又精彩！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/touxiang.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span>章鱼海绵</span></div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://www.4399.com/" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://www.4399.com/" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.png"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="" target="_self" data="/image/sidebar/weixin.png"><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/zhangyuhaimian/zhangyuhaimian.github.io" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <div class="aplayer"></div>
+        <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+        <script type="text/javascript" src="/js/APlayer.min.js"></script>
+        <script type="text/javascript">
+            const aplayer = new APlayer({
+                container: document.querySelector(".aplayer"),
+                fixed: true,
+                autoplay: true,
+                loop: "all",
+                order: "random",
+                preload: "auto",
+                volume: 0.67,
+                mutex: true,
+                lrcType: 3,
+                audio: [
+                    
+                        {
+                            name: "镇海",
+                            artist: "不良人",
+                            cover: "/music/cover/shuai.jpg",
+                            url: "/music/song/zhenhai.mp3",
+                            lrc: "/music/lrc/Endless Tears.lrc"
+                        },
+                    
+                ]
+            });
+        </script>
+    
+    
+    <div class="wrap-right">
+        <div class="setting">
+            <div class="iconbox favorites" switch="false">
+                <span class="iconfont icon-favorites"></span>
+                <span class="icontext">关注</span>
+            </div>
+            <div class="iconbox mode">
+                <div class="light">
+                    <span class="iconfont icon-daymode"></span>
+                    <span class="icontext">浅色模式</span>
+                </div>
+                <div class="dark">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                    <span class="icontext">深色模式</span>
+                </div>
+            </div>
+            <a href="javascript:;" target="_self" class="search">
+                <div class="iconbox">
+                    <span class="iconfont icon-search-menu"></span>
+                    <span class="icontext">搜索</span>
+                </div>
+            </a>
+            <div class="iconbox bottom">
+                <div style="display: inline-block; transform: rotate(180deg);">
+                    <span class="iconfont icon-top"></span>
+                </div>
+                <span class="icontext">跳至底部</span>
+            </div>
+        </div>
+        <div class="iconbox set">
+            <div style="display: inline-block;">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="iconbox top">
+            <span class="iconfont icon-top"></span>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "zhangyuhaimian",
+        GitHubRepositories : "zhangyuhaimian",
+
+        User             : "章鱼海绵",
+        UserAvatar       : "/image/sidebar/touxiang.jpg",
+        WebsiteStartDate : "2023-02-10",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) Hi, Live For Code",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : "/image/website/logo.png",
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/home.jpg",
+            
+                "/image/header/back.jpg",
+            
+        ],
+        HomeBannerText  : "",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+        ],
+
+        OtherBannerText : "",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "简单地活着，肆意而又精彩！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://www.4399.com/",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://www.4399.com/",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.png"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "",
+                        target : "_self",
+                        image  : "/image/sidebar/weixin.png"
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/zhangyuhaimian/zhangyuhaimian.github.io",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2022 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/wechat.png",
+            wechat  : "/image/donate/wechat.png"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : ".comments-content",
+            appId          : "srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz",
+            appKey         : "8uVSP1q6UlALVC5igYfIfv2h",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "APlayer"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : true,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "镇海",
+                        artist : "不良人",
+                        cover  : "/music/cover/shuai.jpg",
+                        url    : "/music/song/zhenhai.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : true, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : false
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js"
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "简单地活着, 肆意又精彩."
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>
