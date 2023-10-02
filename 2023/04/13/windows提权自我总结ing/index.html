@@ -74,6 +74,7 @@
             <div class="toc"></div>
             <div class="article-body">
                 <p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1771226" title="windows提权">windows提权</a></p>
+<p><a target="_blank" rel="noopener" href="https://cloud.tencent.com/developer/article/1771226">windows提权看这一篇就够了-腾讯云开发者社区-腾讯云 (tencent.com)</a></p>
 <p>这篇文章 把windows提权分为了7个方法，这里我再一边学习一边总结，感觉好难，这篇文章我都用我自己的话来描述</p>
 <h1 id="系统内核溢出漏洞提权"><a href="#系统内核溢出漏洞提权" class="headerlink" title="系统内核溢出漏洞提权"></a><a herf="系统内核溢出漏洞提权">系统内核溢出漏洞提权</a></h1><p> 就是系统本身存在一些漏洞，这些漏洞没打相应的补丁，然后通过对比，找到没打的补丁，通过缺失补丁号和对应的系统版本查找对应的exp<br> 如果没成功可能就是系统版本没对应上，或者是有没有可能是提权漏洞需要的环境没有</p>
 <ol>
@@ -132,7 +133,7 @@
 </li>
 <li><p>当前目录</p>
 </li>
-<li><p>环境变量PATH中所有目录。需要注意的是，这里不包括App Paths注册表项指定的应用程序路径。<br>  这个时候再这个文件之前的目录创建一个和他名字一样的dll文件就会调用你创建的dll</p>
+<li><p>环境变量PATH中所有目录。需要注意的是，这里不包括App Paths注册表项指定的应用程序路径。<br> 这个时候再这个文件之前的目录创建一个和他名字一样的dll文件就会调用你创建的dll</p>
 </li>
 </ol>
 <p>HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session\Manager\KnownDLLs<br>不在这个注册表里应该可以劫持</p>

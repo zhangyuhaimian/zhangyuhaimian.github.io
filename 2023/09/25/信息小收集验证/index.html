@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            Hexo
+            信息小收集验证
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,291 +31,123 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/index.css">
-<div id="count"></div>
-<div id="header" >
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-title">章鱼海绵</h1>
-                <h2 class="header-description" id="hitokoto"></h2>
-                <h3 class="header-info" id="hitokotoAuthor"></h3>
+                <h1 class="header-subtitle">信息小收集验证</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-09-25
+                        </span>
+                        
+                            <span id="/2023/09/25/信息小收集验证/" class="leancloud_visitors" data-flag-title="信息小收集验证">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/09/25/信息小收集验证/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">工具</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">工具</span>
+                        
+                    
+                </div>
             
         </div>
     </div>
-    
-        <a class="scroll-down" href="javascript:;" target="_self" data-offset="-45">
-            <i class="scroll-down-icon iconfont icon-return"></i>
-        </a>
     
 </div>
 <div id="container">
     
-        
-            <!-- 首页 -->
-            <div class="articles">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>Nuclei- 批量 POC 验证<br>Nuclei-Templates ： Nuclei 模板<br>Sub昀椀nder ：子域名爆破收集<br>Httpx ：批量主机存活验证<br>Naabu ：端口扫描神器<br>Interactsh ：数据收集</p>
+<h2 id="Httpx："><a href="#Httpx：" class="headerlink" title="Httpx："></a>Httpx：</h2><p>​	特点：快速批量对资产进行批量化验证主机存活</p>
+<p>安装：<br>    项目地址：<a target="_blank" rel="noopener" href="https://github.com/projectdiscovery/httpx/releases">https://github.com/projectdiscovery/httpx/releases</a><br>    1、Windows<br>        下载：httpx_1.3.2_windows_amd64.zip<br>        解压安装<br>        启动<br>            安装包路径cmd<br>            httpx.exe  如有回显则安装成功<br>    2、Linux<br>        下载：httpx_1.3.2_linux_amd64.zip<br>        解压安装<br>            yum -y install unzip<br>            unzip httpx_1.3.2_linux_amd64.zip<br>        启动<br>            解压后路径<br>            .&#x2F;httpx 如有回显则安装成功<br>Httpx常见组合技巧：<br>    1、.&#x2F;httpx -u <a target="_blank" rel="noopener" href="https://www.zkaq.cn/">https://www.zkaq.cn</a> -status-code    （-status-code可缩写 -sc 效果一样）<br>    2、.&#x2F;httpx -l  test.txt -status-code<br>    3、.&#x2F;httpx -l  test.txt -mc 200  （只筛选响应code为200的资产）<br>    4、.&#x2F;httpx -l  test.txt -mc 2                             00 &gt;&gt; success.txt （只筛选响应code200资产，追加写入到success.txt文本中）</p>
+<ol start="5">
+<li>httpx.exe  -sc -cl -ct -websocket -cdn -title -asn</li>
+</ol>
+<p>Httpx联动Nuclei<br>    任意文件下载<br>    poc：&#x2F;etc&#x2F;passwd</p>
+<p>利用：<br>.&#x2F;httpx -l test.txt -mc 200 &gt;&gt; success.txt | &#x2F;root&#x2F;nuclei&#x2F;nuclei -t &#x2F;root&#x2F;nuclei-templates&#x2F;etc_passwd.yaml -l &#x2F;root&#x2F;httpx&#x2F;success.txt</p>
+<p>Httpx 联动 Nuclei<br>[root@cat httpx]# .&#x2F;httpx -l test.txt -mc 200 &gt;&gt; success.txt | &#x2F;root&#x2F;cat&#x2F;nuclei&#x2F;nuclei -<br>t &#x2F;root&#x2F;nuclei-templates&#x2F;etc_passwd.yaml -l &#x2F;root&#x2F;cat&#x2F;httpx&#x2F;success.txt</p>
+<h2 id="Naabu"><a href="#Naabu" class="headerlink" title="Naabu"></a>Naabu</h2><p>项目地址： <a target="_blank" rel="noopener" href="https://github.com/projectdiscovery/naabu">https://github.com/projectdiscovery/naabu</a><br>下载地址： <a target="_blank" rel="noopener" href="https://github.com/projectdiscovery/naabu/releases">https://github.com/projectdiscovery/naabu/releases</a></p>
+<p>Naabu –host hackerone.com</p>
+<p>.&#x2F;naabu -p 80,443,21-23 -host xxx.com</p>
+<p>批量扫描<br>我们将要扫描的文件放到 txt 文件中。用 -list 命令即可。<br>.&#x2F;naabu -list hosts.txt<br>配合 Nmap 并将结果保存<br>echo xxx.cn | .&#x2F;naabu -nmap-cli ‘nmap -sV -oX nmap-output’</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">参数选项 描述</span><br><span class="line">-top-ports 100 扫描 Nmap 前 100 个端口</span><br><span class="line">-top-ports 1000 扫描 Nmap 前 1000 个端口</span><br><span class="line">-p - 扫描从 1-65535 的完整端口</span><br></pre></td></tr></table></figure>
+
+
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/25/XSS%E6%9D%82%E8%AE%B0/">XSS杂记</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-25
-                            </span>
-                            
-                                <span id="/2023/03/25/XSS杂记/" class="leancloud_visitors" data-flag-title="XSS杂记">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/25/XSS杂记/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/09/25/%E4%BF%A1%E6%81%AF%E5%B0%8F%E6%94%B6%E9%9B%86%E9%AA%8C%E8%AF%81/" target="_blank">信息小收集验证</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/categorie/%E5%B7%A5%E5%85%B7/">工具</a>
+                        
                     </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/16/windows%E6%8F%90%E6%9D%83/">windows提权（搬运来的）</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-16
-                            </span>
-                            
-                                <span id="/2023/03/16/windows提权/" class="leancloud_visitors" data-flag-title="windows提权（搬运来的）">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/16/windows提权/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tag/%E5%B7%A5%E5%85%B7/">工具</a>
+                        
                     </div>
                 
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/15/ciphey%E8%A7%A3%E7%A0%81/">ciphey解码</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-15
-                            </span>
-                            
-                                <span id="/2023/03/15/ciphey解码/" class="leancloud_visitors" data-flag-title="ciphey解码">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/15/ciphey解码/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/12/linux%E5%B0%8F%E6%8A%80%E5%B7%A7/">linux小技巧</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-12
-                            </span>
-                            
-                                <span id="/2023/03/12/linux小技巧/" class="leancloud_visitors" data-flag-title="linux小技巧">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/12/linux小技巧/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/09/mysql%E5%B0%8F%E6%93%8D%E4%BD%9C/">mysql小操作</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-09
-                            </span>
-                            
-                                <span id="/2023/03/09/mysql小操作/" class="leancloud_visitors" data-flag-title="mysql小操作">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/09/mysql小操作/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE/">php伪协议</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-08
-                            </span>
-                            
-                                <span id="/2023/03/08/php伪协议/" class="leancloud_visitors" data-flag-title="php伪协议">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/08/php伪协议/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/08/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bdata/">php伪协议之data</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-08
-                            </span>
-                            
-                                <span id="/2023/03/08/php伪协议之data/" class="leancloud_visitors" data-flag-title="php伪协议之data">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/08/php伪协议之data/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/07/php%E4%BC%AA%E5%8D%8F%E8%AE%AE%E4%B9%8Bfilter/">php伪协议之filter</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-07
-                            </span>
-                            
-                                <span id="/2023/03/07/php伪协议之filter/" class="leancloud_visitors" data-flag-title="php伪协议之filter">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/07/php伪协议之filter/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/03/04/burp%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%BB%95%E8%BF%87%E7%88%86%E7%A0%B4/">burp宏定义绕过爆破</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-03-04
-                            </span>
-                            
-                                <span id="/2023/03/04/burp宏定义绕过爆破/" class="leancloud_visitors" data-flag-title="burp宏定义绕过爆破">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/03/04/burp宏定义绕过爆破/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
-                    <div class="article">
-                        <div class="article-title">
-                            <a href="/2023/02/23/python%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99%E5%B0%8F%E8%AE%A1/">python脚本编写小计</a>
-                            
-                        </div>
-                        <div class="article-abstract">
-                            
-                        </div>
-                        <div class="clear"></div>
-                        <div class="article-info">
-                            <span>
-                                <i class="iconfont icon-time"></i> 发表时间：2023-02-23
-                            </span>
-                            
-                                <span id="/2023/02/23/python脚本编写小计/" class="leancloud_visitors" data-flag-title="python脚本编写小计">
-                                    <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
-                                </span>
-                            
-                            <span>
-                                <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/02/23/python脚本编写小计/"></span>
-                            </span>
-                        </div>
-                        <div class="clear"></div>     
-                    </div>
-                
+                <div class="article-prev-next">
+                    
+                        <a href="/2023/09/25/fofax%E9%A3%9F%E7%94%A8/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/09/25/fofax%E9%A3%9F%E7%94%A8/" title="发布于 2023-09-25 05:53">fofax食用</a>
+                        <br>
+                    
+                    
+                        <a href="/2023/09/24/sliver%E5%AD%A6%E4%B9%A0/" class="next-prefix">» </a> 下一篇：    <a href="/2023/09/24/sliver%E5%AD%A6%E4%B9%A0/" title="发布于 2023-09-24 04:42">sliver学习</a>
+                    
+                </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/page/2/">上一页</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -341,7 +173,7 @@
             <div class="menu-list">
                 <ul>
                     
-                        <li class=" active "><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
                     
                         <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
                     
