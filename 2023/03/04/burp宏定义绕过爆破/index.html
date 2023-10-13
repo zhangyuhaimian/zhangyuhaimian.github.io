@@ -73,7 +73,8 @@
         <div id="article">
             <div class="toc"></div>
             <div class="article-body">
-                <p>（是一个好哥哥教我的）<br>首先是要爆破网站的用户名和密码<br>但是在抓包重放实验之后发现<br>有一个类似token的验证<br>pageauth<br>![这是图片](&#x2F;image&#x2F;picture&#x2F;pageauth.png”Magic Gardens”)<br>每一次刷新这个pageauth的值都在变<br>重放会显示auth 不正确<br>应该是对pageauth进行了检验</p>
+                <p>（是一个好哥哥教我的）<br>首先是要爆破网站的用户名和密码<br>但是在抓包重放实验之后发现<br>有一个类似token的验证<br>pageauth</p>
+<p>每一次刷新这个pageauth的值都在变<br>重放会显示auth 不正确<br>应该是对pageauth进行了检验</p>
 <p>尝试用burp抓包删除这个值发现，还是没法绕过，那有没有什么方法能先获取这个值接下来，再利用burp的intruder模块呢<br>我用的是1.7.30版本的burp<br>再Project options选项中的Sessions模块最下面有一个Macros模块 宏定义<br>可以利用宏定义获取pageauth的值然后再进行爆破，接下来看如何获取这个值</p>
 <p>首先抓下来网页的包<br>记下来点击add<br><img src="/image/picture/add1.png" alt="这是图片" title="Magic Gardens"><br>选择这个网页的包<br><img src="/image/picture/10.png" alt="这是图片" title="Magic Gardens"><br>进行修改<br><img src="/image/picture/11.png" alt="这是图片" title="Magic Gardens"><br><img src="/image/picture/12.png" alt="这是图片" title="Magic Gardens"><br><img src="/image/picture/13.png" alt="这是图片" title="Magic Gardens"><br>接下来一直ok<br><img src="/image/picture/14.png" alt="这是图片" title="Magic Gardens"><br><img src="/image/picture/15.png" alt="这是图片" title="Magic Gardens"><br><img src="/image/picture/16.png" alt="这是图片" title="Magic Gardens"><br><img src="/image/picture/17.png" alt="这是图片" title="Magic Gardens"><br>最后开始爆破<br>返回包显示账户名或密码错误说明绕过成功 欧耶<br><img src="/image/picture/18.png" alt="这是图片" title="Magic Gardens"></p>
 
