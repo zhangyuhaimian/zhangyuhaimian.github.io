@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            HTB_Keeper
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">HTB_Keeper</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-10-16
+                        </span>
+                        
+                            <span id="/2023/10/16/HTB-Keeper/" class="leancloud_visitors" data-flag-title="HTB_Keeper">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/10/16/HTB-Keeper/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">HTB</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">HTB</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,107 +69,93 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>s</p>
+<p>简单这个</p>
+<p>正常扫描端口</p>
+<p>进来发现80端口 访问之后有个跳转 绑定host 之后在访问</p>
+<p>是一个rt      搜一下有没有什么漏洞  登录页面有没有弱口令默认密码</p>
+<p>找到了<a target="_blank" rel="noopener" href="https://github.com/bestpractical/rt">bestpractical&#x2F;rt: Request Tracker, an enterprise-grade issue tracking system (github.com)</a></p>
+<p>root password</p>
+<p>成功登录进来</p>
+<p>进来翻翻 Admin -&gt; select 下面有两个角色   root 用户没有啥信息 ，看看另一个 lnorgaard 发现了</p>
+<p>New user. Initial password set to Welcome2023!</p>
+<p>lnorgaard：：Welcome2023！</p>
+<p>尝试一下能不能ssh</p>
+<p>成功登录，拿第一个flag</p>
+<p>进去后有点东西</p>
+<p>一个poc.py 一个压缩包 unzip 解压看看</p>
+<p>一个dmp文件 和一个kdbx文件</p>
+<p>我直接用poc 跑dmp文件 发现出来一串奇怪的东西  </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rødgrød med fløde</span><br></pre></td></tr></table></figure>
+
+<p>这是查阅之后的结果，是一个吃的</p>
+<p>然后用keepass来打开 kdbx 文件 输入这个密码 出现了一个 putty的私钥文件，把内容找出来生成一个ppk文件</p>
+<p>真好 立马去下载一个putty 输入ip之后 在ssh选项上 认证模块 选私钥文件，就选生成的ppk然后open</p>
+<p>直接就链接上去了</p>
+<p>然后</p>
+<p>cat</p>
+<p>结束</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/10/16/HTB-Keeper/" target="_blank">HTB_Keeper</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 36 篇日志，继续加油！
+                            <a href="/categorie/HTB/">HTB</a>
                         
-                    </span>
-                    
-                    
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
                         
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/30/postgresql%E6%95%B0%E6%8D%AE%E5%BA%93/"><span>postgresql数据库</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-30</span>
-                                </div>
-                            </div>
-                        </div>
+                            <a href="/tag/HTB/">HTB</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/28/msf%E4%BD%BF%E7%94%A8/"><span>msf使用</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-28</span>
-                                </div>
-                            </div>
-                        </div>
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/28/%E5%85%8D%E6%9D%80/"><span>免杀</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-28</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/20/%E6%80%9D%E8%B7%AF/"><span>渗透测试思路</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-20</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/13/windows%E6%8F%90%E6%9D%83%E8%87%AA%E6%88%91%E6%80%BB%E7%BB%93ing/"><span>windows提权自我总结ing</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-13</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/05/CS%E5%81%9A%E6%88%90%E6%9C%8D%E5%8A%A1/"><span>CS做成服务</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/05/APP%E6%B5%8B%E8%AF%95%E6%9C%8D%E5%8A%A1%E7%AB%AF/"><span>APP测试服务端</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-05</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/05/APP%E6%B5%8B%E8%AF%95%E5%AE%A2%E6%88%B7%E7%AB%AF%E6%96%B9%E5%90%91/"><span>APP测试客户端方向</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-05</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/10/16/HTB-Sau/" class="next-prefix">» </a> 下一篇：    <a href="/2023/10/16/HTB-Sau/" title="发布于 2023-10-16 12:34">HTB_Sau</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -180,7 +187,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
