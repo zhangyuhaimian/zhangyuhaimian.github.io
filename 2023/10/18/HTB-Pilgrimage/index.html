@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            HTB_Pilgrimage
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">HTB_Pilgrimage</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-10-18
+                        </span>
+                        
+                            <span id="/2023/10/18/HTB-Pilgrimage/" class="leancloud_visitors" data-flag-title="HTB_Pilgrimage">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/10/18/HTB-Pilgrimage/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">HTB</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">HTB</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,77 +69,104 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>s</p>
+<p>嗨嗨嗨 简单操作，简单操作</p>
+<p>扫描端口 然后 80端口 绑host 接下来 进去发现要上传图片 上传了几张没啥反应</p>
+<p>扫一下子域名和 dirsearch 发现了 .git 文件 </p>
+<p>有git泄露 这里我用的是 git-dump 来下载泄露的文件 他这里有一个magick的可执行文件 去搜一下看看</p>
+<p>运行一下看一下版本 ImageMagick 7.1.0-49 搜一下漏洞</p>
+<p> ImageMagick 7.1.0-49 exploit      ImageMagick 7.1.0-49 vuln</p>
+<p><a target="_blank" rel="noopener" href="https://www.exploit-db.com/exploits/51261">ImageMagick 7.1.0-49 - Arbitrary File Read - Multiple local Exploit (exploit-db.com)</a></p>
+<p>然后直接将poc中的图片上传上去，找到图片保存到本地</p>
+<p>然后用命令</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">identify -verbose 1.png </span><br></pre></td></tr></table></figure>
+
+<p>得到很长一串16进制字符 去网上找16进制转文本</p>
+<p><img src="/%5Cimage%5CHTB3%5CPilgrimage%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018073536.png"></p>
+<p><img src="/%5Cimage%5CHTB3%5CPilgrimage%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018075741.png"></p>
+<p><img src="/%5Cimage%5CHTB3%5CPilgrimage%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018083635.png"></p>
+<p>之后没有能继续利用的地方了</p>
+<p>再仔细看看php文件</p>
+<p>发现有一处 &#x2F;var&#x2F;dv&#x2F;pilgrimae  应该是数据库的位置</p>
+<p>还是同上的方法看看能不能读取</p>
+<p>[Sybil-Scan&#x2F;imagemagick-lfi-poc: ImageMagick LFI PoC <a target="_blank" rel="noopener" href="https://github.com/Sybil-Scan/imagemagick-lfi-poc">CVE-2022-44268] (github.com)</a></p>
+<p>用这个的poc</p>
+<p>读取之后发现了  <code>emilyabigchonkyboi123</code> 就这个能看到</p>
+<p><img src="/%5Cimage%5CHTB3%5CPilgrimage%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018083709.png"></p>
+<p>发现是之前读取过的其中一个用户，尝试一下ssh</p>
+<p>成功登录 拿到user</p>
+<p>接下来想办法提权</p>
+<p>sudo -l 用不了</p>
+<p>我懒得看了这里直接看的wp  有一个sh文件</p>
+<p>ps -aux看下进程，看下id之类的常规行为</p>
+<p>在进程里有一个malwarescan.sh</p>
+<p>查看发现这是个监控脚本，监控&#x2F;var&#x2F;www&#x2F;pilgrimage.htb&#x2F;shrunk&#x2F;,调用binwalk实现监控</p>
+<p><a target="_blank" rel="noopener" href="https://www.exploit-db.com/exploits/51249">Binwalk v2.3.2 - Remote Command Execution (RCE) - Python remote Exploit (exploit-db.com)</a></p>
+<p>直接反弹shell 将图片马复制到&#x2F;var&#x2F;www&#x2F;pilgrimage.htb&#x2F;shrunk&#x2F;</p>
+<p>这边nc监听</p>
+<p>成功root</p>
+<p>完事</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/10/18/HTB-Pilgrimage/" target="_blank">HTB_Pilgrimage</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 37 篇日志，继续加油！
+                            <a href="/categorie/HTB/">HTB</a>
                         
-                    </span>
-                    
-                    
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
                         
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/10/18/HTB-Pilgrimage/"><span>HTB_Pilgrimage</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">10-18</span>
-                                </div>
-                            </div>
-                        </div>
+                            <a href="/tag/HTB/">HTB</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/10/16/HTB-Keeper/"><span>HTB_Keeper</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">10-16</span>
-                                </div>
-                            </div>
-                        </div>
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/10/16/HTB-Sau/"><span>HTB_Sau</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">10-16</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/10/15/HTB-CozyHosting/"><span>HTB_CozyHosting</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">10-15</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/10/13/HTB-Analytics-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/"><span>HTB_Analytics-第三季度</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">10-13</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/10/16/HTB-Keeper/" class="next-prefix">» </a> 下一篇：    <a href="/2023/10/16/HTB-Keeper/" title="发布于 2023-10-16 05:17">HTB_Keeper</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -150,7 +198,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
