@@ -84,10 +84,10 @@
 <p>可以登录进去我以为就有txt了，以为还挺简单，是我错了啥也没有</p>
 <p> hi team!<br>me and my friend(Cris) created a new scheduled backup plan for the database<br>the database will be automatically highly compressed and copied to &#x2F;var&#x2F;www&#x2F;backups&#x2F; by a small bash script every day at 12:00 AM<br>*Note: the backup directory may change in the future!<br>*Note2: the backup would be protected with strong password! don’t even think to crack it guys! :)<br>gg&#x3D;doodleGrive-development-team</p>
 <p>看这条有个备份文件，一看666，有密码 g 就一个能看，先传过来在说</p>
-<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125809.png" alt="这是图片"></p>
-<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125825.png" alt="这是图片"></p>
+<p><img src="/%5Cimage/HTB3/Drive/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125809.png" alt="这是图片"></p>
+<p><img src="/%5Cimage/HTB3/Drive/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125825.png" alt="这是图片"></p>
 <p>试试能不能提权，试了好多方法看看进程</p>
-<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125813.png" alt="这是图片"></p>
+<p><img src="/image/HTB3/Drive/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125813.png" alt="这是图片"></p>
 <p>搜一下ok</p>
 <h3 id="Gitea初始"><a href="#Gitea初始" class="headerlink" title="Gitea初始"></a>Gitea初始</h3><p>访问<code>ip:3000</code>即可进入gitea初始化界面</p>
 <p>Gitea的首要目标是创建一个极易安装，运行非常快速，安装和使用体验良好的自建 Git 服务</p>
@@ -95,8 +95,8 @@
 <p>配置文件：<code>/etc/proxychains4.conf</code>, 需要添加代理服务器的ip地址和端口号（可以添加多个）</p>
 <p>他这个有限制，只有自己能访问</p>
 <p>做了一个内网穿透进去代理出来访问</p>
-<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125817.png" alt="这是图片"></p>
-<p><img src="/%5Cimage%5CHTB3%5CDrive%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125820.png" alt="这是图片"></p>
+<p><img src="/image/HTB3/Drive/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125817.png" alt="这是图片"></p>
+<p><img src="/image/HTB3/Drive/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231019125820.png" alt="这是图片"></p>
 <p>得登录</p>
 <p>我就知道马丁得密码，我试试，哎我操，登不进去，再看看</p>
 <p>他不叫马丁了</p>
@@ -110,7 +110,7 @@
 <p>密码是xxxxxxx有需要的加我wx博客有二维码</p>
 <p>进去之后成功拿到user.txt 然后就是提权 ，他这里有个 elf文件，执行以下需要登录一个账户，反编译看看</p>
 <p>elf文件 我用idea反编译的</p>
-<p><img src="/%5Cimage%5CHTB3%5CDrive%5Celf.png" alt="81e3c7db7032f78778135896f7da97d"></p>
+<p><img src="/image/HTB3/Drive/elf.png" alt="81e3c7db7032f78778135896f7da97d"></p>
 <p>翻翻捡捡发现 fuc5得位置有一个sql注入，（从这开始我就不会了）</p>
 <p><a target="_blank" rel="noopener" href="https://sqlite.org/loadext.html">https://sqlite.org/loadext.html</a></p>
 <p>load_extension得注入，没禁用参数的话会执行外部得库 so文件之类的</p>

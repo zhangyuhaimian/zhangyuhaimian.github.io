@@ -86,9 +86,9 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">identify -verbose 1.png </span><br></pre></td></tr></table></figure>
 
 <p>得到很长一串16进制字符 去网上找16进制转文本</p>
-<p><img src="/%5Cimage%5CHTB3%5CPilgrimage%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018073536.png"></p>
-<p><img src="/%5Cimage%5CHTB3%5CPilgrimage%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018075741.png"></p>
-<p><img src="/%5Cimage%5CHTB3%5CPilgrimage%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018083635.png"></p>
+<p><img src="/image/HTB3/Pilgrimage/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018073536.png"></p>
+<p><img src="/image%5CHTB3/Pilgrimage/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018075741.png"></p>
+<p><img src="/image%5CHTB3/Pilgrimage/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018083635.png"></p>
 <p>之后没有能继续利用的地方了</p>
 <p>再仔细看看php文件</p>
 <p>发现有一处 &#x2F;var&#x2F;dv&#x2F;pilgrimae  应该是数据库的位置</p>
@@ -96,7 +96,7 @@
 <p>[Sybil-Scan&#x2F;imagemagick-lfi-poc: ImageMagick LFI PoC <a target="_blank" rel="noopener" href="https://github.com/Sybil-Scan/imagemagick-lfi-poc">CVE-2022-44268] (github.com)</a></p>
 <p>用这个的poc</p>
 <p>读取之后发现了  <code>emilyabigchonkyboi123</code> 就这个能看到</p>
-<p><img src="/%5Cimage%5CHTB3%5CPilgrimage%5C%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018083709.png"></p>
+<p><img src="/image/HTB3/Pilgrimage/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20231018083709.png"></p>
 <p>发现是之前读取过的其中一个用户，尝试一下ssh</p>
 <p>成功登录 拿到user</p>
 <p>接下来想办法提权</p>

