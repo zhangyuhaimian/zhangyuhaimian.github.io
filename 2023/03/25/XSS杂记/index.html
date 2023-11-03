@@ -88,10 +88,9 @@
 <h2 id="DOM型xss"><a href="#DOM型xss" class="headerlink" title="DOM型xss"></a><d id="DOM型xss">DOM型xss</d></h2><ol start="4">
 <li><p>DOM型xss<br>DOM简单来说DOM文档就是一份XML文档，当有了DOM标准之后，DOM便将前端html代码化为一个树状结构，方便程序和脚本能够轻松的动态访问和更新这个树状结构的内容、结构以及样式，且不需要经过服务端，所以DOM型xss在js前端自己就可以完成数据的输入输出，不与服务器产生交互，这样来说DOM型xss也可以理解为反射性xss。</p>
 <p>DOM型xss可以在前端通过js渲染来完成数据的交互，达到插入数据造成xss脚本攻击，且不经过服务器，所以即使抓包无无法抓取到这里的流量，而反射性与存储型xss需要与服务器交互，这便是三者的区别  源码如下<br><code>   function domxss()&#123;</code><br>                 <code>var str = document.getElementById(&quot;text&quot;).value;</code><br>                 <code>document.getElementById(&quot;dom&quot;).innerHTML = &quot;&lt;a href=&#39;&quot;+str+&quot;&#39;&gt;what do you see?&lt;/a&gt;&quot;;</code><br>             <code>&#125;</code></p>
-<h2 id="要想办法闭合下面的a标签"><a href="#要想办法闭合下面的a标签" class="headerlink" title="要想办法闭合下面的a标签"></a>要想办法闭合下面的a标签</h2><h2 id="这里要注意"><a href="#这里要注意" class="headerlink" title="这里要注意"></a>这里要注意</h2><p>我们在打XSS的时候，会发现浏览器里的源码是双引号，但实际上开发写的是单引号，经过浏览器渲染之后就把单引号，渲染成双引号了，所以她实质上是单引号。所以我们打XSS的时候也要用单引号。<br><code>&lt;a href=&quot;&quot;&gt;what do you see?&lt;/a&gt;</code></p>
+<h2 id="要想办法闭合下面的a标签"><a href="#要想办法闭合下面的a标签" class="headerlink" title="要想办法闭合下面的a标签"></a>要想办法闭合下面的a标签</h2><h2 id="这里要注意"><a href="#这里要注意" class="headerlink" title="这里要注意"></a>这里要注意</h2><p>我们在打XSS的时候，会发现浏览器里的源码是双引号，但实际上开发写的是单引号，经过浏览器渲染之后就把单引号，渲染成双引号了，所以她实质上是单引号。所以我们打XSS的时候也要用单引号。<br><code>&lt;a href=&quot;&quot;&gt;what do you see?&lt;/a&gt;</code><br> 这两个语句都可以闭合<br><code>&#39; onclick=&quot;alert(9527)&quot;&gt;        </code><br> <code>&#39; &gt;  &lt;img src=&quot;#&quot; onmouseover=&quot;alert(9527)&quot;&gt;</code></p>
 </li>
 </ol>
-<p>  这两个语句都可以闭合<br>   <code>&#39; onclick=&quot;alert(9527)&quot;&gt;        </code><br>  <code>&#39; &gt;  &lt;img src=&quot;#&quot; onmouseover=&quot;alert(9527)&quot;&gt;</code></p>
 <h2 id="DOM型xSS-x"><a href="#DOM型xSS-x" class="headerlink" title="DOM型xSS -x"></a><e id="DOM型xSS -x">DOM型xSS -x</e></h2><ol start="5">
 <li>DOM型xSS -x</li>
 </ol>

